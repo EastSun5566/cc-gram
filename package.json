@@ -1,7 +1,7 @@
 {
-  "name": "ccgram",
+  "name": "cc-gram",
   "version": "1.0.0",
-  "description": "",
+  "description": "🖼 A CSS & Canvas Instagram filters can be viewed & accessed base on CSSgram",
   "main": "index.ts",
   "types": "dist/types/index.d.ts",
   "files": [
@@ -16,9 +16,19 @@
     "build": "yarn build:types && yarn build:js",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts ."
   },
-  "keywords": [],
+  "keywords": [
+    "instagram",
+    "image",
+    "filter",
+    "css",
+    "canvas"
+  ],
   "author": "汪東陽 EastSun5566",
   "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/EastSun5566/cc-gram"
+  },
   "devDependencies": {
     "@babel/core": "^7.4.3",
     "@babel/preset-env": "^7.4.3",
