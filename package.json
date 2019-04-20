@@ -1,0 +1,36 @@
+{
+  "name": "ccgram",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.ts",
+  "types": "dist/types/index.d.ts",
+  "files": [
+    "dist/index.js"
+  ],
+  "scripts": {
+    "type-check": "tsc --noEmit",
+    "type-check:watch": "yarn type-check -- --watch",
+    "build:types": "tsc --emitDeclarationOnly",
+    "build:js": "webpack -p",
+    "build:js:dev": "webpack -d",
+    "build": "yarn build:types && yarn build:js",
+    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts ."
+  },
+  "keywords": [],
+  "author": "汪東陽 EastSun5566",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/core": "^7.4.3",
+    "@babel/preset-env": "^7.4.3",
+    "@babel/preset-typescript": "^7.3.3",
+    "@typescript-eslint/eslint-plugin": "^1.6.0",
+    "@typescript-eslint/parser": "^1.6.0",
+    "babel-loader": "^8.0.5",
+    "eslint": "^5.16.0",
+    "eslint-config-airbnb-base": "^13.1.0",
+    "eslint-plugin-import": "^2.17.2",
+    "typescript": "^3.4.4",
+    "webpack": "^4.30.0",
+    "webpack-cli": "^3.3.0"
+  }
+}
