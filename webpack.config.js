@@ -5,6 +5,9 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'dist'),
     filename: 'index.js',
+    library: 'cc-gram',
+    libraryTarget: 'umd',
+    globalObject: "typeof self !== 'undefined' ? self : this",
   },
   resolve: {
     extensions: ['.ts', '.js', '.json'],
