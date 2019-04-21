@@ -1,8 +1,13 @@
+/* eslint-disable no-param-reassign */
 /* eslint-disable no-nested-ternary */
 import filters from './utils/filters';
 
 export default class {
   private _filters = filters;
+
+  public constructor() {
+    this.applyFilter();
+  }
 
   public get filterNumber(): number {
     return this._filters.size;
@@ -12,7 +17,7 @@ export default class {
     return Array.from(this._filters.keys());
   }
 
-  public getFilterStyleString(filterName: string): string {
+  public getFilterStyle(filterName: string = ''): string {
     const filterSetting = this._filters.get(filterName);
 
     if (!filterSetting) return 'none';
@@ -27,5 +32,14 @@ export default class {
             : ''
       })`)
       .join(' ');
+  }
+
+  public applyFilter(): void {
+    const targets: NodeListOf<HTMLElement> = document.querySelectorAll('[data-filter]');
+
+    targets.forEach((target): void => {
+      const filterName = target.dataset.filter;
+      target.style.filter = this.getFilterStyle(filterName);
+    });
   }
 }
