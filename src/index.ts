@@ -9,10 +9,6 @@ export default class {
     this.applyFilter();
   }
 
-  public get filterNumber(): number {
-    return this._filters.size;
-  }
-
   public get filterNameList(): string[] {
     return Array.from(this._filters.keys());
   }
@@ -35,7 +31,7 @@ export default class {
   }
 
   public applyFilter(): void {
-    const targets: NodeListOf<HTMLElement> = document.querySelectorAll('[data-filter]');
+    const targets: NodeListOf<HTMLElement> = document.querySelectorAll('img[data-filter]');
 
     targets.forEach((target): void => {
       const filterName = target.dataset.filter;
