@@ -5,6 +5,8 @@ import filters from './utils/filters';
 export default class {
   private _filters = filters;
 
+  private _target: HTMLImageElement | null = null;
+
   public constructor() {
     if (document.readyState === 'complete') {
       this.applyFilter();
@@ -36,47 +38,67 @@ export default class {
   }
 
   public applyFilter(): void {
-    const targetImages: NodeListOf<HTMLImageElement> = document.querySelectorAll('img[data-filter]');
+    const targets: NodeListOf<HTMLImageElement> = document.querySelectorAll('img[data-filter]');
 
-    targetImages.forEach((target): void => {
-      const { dataset } = target;
-      target.style.filter = this.getFilterStyle(dataset.filter);
+    targets.forEach((target): void => {
+      const { dataset: { filter } } = target;
+      target.style.filter = this.getFilterStyle(filter);
     });
   }
 
-  public getDataUrl(imageElement: HTMLImageElement): Promise<string> {
-    if (!imageElement || imageElement.tagName !== 'IMG') throw new Error();
+  private getCanvasOfImage(): Promise<HTMLCanvasElement> {
+    const { _target } = this;
+    if (!_target || _target.tagName !== 'IMG') throw new Error('The first argument is required and must be an <img> element.');
 
     const {
       src,
-      dataset,
-    } = imageElement;
+      dataset: { filter },
+    } = _target;
 
-    if (!src) return Promise.resolve('');
+    if (!src) throw new Error('The <img> element src attribute is empty.');
 
     return new Promise((resolve, reject): void => {
       const image = new Image();
 
-      image.onload = ({ target }): void => {
-        const { width, height } = target;
-        const canvas = document.createElement('canvas');
+      image.onload = (): void => {
+        const { width, height } = image;
 
+        const canvas = document.createElement('canvas');
         canvas.width = width;
         canvas.height = height;
 
         const ctx = canvas.getContext('2d');
-        if (!ctx) throw new Error();
+        if (!ctx) {
+          reject(new Error('The 2d context canvas is not supported.'));
+          return;
+        }
 
-        ctx.filter = this.getFilterStyle(dataset.filter);
-        ctx.drawImage(target, 0, 0);
+        ctx.filter = this.getFilterStyle(filter);
+        ctx.drawImage(image, 0, 0);
 
-        resolve(canvas.toDataURL());
+        resolve(canvas);
       };
 
       image.onerror = (error): void => reject(error);
 
       image.crossOrigin = 'anonymous';
       image.src = src;
+    });
+  }
+
+  public async getDataUrl(elment: HTMLImageElement): Promise<string> {
+    this._target = elment;
+    const canvas = await this.getCanvasOfImage();
+
+    return canvas.toDataURL();
+  }
+
+  public async getBlob(elment: HTMLImageElement): Promise<Blob | null> {
+    this._target = elment;
+    const canvas = await this.getCanvasOfImage();
+
+    return new Promise((resolve): void => {
+      canvas.toBlob((blob): void => resolve(blob));
     });
   }
 }
