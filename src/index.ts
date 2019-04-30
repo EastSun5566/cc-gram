@@ -6,7 +6,7 @@
 
 import filters from './utils/filters';
 
-export default class {
+class Ccgram {
   /**
    * The default filter list
    */
@@ -157,3 +157,5 @@ export default class {
     a.click();
   }
 }
+
+export default Ccgram;

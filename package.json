@@ -1,7 +1,7 @@
 {
   "name": "cc-gram",
-  "version": "1.0.0",
-  "description": "🖼 A CSS & Canvas Instagram filters can be viewed & accessed base on CSSgram",
+  "version": "0.0.9",
+  "description": "🖼 A CSS & Canvas Instagram filters based on CSSgram",
   "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [

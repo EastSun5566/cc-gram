@@ -1,4 +1,4 @@
-export default new Map([
+const filters = new Map([
   [
     '1977',
     {
@@ -16,4 +16,6 @@ export default new Map([
       brightness: 1.2,
     },
   ],
-]) as Map<string, { [key: string]: number }>;
+]);
+
+export default filters;
