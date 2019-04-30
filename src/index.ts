@@ -1,12 +1,26 @@
-/* eslint-disable no-param-reassign */
-/* eslint-disable no-nested-ternary */
+/**
+ * @license MIT
+ * @copyright (c) 2019 - present
+ * @author 汪東陽 EastSun5566
+ */
+
 import filters from './utils/filters';
 
 export default class {
+  /**
+   * The default filter list
+   */
   private _filters = filters;
 
+  /**
+   * The image target for methods
+   */
   private _target: HTMLImageElement | null = null;
 
+  /**
+   * Initalize CSS filter to all targets
+   * @constructor
+   */
   public constructor() {
     if (document.readyState === 'complete') {
       this.applyFilter();
@@ -16,11 +30,20 @@ export default class {
     document.addEventListener('DOMContentLoaded', this.applyFilter);
   }
 
+  /**
+   * The filter name list
+   * @readonly
+   */
   public get filterNameList(): string[] {
     return Array.from(this._filters.keys());
   }
 
-  public getFilterStyle(filterName: string = ''): string {
+  /**
+   * Get the CSS inline style of filter
+   * @param {string} [filterName=''] - The filter name
+   * @returns {string} filter CSS inline style
+   */
+  private getFilterStyle(filterName: string = ''): string {
     const filterSetting = this._filters.get(filterName);
 
     if (!filterSetting) return 'none';
@@ -37,6 +60,9 @@ export default class {
       .join(' ');
   }
 
+  /**
+   * Apply CSS filter to all targets
+   */
   public applyFilter(): void {
     const targets: NodeListOf<HTMLImageElement> = document.querySelectorAll('img[data-filter]');
 
@@ -46,7 +72,11 @@ export default class {
     });
   }
 
-  private getCanvasOfImage(): Promise<HTMLCanvasElement> {
+  /**
+   * Create canvas of image target
+   * @returns {Promise<HTMLCanvasElement>}
+   */
+  private createImageCanvas(): Promise<HTMLCanvasElement> {
     const { _target } = this;
     if (!_target || _target.tagName !== 'IMG') throw new Error('The first argument is required and must be an <img> element.');
 
@@ -56,6 +86,7 @@ export default class {
     } = _target;
 
     if (!src) throw new Error('The <img> element src attribute is empty.');
+    if (!filter) throw new Error('The <img> element data-filter attribute is empty.');
 
     return new Promise((resolve, reject): void => {
       const image = new Image();
@@ -86,19 +117,43 @@ export default class {
     });
   }
 
+  /**
+   * Get the data url of image elment
+   * @param {HTMLImageElement} elment - image elment
+   * @returns {Promise<string>} data url
+   */
   public async getDataUrl(elment: HTMLImageElement): Promise<string> {
     this._target = elment;
-    const canvas = await this.getCanvasOfImage();
+    const canvas = await this.createImageCanvas();
 
     return canvas.toDataURL();
   }
 
+  /**
+   * Get the blob of image elment
+   * @param {HTMLImageElement} elment - image elment
+   * @returns {(Promise<Blob | null>)} blob
+   */
   public async getBlob(elment: HTMLImageElement): Promise<Blob | null> {
     this._target = elment;
-    const canvas = await this.getCanvasOfImage();
+    const canvas = await this.createImageCanvas();
 
     return new Promise((resolve): void => {
       canvas.toBlob((blob): void => resolve(blob));
     });
+  }
+
+  /**
+   * Download the image elment
+   * @param {HTMLImageElement} elment - image elment
+   * @returns {Promise<void>}
+   */
+  public async download(elment: HTMLImageElement): Promise<void> {
+    const dataUrl = await this.getDataUrl(elment);
+
+    const a = document.createElement('a');
+    a.href = dataUrl;
+    a.download = elment.dataset.filter || 'Image';
+    a.click();
   }
 }
