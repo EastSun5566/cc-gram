@@ -1,11 +1,11 @@
 {
   "name": "cc-gram",
-  "version": "1.0.0",
-  "description": "🖼 A CSS & Canvas Instagram filters can be viewed & accessed base on CSSgram",
-  "main": "index.ts",
+  "version": "0.0.9",
+  "description": "🖼 A CSS & Canvas Instagram filters based on CSSgram",
+  "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist/index.js"
+    "dist"
   ],
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -17,11 +17,12 @@
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts ."
   },
   "keywords": [
-    "instagram",
     "image",
     "filter",
     "css",
-    "canvas"
+    "canvas",
+    "Instagram",
+    "CSSgram"
   ],
   "author": "汪東陽 EastSun5566",
   "license": "MIT",
@@ -31,6 +32,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.11",
@@ -38,6 +41,7 @@
     "@typescript-eslint/parser": "^1.6.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "canvas": "^2.4.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
