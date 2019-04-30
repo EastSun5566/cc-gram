@@ -1,4 +1,4 @@
-const filters = new Map([
+const filters: Map<string, { [key: string]: number | undefined }> = new Map([
   [
     '1977',
     {
