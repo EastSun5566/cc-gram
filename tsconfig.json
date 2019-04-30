@@ -6,7 +6,10 @@
     "importHelpers": true,
     "experimentalDecorators": true,
     "esModuleInterop": true,
-    "allowSyntheticDefaultImports": true
+    "allowSyntheticDefaultImports": true,
+    "declaration": true,
+    "declarationDir": "dist/types",
+    "moduleResolution": "node"
   },
   "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
   "include": ["src/**/*"],

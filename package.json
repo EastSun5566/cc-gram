@@ -2,10 +2,10 @@
   "name": "cc-gram",
   "version": "1.0.0",
   "description": "🖼 A CSS & Canvas Instagram filters can be viewed & accessed base on CSSgram",
-  "main": "index.ts",
+  "main": "dist/index.js",
   "types": "dist/types/index.d.ts",
   "files": [
-    "dist/index.js"
+    "dist"
   ],
   "scripts": {
     "type-check": "tsc --noEmit",
@@ -32,6 +32,8 @@
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
+    "@babel/plugin-proposal-class-properties": "^7.4.4",
+    "@babel/plugin-proposal-object-rest-spread": "^7.4.4",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-typescript": "^7.3.3",
     "@types/jest": "^24.0.11",
