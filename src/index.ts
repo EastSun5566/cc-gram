@@ -43,7 +43,7 @@ class Ccgram {
    * @param {string} [filterName=''] - The filter name
    * @returns {string} filter CSS inline style
    */
-  private getFilterStyle(filterName: string = ''): string {
+  public getFilterStyle(filterName: string = ''): string {
     const filterSetting = this._filters.get(filterName);
 
     if (!filterSetting) return 'none';
