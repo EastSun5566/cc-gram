@@ -41,6 +41,7 @@
     "@typescript-eslint/parser": "^1.6.0",
     "babel-eslint": "^10.0.1",
     "babel-loader": "^8.0.5",
+    "babel-plugin-transform-runtime": "^6.23.0",
     "canvas": "^2.4.1",
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
