@@ -1,12 +1,12 @@
 /**
  * @license MIT
  * @copyright (c) 2019 - present
- * @author 汪東陽 EastSun5566
+ * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566/cc-gram>
  */
 
 import filters from './utils/filters';
 
-class Ccgram {
+export default class Ccgram {
   /**
    * The default filter list
    */
@@ -27,7 +27,12 @@ class Ccgram {
       return;
     }
 
-    document.addEventListener('DOMContentLoaded', this.applyFilter);
+    const handleLoaded = (): void => {
+      this.applyFilter();
+      document.removeEventListener('DOMContentLoaded', handleLoaded);
+    };
+
+    document.addEventListener('DOMContentLoaded', handleLoaded);
   }
 
   /**
@@ -157,5 +162,3 @@ class Ccgram {
     a.click();
   }
 }
-
-export default Ccgram;
