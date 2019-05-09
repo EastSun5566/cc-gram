@@ -147,18 +147,4 @@ export default class Ccgram {
       canvas.toBlob((blob): void => resolve(blob));
     });
   }
-
-  /**
-   * Download the image elment
-   * @param {HTMLImageElement} elment - image elment
-   * @returns {Promise<void>}
-   */
-  public async download(elment: HTMLImageElement): Promise<void> {
-    const dataUrl = await this.getDataUrl(elment);
-
-    const a = document.createElement('a');
-    a.href = dataUrl;
-    a.download = elment.dataset.filter || 'Image';
-    a.click();
-  }
 }
