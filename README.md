@@ -1,10 +1,8 @@
 # CCgram
 
-> 🖼 A CSS & Canvas Instagram filters based on CSSgram
-
----
-
 [![Build Status](https://travis-ci.org/EastSun5566/cc-gram.svg?branch=master)](https://travis-ci.org/EastSun5566/cc-gram)
+
+> 🖼 A CSS & Canvas Instagram filters based on CSSgram
 
 ## ✨ Install
 
