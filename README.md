@@ -19,10 +19,7 @@ npm i cc-gram
 - HTML
 
 ```html
-<!-- 
-  An image tag with data-filter attribute,
-  whitch is Filter name
-  -->
+<!-- An image tag with data-filter attribute that is filter name -->
 <img src="./my-picture.png" data-filter="1977" />
 ```
 
@@ -31,7 +28,7 @@ npm i cc-gram
 ```js
 import Ccgram from "cc-gram";
 
-// Initalize to apply CSS filter to All targets whitch has data-filter attribute
+// Initalize to apply CSS filter to All targets that has data-filter attribute
 const ccgram = new Ccgram();
 ```
 
@@ -45,9 +42,6 @@ const dataUrl = await ccgram.getDataUrl(target);
 
 // Get the blob of target
 const blob = await ccgram.getBlob(target);
-
-// download the target
-ccgram.download(target);
 ```
 
 ### Else
