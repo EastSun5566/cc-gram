@@ -1,9 +1,13 @@
 /**
- * @fileoverview The Filter List
- * based on CSSgram <https://github.com/una/CSSgram>
+ * @module filters
+ *
+ * Base on CSSgram by Una Kravets
+ * @see CSSgram <https://github.com/una/CSSgram>
  */
 
-const filters: Map<string, { [key: string]: number | undefined }> = new Map([
+import { FilterName, FilterSetting } from './types';
+
+const filters: Map<FilterName, FilterSetting> = new Map([
   [
     'aden',
     {

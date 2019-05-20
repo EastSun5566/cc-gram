@@ -1,11 +1,18 @@
 /**
+ * @package cc-gram <https://github.com/EastSun5566/cc-gram>
+ *
  * @license MIT
  * @copyright (c) 2019 - present
- * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566/cc-gram>
+ * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
  */
 
+import { FilterName, FilterSetting } from './utils/types';
 import filters from './utils/filters';
 
+
+/**
+ * @class Ccgram
+ */
 export default class Ccgram {
   /**
    * The default filter list
@@ -39,16 +46,26 @@ export default class Ccgram {
    * The filter name list
    * @readonly
    */
-  public get filterNameList(): string[] {
-    return Array.from(this._filters.keys());
+  public get filterNameList(): FilterName[] {
+    return [...this._filters.keys()];
+  }
+
+  /**
+   * Add CSS filter
+   * @param {object}
+   */
+  public set addFilter(
+    { filterName, filterSetting }: { filterName: FilterName; filterSetting: FilterSetting },
+  ) {
+    this._filters.set(filterName, filterSetting);
   }
 
   /**
    * Get the CSS inline style of filter
-   * @param {string} [filterName=''] - The filter name
+   * @param {string} filterName - The filter name
    * @returns {string} filter CSS inline style
    */
-  public getFilterStyle(filterName: string = ''): string {
+  public getFilterStyle(filterName: FilterName = ''): string {
     const filterSetting = this._filters.get(filterName);
 
     if (!filterSetting) return 'none';
@@ -91,7 +108,6 @@ export default class Ccgram {
     } = _target;
 
     if (!src) throw new Error('The <img> element src attribute is empty.');
-    if (!filter) throw new Error('The <img> element data-filter attribute is empty.');
 
     return new Promise((resolve, reject): void => {
       const image = new Image();
@@ -103,7 +119,7 @@ export default class Ccgram {
         canvas.width = width;
         canvas.height = height;
 
-        const ctx = canvas.getContext('2d');
+        const ctx = canvas.getContext('2d', { alpha: false });
         if (!ctx) {
           reject(new Error('The 2d context canvas is not supported.'));
           return;
