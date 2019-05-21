@@ -15,3 +15,8 @@ export interface FilterSetting {
   sepia?: number;
   [key: string]: number | undefined;
 }
+
+export interface Options {
+  type?: string;
+  quality?: number;
+}

@@ -1,5 +1,5 @@
 /**
- * @module filters
+ * @module filters - The Filter List
  *
  * Base on CSSgram by Una Kravets
  * @see CSSgram <https://github.com/una/CSSgram>

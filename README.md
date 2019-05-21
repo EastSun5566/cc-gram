@@ -8,64 +8,113 @@
 
 ```sh
 npm i cc-gram
+```
 
-# or yarn add cc-gram
+or
+
+```sh
+yarn add cc-gram
 ```
 
 ## 🚀 Usage
 
-### Apply filter
+### Apply CSS filter
 
-- HTML
+#### HTML
+
+An image tag with `data-filter` attribute is filter name.
 
 ```html
-<!-- An image tag with data-filter attribute that is filter name -->
 <img src="./my-picture.png" data-filter="1977" />
 ```
 
-- JavaScript
+#### JavaScript
+
+Initalize to apply CSS filter to All targets has `data-filter` attribute.
 
 ```js
 import Ccgram from "cc-gram";
 
-// Initalize to apply CSS filter to All targets that has data-filter attribute
 const ccgram = new Ccgram();
 ```
 
+---
+
+Manual apply CSS filter
+
+`applyFilter()`
+
+```js
+ccgram.applyFilter();
+```
+
+All available filter name list
+
+`filterNameList`
+
+```js
+const { filterNameList } = ccgram;
+```
+
+Add filter to filter list
+
+`applyFilter(filterName, filterSetting)`
+
+```js
+ccgram.applyFilter("my-filter", { saturate: 0.8 });
+```
+
+---
+
 ### Access Filter image
+
+Get the target.
 
 ```js
 const target = document.querySelector('img[data-filter="1977"]');
-
-// Get the data url of target
-const dataUrl = await ccgram.getDataUrl(target);
-
-// Get the blob of target
-const blob = await ccgram.getBlob(target);
 ```
 
-### Else
+#### Data URL
+
+`getDataUrl(elment[, option])`
 
 ```js
-// get all available filter name list
-const { filterNameList } = ccgram;
+const dataUrl = await ccgram.getDataUrl(target);
+```
 
-// Manual apply CSS filter
-ccgram.applyFilter();
+#### Blob
+
+`getBlob(elment[, option])`
+
+```js
+const blob = await ccgram.getBlob(target, {
+  type: "image/jpeg",
+  quality: 0.8
+});
 ```
 
 ## 🔧 Develop
 
+### Install dependencies
+
 ```sh
-# Install dependencies
 yarn
+```
 
-# Fix style
+### Fix style
+
+```sh
 yarn lint
+```
 
-# Run test
+### Run test
+
+```sh
 yarn test
+```
 
-# Build for production
+### Build for production
+
+```sh
 yarn build
 ```
