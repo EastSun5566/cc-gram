@@ -6,9 +6,8 @@
  * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
  */
 
-import { FilterName, FilterSetting } from './utils/types';
+import { FilterName, FilterSetting, Options } from './utils/types';
 import filters from './utils/filters';
-
 
 /**
  * @class Ccgram
@@ -44,7 +43,6 @@ export default class Ccgram {
 
   /**
    * The filter name list
-   * @readonly
    */
   public get filterNameList(): FilterName[] {
     return [...this._filters.keys()];
@@ -55,7 +53,8 @@ export default class Ccgram {
    * @param {object}
    */
   public set addFilter(
-    { filterName, filterSetting }: { filterName: FilterName; filterSetting: FilterSetting },
+    { filterName, filterSetting }:
+    { filterName: FilterName; filterSetting: FilterSetting },
   ) {
     this._filters.set(filterName, filterSetting);
   }
@@ -143,11 +142,18 @@ export default class Ccgram {
    * @param {HTMLImageElement} elment - image elment
    * @returns {Promise<string>} data url
    */
-  public async getDataUrl(elment: HTMLImageElement): Promise<string> {
-    this._target = elment;
-    const canvas = await this.createImageCanvas();
+  public async getDataUrl(
+    elment: HTMLImageElement,
+    { type, quality }: Options,
+  ): Promise<string> {
+    try {
+      this._target = elment;
 
-    return canvas.toDataURL();
+      const canvas = await this.createImageCanvas();
+      return canvas.toDataURL(type, quality);
+    } catch (error) {
+      throw error;
+    }
   }
 
   /**
@@ -155,12 +161,23 @@ export default class Ccgram {
    * @param {HTMLImageElement} elment - image elment
    * @returns {(Promise<Blob | null>)} blob
    */
-  public async getBlob(elment: HTMLImageElement): Promise<Blob | null> {
-    this._target = elment;
-    const canvas = await this.createImageCanvas();
+  public async getBlob(
+    elment: HTMLImageElement,
+    { type, quality }: Options,
+  ): Promise<Blob | null> {
+    try {
+      this._target = elment;
+      const canvas = await this.createImageCanvas();
 
-    return new Promise((resolve): void => {
-      canvas.toBlob((blob): void => resolve(blob));
-    });
+      return new Promise((resolve): void => {
+        canvas.toBlob(
+          (blob): void => resolve(blob),
+          type,
+          quality,
+        );
+      });
+    } catch (error) {
+      throw error;
+    }
   }
 }
