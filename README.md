@@ -22,7 +22,7 @@ yarn add cc-gram
 
 #### HTML
 
-An image tag with `data-filter` attribute is filter name.
+##### An image tag with `data-filter` attribute is filter name
 
 ```html
 <img src="./my-picture.png" data-filter="1977" />
@@ -30,7 +30,7 @@ An image tag with `data-filter` attribute is filter name.
 
 #### JavaScript
 
-Initalize to apply CSS filter to All targets has `data-filter` attribute.
+##### Initalize to apply CSS filter to All targets has `data-filter` attribute
 
 ```js
 import Ccgram from "cc-gram";
@@ -40,7 +40,7 @@ const ccgram = new Ccgram();
 
 ---
 
-Manual apply CSS filter
+##### Manual apply CSS filter
 
 `applyFilter()`
 
@@ -48,27 +48,47 @@ Manual apply CSS filter
 ccgram.applyFilter();
 ```
 
-All available filter name list
+##### All available filter name list
 
-`filterNameList`
-
-```js
-const { filterNameList } = ccgram;
-```
-
-Add filter to filter list
-
-`applyFilter(filterName, filterSetting)`
+`filterNames`
 
 ```js
-ccgram.applyFilter("my-filter", { saturate: 0.8 });
+const { filterNames } = ccgram;
 ```
+
+##### Add filter to filter list
+
+`applyFilter(filter = {})`
+
+###### filter
+
+- name: `string` - The filter name, default is `''`
+- setting: `object` - The filter setting, default is `{}`
+
+```js
+ccgram.applyFilter({
+  name: "my-filter",
+  setting: {
+    saturate: 0.8,
+    contrast: 1.2
+  }
+});
+```
+
+Available setting key(all value is number):
+
+- blur
+- brightness
+- contrast
+- grayscale
+- hue-rotate
+- invert
+- saturate
+- sepia
 
 ---
 
 ### Access Filter image
-
-Get the target.
 
 ```js
 const target = document.querySelector('img[data-filter="1977"]');
@@ -76,7 +96,7 @@ const target = document.querySelector('img[data-filter="1977"]');
 
 #### Data URL
 
-`getDataUrl(elment[, option])`
+`getDataUrl(elment[, options = {}])`
 
 ```js
 const dataUrl = await ccgram.getDataUrl(target);
@@ -84,7 +104,7 @@ const dataUrl = await ccgram.getDataUrl(target);
 
 #### Blob
 
-`getBlob(elment[, option])`
+`getBlob(elment[, options = {}])`
 
 ```js
 const blob = await ccgram.getBlob(target, {
@@ -92,6 +112,11 @@ const blob = await ccgram.getBlob(target, {
   quality: 0.8
 });
 ```
+
+##### Options
+
+- type: `string` - MIME types, default is `image/png`,
+- quality: `number`- [0 - 1], default is `0.92`
 
 ## 🔧 Develop
 

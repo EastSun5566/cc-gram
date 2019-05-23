@@ -44,7 +44,7 @@ export default class Ccgram {
   /**
    * The filter name list
    */
-  public get filterNameList(): FilterName[] {
+  public get filterNames(): FilterName[] {
     return [...this._filters.keys()];
   }
 
@@ -52,26 +52,24 @@ export default class Ccgram {
    * Add CSS filter
    * @param {object}
    */
-  public set addFilter(
-    { filterName, filterSetting }:
-    { filterName: FilterName; filterSetting: FilterSetting },
-  ) {
-    this._filters.set(filterName, filterSetting);
+  public set addFilter(filter: { name: FilterName; setting: FilterSetting }) {
+    const { name = '', setting = {} } = filter || {};
+    this._filters.set(name, setting);
   }
 
   /**
    * Get the CSS inline style of filter
-   * @param {string} filterName - The filter name
+   * @param {string} name - The filter name
    * @returns {string} filter CSS inline style
    */
-  public getFilterStyle(filterName: FilterName = ''): string {
-    const filterSetting = this._filters.get(filterName);
+  public getFilterStyle(name: FilterName = ''): string {
+    const setting = this._filters.get(name);
 
-    if (!filterSetting) return 'none';
+    if (!setting) return 'none';
 
     return Object
-      .keys(filterSetting)
-      .map((key): string => `${key}(${filterSetting[key]}${
+      .keys(setting)
+      .map((key): string => `${key}(${setting[key]}${
         key === 'hue-rotate'
           ? 'deg'
           : key === 'blur'
