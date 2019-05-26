@@ -3,7 +3,7 @@ import Ccgram from '../src';
 import filters from '../src/utils/filters';
 
 describe('Test instance of ccgram class', (): void => {
-  const imageSrc = 'https://i.ytimg.com/vi/SfLV8hD7zX4/maxresdefault.jpg';
+  const imageSrc = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
   const filterName = '1977';
   document.body.innerHTML = `
     <img
@@ -15,9 +15,14 @@ describe('Test instance of ccgram class', (): void => {
 
   test('Test constructor', (): void => {});
 
-  test('Test getters', (): void => {
-    expect(ccgram.filterNameList).toEqual(Array.from(filters.keys()));
+  test('Test get filter names list', (): void => {
+    expect(ccgram.filterNames).toEqual([...filters.keys()]);
   });
+
+  // test('Test Add filter', (): void => {
+  //   expect(ccgram.setFilter('my-filter', { saturate: 0.8 }))
+  //     .toEqual([...filters.keys()]);
+  // });
 
   const target: HTMLImageElement | null = document.querySelector(`img[data-filter="${filterName}"]`);
   if (!target) return;
