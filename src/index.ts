@@ -15,11 +15,13 @@ import filters from './utils/filters';
 export default class Ccgram {
   /**
    * The default filter list
+   * @private
    */
   private _filters = filters;
 
   /**
    * The image target for methods
+   * @private
    */
   private _target: HTMLImageElement | null = null;
 
@@ -43,35 +45,43 @@ export default class Ccgram {
 
   /**
    * The filter name list
+   * @readonly
    */
-  public get filterNameList(): FilterName[] {
+  public get filterNames(): FilterName[] {
     return [...this._filters.keys()];
   }
 
   /**
-   * Add CSS filter
-   * @param {object}
+   * Add/Set filter
+   * @param {string} name - the Filter name
+   * @param {object} setting - the Filter setting
    */
-  public set addFilter(
-    { filterName, filterSetting }:
-    { filterName: FilterName; filterSetting: FilterSetting },
-  ) {
-    this._filters.set(filterName, filterSetting);
+  public setFilter(name: FilterName, setting: FilterSetting): void {
+    this._filters.set(name, setting);
+  }
+
+  /**
+   * Remove filter
+   * @param {string} name - the Filter name
+   * @returns {boolean} Whether the removal was successful
+   */
+  public removeFilter(name: FilterName): boolean {
+    return this._filters.delete(name);
   }
 
   /**
    * Get the CSS inline style of filter
-   * @param {string} filterName - The filter name
+   * @param {string} name - The filter name
    * @returns {string} filter CSS inline style
    */
-  public getFilterStyle(filterName: FilterName = ''): string {
-    const filterSetting = this._filters.get(filterName);
+  public getFilterStyle(name: FilterName = ''): string {
+    const setting = this._filters.get(name);
 
-    if (!filterSetting) return 'none';
+    if (!setting) return 'none';
 
     return Object
-      .keys(filterSetting)
-      .map((key): string => `${key}(${filterSetting[key]}${
+      .keys(setting)
+      .map((key): string => `${key}(${setting[key]}${
         key === 'hue-rotate'
           ? 'deg'
           : key === 'blur'
@@ -146,14 +156,10 @@ export default class Ccgram {
     elment: HTMLImageElement,
     { type, quality }: Options,
   ): Promise<string> {
-    try {
-      this._target = elment;
+    this._target = elment;
+    const canvas = await this.createImageCanvas();
 
-      const canvas = await this.createImageCanvas();
-      return canvas.toDataURL(type, quality);
-    } catch (error) {
-      throw error;
-    }
+    return canvas.toDataURL(type, quality);
   }
 
   /**
@@ -165,19 +171,15 @@ export default class Ccgram {
     elment: HTMLImageElement,
     { type, quality }: Options,
   ): Promise<Blob | null> {
-    try {
-      this._target = elment;
-      const canvas = await this.createImageCanvas();
+    this._target = elment;
+    const canvas = await this.createImageCanvas();
 
-      return new Promise((resolve): void => {
-        canvas.toBlob(
-          (blob): void => resolve(blob),
-          type,
-          quality,
-        );
-      });
-    } catch (error) {
-      throw error;
-    }
+    return new Promise((resolve): void => {
+      canvas.toBlob(
+        (blob): void => resolve(blob),
+        type,
+        quality,
+      );
+    });
   }
 }
