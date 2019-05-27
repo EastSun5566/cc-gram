@@ -56,26 +56,21 @@ ccgram.applyFilter();
 const { filterNames } = ccgram;
 ```
 
-##### Add filter to filter list
+##### Add / Set filter to filter list
 
-`applyFilter(filter = {})`
+`setFilter(name, setting)`
 
-###### filter
-
-- name: `string` - The filter name, default is `''`
-- setting: `object` - The filter setting, default is `{}`
+- name: `string` - The filter name
+- setting: `object` - The filter setting
 
 ```js
-ccgram.applyFilter({
-  name: "my-filter",
-  setting: {
-    saturate: 0.8,
-    contrast: 1.2
-  }
+ccgram.applyFilter("my-filter", {
+  saturate: 0.8,
+  contrast: 1.2
 });
 ```
 
-Available setting key(all value is number):
+Available setting key (all value is number):
 
 - blur
 - brightness
@@ -85,6 +80,16 @@ Available setting key(all value is number):
 - invert
 - saturate
 - sepia
+
+##### Remove filter from filter list
+
+`removeFilter(name)`
+
+- name: `string` - The filter name
+
+```js
+ccgram.removeFilter("my-filter");
+```
 
 ---
 
