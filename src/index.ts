@@ -154,7 +154,7 @@ export default class Ccgram {
    */
   public async getDataUrl(
     elment: HTMLImageElement,
-    { type, quality }: Options,
+    { type, quality }: Options = {},
   ): Promise<string> {
     this._target = elment;
     const canvas = await this.createImageCanvas();
@@ -169,7 +169,7 @@ export default class Ccgram {
    */
   public async getBlob(
     elment: HTMLImageElement,
-    { type, quality }: Options,
+    { type, quality }: Options = {},
   ): Promise<Blob | null> {
     this._target = elment;
     const canvas = await this.createImageCanvas();

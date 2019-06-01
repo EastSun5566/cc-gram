@@ -13,16 +13,21 @@ describe('Test instance of ccgram class', (): void => {
 
   const ccgram = new Ccgram();
 
-  test('Test constructor', (): void => {});
-
   test('Test get filter names list', (): void => {
     expect(ccgram.filterNames).toEqual([...filters.keys()]);
   });
 
-  // test('Test Add filter', (): void => {
-  //   expect(ccgram.setFilter('my-filter', { saturate: 0.8 }))
-  //     .toEqual([...filters.keys()]);
-  // });
+  test('Test Add filter', (): void => {
+    ccgram.setFilter('my-filter', { saturate: 0.8 });
+
+    expect(ccgram.filterNames).toContain('my-filter');
+  });
+
+  test('Test remove filter', (): void => {
+    ccgram.removeFilter('my-filter');
+
+    expect(ccgram.filterNames.includes('my-filter')).toBe(false);
+  });
 
   const target: HTMLImageElement | null = document.querySelector(`img[data-filter="${filterName}"]`);
   if (!target) return;
@@ -30,8 +35,4 @@ describe('Test instance of ccgram class', (): void => {
   test('Test applyFilter method', (): void => {
     expect(ccgram.getFilterStyle(filterName)).toBe(target.style.filter);
   });
-
-  // test('Test getDataUrl method', async (): Promise<void> => {
-  //   const dataUrl = await ccgram.getDataUrl(target);
-  // });
 });

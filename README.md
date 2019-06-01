@@ -64,7 +64,7 @@ const { filterNames } = ccgram;
 - setting: `object` - The filter setting
 
 ```js
-ccgram.applyFilter("my-filter", {
+ccgram.setFilter("my-filter", {
   saturate: 0.8,
   contrast: 1.2
 });
