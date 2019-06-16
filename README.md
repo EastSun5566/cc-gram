@@ -1,6 +1,6 @@
 # CCgram
 
-[![Build Status](https://travis-ci.org/EastSun5566/cc-gram.svg?branch=master)](https://travis-ci.org/EastSun5566/cc-gram)
+[![Build Status](https://travis-ci.org/EastSun5566/cc-gram.svg?branch=master)](https://travis-ci.org/EastSun5566/cc-gram) [![npm](https://img.shields.io/npm/v/cc-gram.svg)](https://www.npmjs.com/package/cc-gram)
 
 > 🖼 A CSS & Canvas Instagram filters based on CSSgram
 
