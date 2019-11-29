@@ -14,7 +14,7 @@
     "build:js:dev": "webpack -d",
     "build": "yarn build:types && yarn build:js",
     "test": "jest",
-    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts ."
+    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/"
   },
   "keywords": [
     "image",
@@ -29,6 +29,11 @@
   "repository": {
     "type": "git",
     "url": "https://github.com/EastSun5566/cc-gram"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -46,6 +51,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
+    "husky": "^3.1.0",
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.4.4",

@@ -10,14 +10,14 @@ import { FilterName, FilterSetting, Options } from './utils/types';
 import filters from './utils/filters';
 
 /**
- * @class Ccgram
+ * @class CCGram
  */
-export default class Ccgram {
+export default class CCGram {
   /**
    * The default filter list
    * @private
    */
-  private _filters = filters;
+  private readonly _filters = filters;
 
   /**
    * The image target for methods
@@ -26,7 +26,7 @@ export default class Ccgram {
   private _target: HTMLImageElement | null = null;
 
   /**
-   * Initalize CSS filter to all targets
+   * Initialize CSS filter to all targets
    * @constructor
    */
   public constructor() {
@@ -148,30 +148,30 @@ export default class Ccgram {
   }
 
   /**
-   * Get the data url of image elment
-   * @param {HTMLImageElement} elment - image elment
+   * Get the data url of image element
+   * @param {HTMLImageElement} element - image element
    * @returns {Promise<string>} data url
    */
   public async getDataUrl(
-    elment: HTMLImageElement,
+    element: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<string> {
-    this._target = elment;
+    this._target = element;
     const canvas = await this.createImageCanvas();
 
     return canvas.toDataURL(type, quality);
   }
 
   /**
-   * Get the blob of image elment
-   * @param {HTMLImageElement} elment - image elment
+   * Get the blob of image element
+   * @param {HTMLImageElement} element - image element
    * @returns {(Promise<Blob | null>)} blob
    */
   public async getBlob(
-    elment: HTMLImageElement,
+    element: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<Blob | null> {
-    this._target = elment;
+    this._target = element;
     const canvas = await this.createImageCanvas();
 
     return new Promise((resolve): void => {

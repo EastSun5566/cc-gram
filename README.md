@@ -30,12 +30,12 @@ yarn add cc-gram
 
 #### JavaScript
 
-##### Initalize to apply CSS filter to All targets has `data-filter` attribute
+##### Initialize to apply CSS filter to All targets has `data-filter` attribute
 
 ```js
-import Ccgram from "cc-gram";
+import CCGram from "cc-gram";
 
-const ccgram = new Ccgram();
+const cg = new CCGram();
 ```
 
 ---
@@ -45,7 +45,7 @@ const ccgram = new Ccgram();
 `applyFilter()`
 
 ```js
-ccgram.applyFilter();
+cg.applyFilter();
 ```
 
 ##### All available filter name list
@@ -53,7 +53,7 @@ ccgram.applyFilter();
 `filterNames`
 
 ```js
-const { filterNames } = ccgram;
+const { filterNames } = cg;
 ```
 
 ##### Add / Set filter to filter list
@@ -64,7 +64,7 @@ const { filterNames } = ccgram;
 - setting: `object` - The filter setting
 
 ```js
-ccgram.setFilter("my-filter", {
+cg.setFilter("my-filter", {
   saturate: 0.8,
   contrast: 1.2
 });
@@ -88,7 +88,7 @@ Available setting key (all value is number):
 - name: `string` - The filter name
 
 ```js
-ccgram.removeFilter("my-filter");
+cg.removeFilter("my-filter");
 ```
 
 ---
@@ -101,18 +101,18 @@ const target = document.querySelector('img[data-filter="1977"]');
 
 #### Data URL
 
-`getDataUrl(elment[, options = {}])`
+`getDataUrl(element[, options = {}])`
 
 ```js
-const dataUrl = await ccgram.getDataUrl(target);
+const dataUrl = await ccGram.getDataUrl(target);
 ```
 
 #### Blob
 
-`getBlob(elment[, options = {}])`
+`getBlob(element[, options = {}])`
 
 ```js
-const blob = await ccgram.getBlob(target, {
+const blob = await cg.getBlob(target, {
   type: "image/jpeg",
   quality: 0.8
 });
