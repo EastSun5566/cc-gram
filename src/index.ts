@@ -10,12 +10,14 @@ import { FilterName, FilterSetting, Options } from './utils/types';
 import filters from './utils/filters';
 
 /**
+ * 🖼 A CSS & Canvas Instagram filters based on CSSgram
  * @class CCGram
  */
 export default class CCGram {
   /**
    * The default filter list
    * @private
+   * @readonly
    */
   private readonly _filters = filters;
 
@@ -54,7 +56,7 @@ export default class CCGram {
   /**
    * Add/Set filter
    * @param {string} name - the Filter name
-   * @param {object} setting - the Filter setting
+   * @param {FilterSetting} setting - the Filter setting
    */
   public setFilter(name: FilterName, setting: FilterSetting): void {
     this._filters.set(name, setting);
