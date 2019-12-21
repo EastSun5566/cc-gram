@@ -22,5 +22,6 @@ module.exports = {
       'no-underscore-dangle': ['error', { allowAfterThis: true }],
       'no-param-reassign': ['error', { props: false }],
       'no-nested-ternary': 'off',
+      'import/extensions': 'off',
     },
 };
