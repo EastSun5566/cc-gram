@@ -14,7 +14,9 @@
     "build:js:dev": "webpack -d",
     "build": "yarn build:types && yarn build:js",
     "test": "jest",
-    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/"
+    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
+    "release": "sh bin/release.sh",
+    "deploy": "sh bin/deploy.sh"
   },
   "keywords": [
     "image",
