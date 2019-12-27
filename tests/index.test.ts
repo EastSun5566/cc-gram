@@ -1,38 +1,40 @@
 /* eslint-disable no-undef */
-import CCGram from '../src';
-import filters from '../src/utils/filters';
+import { CCGram } from '../src';
 
-describe('Test instance of CCGram class', (): void => {
-  const imageSrc = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
-  const filterName = '1977';
+import { DEFAULT_FILTERS } from '../src/filters';
+
+describe('CCGram class', (): void => {
+  const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
+  const FILTER_NAME = '1977';
+
   document.body.innerHTML = `
     <img
-      src="${imageSrc}"
-      data-filter="${filterName}">
+      src="${IMAGE_SRC}"
+      data-filter="${FILTER_NAME}">
   `;
 
   const cg = new CCGram();
 
-  test('Test get filter names list', (): void => {
-    expect(cg.filterNames).toEqual([...filters.keys()]);
+  test('Get filter names list', (): void => {
+    expect(cg.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
   });
 
-  test('Test Add filter', (): void => {
+  test('Add filter', (): void => {
     cg.setFilter('my-filter', { saturate: 0.8 });
 
     expect(cg.filterNames).toContain('my-filter');
   });
 
-  test('Test remove filter', (): void => {
+  test('remove filter', (): void => {
     cg.removeFilter('my-filter');
 
     expect(cg.filterNames.includes('my-filter')).toBe(false);
   });
 
-  const target: HTMLImageElement | null = document.querySelector(`img[data-filter="${filterName}"]`);
-  if (!target) return;
+  // const target: HTMLImageElement | null = document.querySelector(`img[data-filter="${filterName}"]`);
+  // if (!target) return;
 
-  test('Test applyFilter method', (): void => {
-    expect(cg.getFilterStyle(filterName)).toBe(target.style.filter);
-  });
+  // test('Test applyFilter method', (): void => {
+  //   expect(cg.getFilterStyle(FILTER_NAME)).toBe(target.style.filter);
+  // });
 });
