@@ -1,9 +1,10 @@
-import { FilterSetting } from './types';
+import { FilterSetting } from './filters';
 
 /**
- * parseSettingToStyle
+ * Parse setting to style
  *
- * @param {FilterSetting} setting
+ * @param {FilterSetting} setting - The filter setting
+ * @returns {string} The filter style
  */
 export const parseSettingToStyle = (setting: FilterSetting | undefined): string => {
   if (!setting) return 'none';
@@ -21,10 +22,11 @@ export const parseSettingToStyle = (setting: FilterSetting | undefined): string 
 };
 
 /**
- * createFilterImageCanvas
+ * Create filter image canvas
  *
- * @param {HTMLImageElement['src']} src
- * @param {string} filterStyle
+ * @param {HTMLImageElement['src']} src - The src of image
+ * @param {string} filterStyle - The filter style
+ * @returns {Promise<HTMLCanvasElement>}
  */
 export const createFilterImageCanvas = (
   src: HTMLImageElement['src'],

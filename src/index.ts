@@ -6,16 +6,15 @@
  * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
  */
 
-import { DEFAULT_FILTERS } from './filters';
+import { DEFAULT_FILTERS, FilterName, FilterSetting } from './filters';
 import {
   parseSettingToStyle,
   createFilterImageCanvas,
 } from './utils';
 
-import { FilterName, FilterSetting, Options } from './types';
-
 /**
  * 🖼 A CSS & Canvas Instagram filters based on CSSgram
+ *
  * @class CCGram
  */
 export class CCGram {
@@ -166,3 +165,13 @@ export class CCGram {
 }
 
 export default CCGram;
+
+/**
+ * The Options for canvas
+ *
+ * @interface Options
+ */
+interface Options {
+  type?: string;
+  quality?: number;
+}
