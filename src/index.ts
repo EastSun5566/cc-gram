@@ -17,7 +17,7 @@ import {
  *
  * @class CCGram
  */
-export class CCGram {
+export class CCGram implements ICCGram {
   /**
    * The default filter list
    *
@@ -87,7 +87,7 @@ export class CCGram {
    * @returns {string} filter CSS inline style
    * @memberof CCGram
    */
-  private getFilterStyle(name: FilterName = ''): string {
+  private _getFilterStyle(name: FilterName = ''): string {
     const setting = this._filters.get(name);
 
     return parseSettingToStyle(setting);
@@ -96,14 +96,15 @@ export class CCGram {
   /**
    * Apply CSS filter to all targets
    *
+   * @param {string} [dataAttribute='filter'] - custom data attribute
    * @memberof CCGram
    */
-  public applyFilter(): void {
-    const targets: NodeListOf<HTMLImageElement> = document.querySelectorAll('img[data-filter]');
+  public applyFilter(dataAttribute: string = 'filter'): void {
+    const targets: NodeListOf<HTMLImageElement> = document.querySelectorAll(`img[data-${dataAttribute}]`);
 
     targets.forEach((target): void => {
-      const { dataset: { filter } } = target;
-      target.style.filter = this.getFilterStyle(filter);
+      const { dataset } = target;
+      target.style.filter = this._getFilterStyle(dataset[dataAttribute]);
     });
   }
 
@@ -115,7 +116,7 @@ export class CCGram {
    * @returns {Promise<HTMLCanvasElement>}
    * @memberof CCGram
    */
-  private getImageCanvas(image: HTMLImageElement): Promise<HTMLCanvasElement> {
+  private _getImageCanvas(image: HTMLImageElement): Promise<HTMLCanvasElement> {
     if (!image || image.tagName !== 'IMG') throw new Error('The first argument is required and must be an <img> element.');
     if (!image.src) throw new Error('The <img> element src attribute is empty.');
 
@@ -124,14 +125,14 @@ export class CCGram {
       dataset: { filter },
     } = image;
 
-    return createFilterImageCanvas(src, this.getFilterStyle(filter));
+    return createFilterImageCanvas(src, this._getFilterStyle(filter));
   }
 
   /**
-   * Get the data url of image element
+   * Get the data URL of image element
    *
    * @param {HTMLImageElement} element - image element
-   * @param {Options} [options={}]
+   * @param {Options} [options={}] - options
    * @returns {Promise<string>} data url
    * @memberof CCGram
    */
@@ -139,7 +140,7 @@ export class CCGram {
     element: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<string> {
-    const canvas = await this.getImageCanvas(element);
+    const canvas = await this._getImageCanvas(element);
 
     return canvas.toDataURL(type, quality);
   }
@@ -148,7 +149,7 @@ export class CCGram {
    * Get the blob of image element
    *
    * @param {HTMLImageElement} element - image element
-   * @param {Options} [{ type, quality }={}]
+   * @param {Options} [options={}] - options
    * @returns {(Promise<Blob | null>)} blob
    * @memberof CCGram
    */
@@ -156,7 +157,7 @@ export class CCGram {
     element: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<Blob | null> {
-    const canvas = await this.getImageCanvas(element);
+    const canvas = await this._getImageCanvas(element);
 
     return new Promise((resolve): void => {
       canvas.toBlob((blob): void => resolve(blob), type, quality);
@@ -167,11 +168,41 @@ export class CCGram {
 export default CCGram;
 
 /**
+ * CCGram interface
+ *
+ * @interface ICCGram
+ */
+// eslint-disable-next-line @typescript-eslint/interface-name-prefix
+interface ICCGram {
+  filterNames: FilterName[];
+
+  setFilter(name: FilterName, setting: FilterSetting): void;
+  removeFilter(name: FilterName): boolean;
+  applyFilter(dataAttribute: string): void;
+
+  getDataUrl(element: HTMLImageElement, options: Options): Promise<string>;
+  getBlob(element: HTMLImageElement, options: Options): Promise<Blob | null>;
+}
+
+/**
  * The Options for canvas
  *
  * @interface Options
  */
 interface Options {
+  /**
+   * MIME types, default is `image/png`
+   *
+   * @type {string}
+   * @memberof Options
+   */
   type?: string;
+
+  /**
+   * [0 - 1], default is `0.92`
+   *
+   * @type {number}
+   * @memberof Options
+   */
   quality?: number;
 }
