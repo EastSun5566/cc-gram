@@ -122,15 +122,15 @@ const blob = await cg.getBlob(target, {
 ## 🔧 Develop
 
 ```sh
-# Install dependencies
+# install dependencies
 yarn
 
-# Fix style
+# fix style
 yarn lint
 
-# Run test
+# run test
 yarn test
 
-# Build for production
+# build for production
 yarn build
 ```
