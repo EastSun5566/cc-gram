@@ -2,10 +2,18 @@
  * @module types
  */
 
-/** The Name Filter */
+/**
+ * The Name of Filter
+ *
+ * @type {string}
+ */
 export type FilterName = string;
 
-/** The Setting of Filter */
+/**
+ * The Setting of Filter
+ *
+ * @interface FilterSetting
+ */
 export interface FilterSetting {
   blur?: number;
   brightness?: number;
@@ -18,6 +26,11 @@ export interface FilterSetting {
   [key: string]: number | undefined;
 }
 
+/**
+ * The Options for canvas
+ *
+ * @interface Options
+ */
 export interface Options {
   type?: string;
   quality?: number;

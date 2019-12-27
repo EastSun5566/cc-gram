@@ -1,5 +1,5 @@
 /**
- * @module filters - The Filter List
+ * @module filters - The default Filter List
  *
  * Base on CSSgram by Una Kravets
  * @see CSSgram <https://github.com/una/CSSgram>
@@ -7,7 +7,8 @@
 
 import { FilterName, FilterSetting } from './types';
 
-const filters: Map<FilterName, FilterSetting> = new Map([
+/** The default Filter List */
+export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'aden',
     {
@@ -205,4 +206,4 @@ const filters: Map<FilterName, FilterSetting> = new Map([
   ],
 ]);
 
-export default filters;
+export default DEFAULT_FILTERS;
