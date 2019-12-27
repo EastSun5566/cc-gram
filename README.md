@@ -41,7 +41,11 @@ const cg = new CCGram();
 > `applyFilter()`
 
 ```js
+// apply to All targets has `data-filter` attribute
 cg.applyFilter();
+
+// or you can use custom data attribute like <img data-custom="1977" />
+cg.applyFilter("custom");
 ```
 
 ##### All available filter name list
@@ -51,6 +55,34 @@ cg.applyFilter();
 ```js
 const { filterNames } = cg;
 ```
+
+- Default filter Name list:
+
+  - `aden`
+  - `inkwell`
+  - `reyes`
+  - `gingham`
+  - `toaster`
+  - `walden`
+  - `hudson`
+  - `earlybird`
+  - `mayfair`
+  - `lofi`
+  - `1977`
+  - `brooklyn`
+  - `xpro2`
+  - `nashville`
+  - `lark`
+  - `moon`
+  - `clarendon`
+  - `willow`
+  - `rise`
+  - `slumber`
+  - `brannan`
+  - `valencia`
+  - `maven`
+  - `stinson`
+  - `amaro`
 
 ##### Add / Set filter to filter list
 
