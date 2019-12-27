@@ -8,12 +8,8 @@
 
 ```sh
 npm i cc-gram
-```
 
-or
-
-```sh
-yarn add cc-gram
+# or yarn add cc-gram
 ```
 
 ## 🚀 Usage
@@ -22,7 +18,7 @@ yarn add cc-gram
 
 #### HTML
 
-##### An image tag with `data-filter` attribute is filter name
+> An image tag with `data-filter` attribute is filter name
 
 ```html
 <img src="./my-picture.png" data-filter="1977" />
@@ -30,7 +26,7 @@ yarn add cc-gram
 
 #### JavaScript
 
-##### Initialize to apply CSS filter to All targets has `data-filter` attribute
+> Initialize to apply CSS filter to All targets has `data-filter` attribute
 
 ```js
 import CCGram from "cc-gram";
@@ -42,7 +38,7 @@ const cg = new CCGram();
 
 ##### Manual apply CSS filter
 
-`applyFilter()`
+> `applyFilter()`
 
 ```js
 cg.applyFilter();
@@ -50,7 +46,7 @@ cg.applyFilter();
 
 ##### All available filter name list
 
-`filterNames`
+> `filterNames`
 
 ```js
 const { filterNames } = cg;
@@ -58,7 +54,7 @@ const { filterNames } = cg;
 
 ##### Add / Set filter to filter list
 
-`setFilter(name, setting)`
+> `setFilter(name, setting)`
 
 - name: `string` - The filter name
 - setting: `object` - The filter setting
@@ -70,20 +66,20 @@ cg.setFilter("my-filter", {
 });
 ```
 
-Available setting key (all value is number):
+- Available setting key (all value is number):
 
-- blur
-- brightness
-- contrast
-- grayscale
-- hue-rotate
-- invert
-- saturate
-- sepia
+  - `blur`
+  - `brightness`
+  - `contrast`
+  - `grayscale`
+  - `hue-rotate`
+  - `invert`
+  - `saturate`
+  - `sepia`
 
 ##### Remove filter from filter list
 
-`removeFilter(name)`
+> `removeFilter(name)`
 
 - name: `string` - The filter name
 
@@ -101,7 +97,7 @@ const target = document.querySelector('img[data-filter="1977"]');
 
 #### Data URL
 
-`getDataUrl(element[, options = {}])`
+> `getDataUrl(element[, options = {}])`
 
 ```js
 const dataUrl = await ccGram.getDataUrl(target);
@@ -109,7 +105,7 @@ const dataUrl = await ccGram.getDataUrl(target);
 
 #### Blob
 
-`getBlob(element[, options = {}])`
+> `getBlob(element[, options = {}])`
 
 ```js
 const blob = await cg.getBlob(target, {
@@ -118,33 +114,23 @@ const blob = await cg.getBlob(target, {
 });
 ```
 
-##### Options
+- Options
 
-- type: `string` - MIME types, default is `image/png`,
-- quality: `number`- [0 - 1], default is `0.92`
+  - type: `string` - MIME types, default is `image/png`,
+  - quality: `number`- [0 - 1], default is `0.92`
 
 ## 🔧 Develop
 
-### Install dependencies
-
 ```sh
+# Install dependencies
 yarn
-```
 
-### Fix style
-
-```sh
+# Fix style
 yarn lint
-```
 
-### Run test
-
-```sh
+# Run test
 yarn test
-```
 
-### Build for production
-
-```sh
+# Build for production
 yarn build
 ```

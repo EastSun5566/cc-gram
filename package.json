@@ -21,8 +21,10 @@
     "filter",
     "css",
     "canvas",
-    "Instagram",
-    "CSSgram"
+    "css-filter",
+    "canvas-instagram-filter",
+    "instagram",
+    "cssgram"
   ],
   "author": "汪東陽 EastSun5566",
   "license": "MIT",
