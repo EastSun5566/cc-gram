@@ -8,12 +8,8 @@
 
 ```sh
 npm i cc-gram
-```
 
-or
-
-```sh
-yarn add cc-gram
+# or yarn add cc-gram
 ```
 
 ## 🚀 Usage
@@ -22,7 +18,7 @@ yarn add cc-gram
 
 #### HTML
 
-##### An image tag with `data-filter` attribute is filter name
+> An image tag with `data-filter` attribute is filter name
 
 ```html
 <img src="./my-picture.png" data-filter="1977" />
@@ -30,65 +26,97 @@ yarn add cc-gram
 
 #### JavaScript
 
-##### Initalize to apply CSS filter to All targets has `data-filter` attribute
+> Initialize to apply CSS filter to All targets has `data-filter` attribute
 
 ```js
-import Ccgram from "cc-gram";
+import CCGram from "cc-gram";
 
-const ccgram = new Ccgram();
+const cg = new CCGram();
 ```
 
 ---
 
 ##### Manual apply CSS filter
 
-`applyFilter()`
+> `applyFilter()`
 
 ```js
-ccgram.applyFilter();
+// apply to All targets has `data-filter` attribute
+cg.applyFilter();
+
+// or you can use custom data attribute like <img data-custom="1977" />
+cg.applyFilter("custom");
 ```
 
 ##### All available filter name list
 
-`filterNames`
+> `filterNames`
 
 ```js
-const { filterNames } = ccgram;
+const { filterNames } = cg;
 ```
+
+- Default filter Name list:
+
+  - `aden`
+  - `inkwell`
+  - `reyes`
+  - `gingham`
+  - `toaster`
+  - `walden`
+  - `hudson`
+  - `earlybird`
+  - `mayfair`
+  - `lofi`
+  - `1977`
+  - `brooklyn`
+  - `xpro2`
+  - `nashville`
+  - `lark`
+  - `moon`
+  - `clarendon`
+  - `willow`
+  - `rise`
+  - `slumber`
+  - `brannan`
+  - `valencia`
+  - `maven`
+  - `stinson`
+  - `amaro`
 
 ##### Add / Set filter to filter list
 
-`setFilter(name, setting)`
+> `setFilter(name, setting)`
 
 - name: `string` - The filter name
 - setting: `object` - The filter setting
 
 ```js
-ccgram.setFilter("my-filter", {
+cg.setFilter("my-filter", {
   saturate: 0.8,
   contrast: 1.2
 });
 ```
 
-Available setting key (all value is number):
+- Available setting key (all value is number):
 
-- blur
-- brightness
-- contrast
-- grayscale
-- hue-rotate
-- invert
-- saturate
-- sepia
+  - `blur`
+  - `brightness`
+  - `contrast`
+  - `grayscale`
+  - `hue-rotate`
+  - `invert`
+  - `saturate`
+  - `sepia`
 
 ##### Remove filter from filter list
 
-`removeFilter(name)`
+> `removeFilter(name)`
 
 - name: `string` - The filter name
 
 ```js
-ccgram.removeFilter("my-filter");
+cg.removeFilter("my-filter");
 ```
 
 ---
@@ -101,50 +129,40 @@ const target = document.querySelector('img[data-filter="1977"]');
 
 #### Data URL
 
-`getDataUrl(elment[, options = {}])`
+> `getDataUrl(element[, options = {}])`
 
 ```js
-const dataUrl = await ccgram.getDataUrl(target);
+const dataUrl = await ccGram.getDataUrl(target);
 ```
 
 #### Blob
 
-`getBlob(elment[, options = {}])`
+> `getBlob(element[, options = {}])`
 
 ```js
-const blob = await ccgram.getBlob(target, {
+const blob = await cg.getBlob(target, {
   type: "image/jpeg",
   quality: 0.8
 });
 ```
 
-##### Options
+- Options
 
-- type: `string` - MIME types, default is `image/png`,
-- quality: `number`- [0 - 1], default is `0.92`
+  - type: `string` - MIME types, default is `image/png`,
+  - quality: `number`- [0 - 1], default is `0.92`
 
 ## 🔧 Develop
 
-### Install dependencies
-
 ```sh
+# install dependencies
 yarn
-```
 
-### Fix style
-
-```sh
+# fix style
 yarn lint
-```
 
-### Run test
-
-```sh
+# run test
 yarn test
-```
 
-### Build for production
-
-```sh
+# build for production
 yarn build
 ```

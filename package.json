@@ -14,21 +14,30 @@
     "build:js:dev": "webpack -d",
     "build": "yarn build:types && yarn build:js",
     "test": "jest",
-    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts ."
+    "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
+    "release": "sh bin/release.sh",
+    "deploy": "sh bin/deploy.sh"
   },
   "keywords": [
     "image",
     "filter",
     "css",
     "canvas",
-    "Instagram",
-    "CSSgram"
+    "css-filter",
+    "canvas-instagram-filter",
+    "instagram",
+    "cssgram"
   ],
   "author": "汪東陽 EastSun5566",
   "license": "MIT",
   "repository": {
     "type": "git",
     "url": "https://github.com/EastSun5566/cc-gram"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "yarn lint"
+    }
   },
   "devDependencies": {
     "@babel/core": "^7.4.3",
@@ -37,7 +46,7 @@
     "@babel/plugin-transform-runtime": "^7.4.4",
     "@babel/preset-env": "^7.4.3",
     "@babel/preset-typescript": "^7.3.3",
-    "@types/jest": "^24.0.11",
+    "@types/jest": "^24.0.24",
     "@typescript-eslint/eslint-plugin": "^1.6.0",
     "@typescript-eslint/parser": "^1.6.0",
     "babel-eslint": "^10.0.1",
@@ -46,6 +55,7 @@
     "eslint": "^5.16.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-plugin-import": "^2.17.2",
+    "husky": "^3.1.0",
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",
     "typescript": "^3.4.4",
