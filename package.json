@@ -34,6 +34,7 @@
     "type": "git",
     "url": "https://github.com/EastSun5566/cc-gram"
   },
+  "homepage": "https://eastsun5566.github.io/cc-gram/",
   "husky": {
     "hooks": {
       "pre-commit": "yarn lint"
