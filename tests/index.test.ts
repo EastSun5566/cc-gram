@@ -1,4 +1,3 @@
-/* eslint-disable no-undef */
 import { CCGram } from '../src';
 
 import { DEFAULT_FILTERS } from '../src/filters';
