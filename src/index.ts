@@ -99,7 +99,7 @@ export class CCGram implements ICCGram {
    * @param {string} [dataAttribute='filter'] - custom data attribute
    * @memberof CCGram
    */
-  public applyFilter(dataAttribute: string = 'filter'): void {
+  public applyFilter(dataAttribute = 'filter'): void {
     const targets: NodeListOf<HTMLImageElement> = document.querySelectorAll(`img[data-${dataAttribute}]`);
 
     targets.forEach((target): void => {
