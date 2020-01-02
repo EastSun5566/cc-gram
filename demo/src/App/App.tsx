@@ -1,46 +1,87 @@
-import React from 'react';
+import React, { FC, useState, useEffect } from 'react';
+import CCGram from 'cc-gram';
+
 import './App.scss';
 
 import GithubCorner from '../components/GithubCorner/GithubCorner';
 
-const App: React.FC = () => (
-  <>
-    <div id="app">
-      {/* <div className="uploader">
+const cg = new CCGram();
+
+const App: FC = () => {
+  const [imageURL, setImageURL] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
+
+  useEffect(() => {
+    cg.applyFilter();
+  }, [imageURL, selectedFilter]);
+
+  const uploadImage = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
+    if (!target.files) return;
+
+    const image = target.files[0];
+    setImageURL(URL.createObjectURL(image));
+  };
+
+  const UploadInput: FC = () => (
+    <div className="input-container">
       <i className="fas fa-cloud-upload-alt" />
 
       <input
         type="file"
         accept="image/*"
+        onChange={uploadImage}
       />
     </div>
+  );
 
-    <div
-      v-else
-      key="preview"
-      className="preview"
-    >
+  const Preview: FC = () => (
+    <div className="preview">
 
-      <div
-        className="preview-image-container"
-      >
-        <img src="" alt="" />
+      <div className="image-container">
+        <img
+          src={imageURL}
+          data-filter={selectedFilter}
+          alt=""
+        />
       </div>
 
-      <div className="presets-container">
-        <figure>
+      <div className="filters-container">
+        {
+          cg.filterNames.map((filterName) => (
+            <figure
+              // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+              role="button"
+              key={filterName}
+              onClick={(): void => setSelectedFilter(filterName)}
+              onKeyPress={(): void => setSelectedFilter(filterName)}
+            >
 
-          <img src="" alt="" />
+              <img
+                src={imageURL}
+                data-filter={filterName}
+                alt=""
+              />
 
-          <figcaption>test</figcaption>
-        </figure>
+              <figcaption>{filterName}</figcaption>
+            </figure>
+          ))
+        }
       </div>
 
-    </div> */}
     </div>
+  );
 
-    <GithubCorner />
-  </>
-);
+  return (
+    <>
+      <div id="app">
+        {imageURL
+          ? <Preview />
+          : <UploadInput /> }
+      </div>
+
+      <GithubCorner />
+    </>
+  );
+};
 
 export default App;

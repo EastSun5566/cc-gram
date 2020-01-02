@@ -6,7 +6,7 @@
   @include flex;
 }
 
-.uploader {
+.input-container {
   width: 100%;
   max-width: 300px;
   min-height: 100px;
@@ -35,7 +35,7 @@
   width: 100%;
   text-align: center;
 
-  .preview-image-container {
+  .image-container {
     max-width: 400px;
     margin: 0 auto 16px auto;
 
@@ -68,7 +68,7 @@
     }
   }
 
-  .presets-container {
+  .filters-container {
     display: flex;
     overflow-x: scroll;
 
