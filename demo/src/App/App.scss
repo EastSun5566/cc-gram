@@ -1,35 +1,4 @@
-$color-font: #eee;
-
-@mixin flex {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-}
-
-@mixin abs {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-}
-
-@mixin size($w: 100%, $h: $w) {
-  width: $w;
-  height: $h;
-}
-
-@mixin shadow {
-  box-shadow: 0 8px 16px rgba(black, 0.3);
-}
-
-* {
-  position: relative;
-}
-
-body {
-  background: radial-gradient(circle, #86a8e7, #7f7fd5);
-  color: $color-font;
-}
+@import "../assets/styles.scss";
 
 #app {
   min-height: 100vh;

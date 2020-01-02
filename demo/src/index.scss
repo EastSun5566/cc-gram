@@ -1,0 +1,10 @@
+@import "./assets/styles.scss";
+
+* {
+  position: relative;
+}
+
+body {
+  background: radial-gradient(circle, #86a8e7, #7f7fd5);
+  color: $color-font;
+}
