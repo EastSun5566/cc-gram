@@ -17,7 +17,7 @@ import {
  *
  * @class CCGram
  */
-export class CCGram implements ICCGram {
+export class CCGram {
   /**
    * The default filter list
    *
@@ -166,23 +166,6 @@ export class CCGram implements ICCGram {
 }
 
 export default CCGram;
-
-/**
- * CCGram interface
- *
- * @interface ICCGram
- */
-// eslint-disable-next-line @typescript-eslint/interface-name-prefix
-interface ICCGram {
-  filterNames: FilterName[];
-
-  setFilter(name: FilterName, setting: FilterSetting): void;
-  removeFilter(name: FilterName): boolean;
-  applyFilter(dataAttribute: string): void;
-
-  getDataUrl(element: HTMLImageElement, options: Options): Promise<string>;
-  getBlob(element: HTMLImageElement, options: Options): Promise<Blob | null>;
-}
 
 /**
  * The Options for canvas
