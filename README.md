@@ -44,8 +44,8 @@ const cg = new CCGram();
 // apply to All targets has `data-filter` attribute
 cg.applyFilter();
 
-// or you can use custom data attribute like <img data-custom="1977" />
-cg.applyFilter("custom");
+// or you can just use selector
+cg.applyFilter("#my-image");
 ```
 
 ##### All available filter name list

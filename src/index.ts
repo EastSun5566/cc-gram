@@ -17,7 +17,7 @@ import {
  *
  * @class CCGram
  */
-export class CCGram implements ICCGram {
+export class CCGram {
   /**
    * The default filter list
    *
@@ -96,15 +96,15 @@ export class CCGram implements ICCGram {
   /**
    * Apply CSS filter to all targets
    *
-   * @param {string} [dataAttribute='filter'] - custom data attribute
+   * @param {string} [selectors='img[data-filter]'] - selectors
    * @memberof CCGram
    */
-  public applyFilter(dataAttribute: string = 'filter'): void {
-    const targets: NodeListOf<HTMLImageElement> = document.querySelectorAll(`img[data-${dataAttribute}]`);
+  public applyFilter(selectors = 'img[data-filter]'): void {
+    const targets = document.querySelectorAll<HTMLImageElement>(selectors);
 
     targets.forEach((target): void => {
-      const { dataset } = target;
-      target.style.filter = this._getFilterStyle(dataset[dataAttribute]);
+      const { dataset: { filter } } = target;
+      target.style.filter = this._getFilterStyle(filter);
     });
   }
 
@@ -166,23 +166,6 @@ export class CCGram implements ICCGram {
 }
 
 export default CCGram;
-
-/**
- * CCGram interface
- *
- * @interface ICCGram
- */
-// eslint-disable-next-line @typescript-eslint/interface-name-prefix
-interface ICCGram {
-  filterNames: FilterName[];
-
-  setFilter(name: FilterName, setting: FilterSetting): void;
-  removeFilter(name: FilterName): boolean;
-  applyFilter(dataAttribute: string): void;
-
-  getDataUrl(element: HTMLImageElement, options: Options): Promise<string>;
-  getBlob(element: HTMLImageElement, options: Options): Promise<Blob | null>;
-}
 
 /**
  * The Options for canvas
