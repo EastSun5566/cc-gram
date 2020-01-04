@@ -2554,10 +2554,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cc-gram@^0.1.4:
-  version "0.1.4"
-  resolved "https://registry.yarnpkg.com/cc-gram/-/cc-gram-0.1.4.tgz#2aa39887221d7623514b84fd974f250679965043"
-  integrity sha512-+YPOa4RLok+7MRLbkmMv/2QjeiY/5/Fd0CF1PZuJkqXRIhQvSgI6j9EbD4zc5CgCVipTdbJ5gcF3i5ALErEfmQ==
+cc-gram@^0.1.5:
+  version "0.1.5"
+  resolved "https://registry.yarnpkg.com/cc-gram/-/cc-gram-0.1.5.tgz#f0c97cab2250b58f40e902be5cf99efb5920897c"
+  integrity sha512-SUXL1fVWkeCvg5u8dYccJ6NXYSYx2d3jc3xkw3YFetwJlPCpwPTGU8gGOgMIN52XfutAt4W3iRUs6FQrwSV9Cg==
   dependencies:
     "@babel/runtime" "^7.4.4"
 
