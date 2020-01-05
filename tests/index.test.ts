@@ -14,11 +14,11 @@ describe('CCGram class', (): void => {
 
   const cg = new CCGram();
 
-  test('Get filter names list', (): void => {
+  test('get filter names list', (): void => {
     expect(cg.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
   });
 
-  test('Add filter', (): void => {
+  test('add filter', (): void => {
     cg.setFilter('my-filter', { saturate: 0.8 });
 
     expect(cg.filterNames).toContain('my-filter');
@@ -30,10 +30,22 @@ describe('CCGram class', (): void => {
     expect(cg.filterNames.includes('my-filter')).toBe(false);
   });
 
-  // const target: HTMLImageElement | null = document.querySelector(`img[data-filter="${filterName}"]`);
-  // if (!target) return;
+  const target = document.querySelector<HTMLImageElement>(`img[data-filter="${FILTER_NAME}"]`);
+  if (!target) throw new Error('No target');
 
-  // test('Test applyFilter method', (): void => {
-  //   expect(cg.getFilterStyle(FILTER_NAME)).toBe(target.style.filter);
+  test('applyFilter method', (): void => {
+    expect(cg.getFilterStyle(FILTER_NAME)).toBe(target.style.filter);
+  });
+
+  // test('getDataURL method', async (): Promise<void> => {
+  //   const dataURL = await cg.getDataURL(target, { quality: 0.8 });
+
+  //   expect(dataURL).toBeTruthy();
+  // });
+
+  // test('getDataURL method', async (): Promise<void> => {
+  //   const blob = await cg.getBlob(target, { quality: 0.8 });
+
+  //   expect(blob).toBeTruthy();
   // });
 });

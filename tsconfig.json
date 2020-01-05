@@ -12,6 +12,6 @@
     "moduleResolution": "node"
   },
   "lib": ["esnext", "dom", "dom.iterable", "scripthost"],
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "tests/*"],
   "exclude": ["node_modules", "dist"]
 }

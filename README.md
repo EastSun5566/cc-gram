@@ -129,10 +129,10 @@ const target = document.querySelector('img[data-filter="1977"]');
 
 #### Data URL
 
-> `getDataUrl(element[, options = {}])`
+> `getDataURL(element[, options = {}])`
 
 ```js
-const dataUrl = await ccGram.getDataUrl(target);
+const dataUrl = await ccGram.getDataURL(target);
 ```
 
 #### Blob

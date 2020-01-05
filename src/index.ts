@@ -32,7 +32,7 @@ export class CCGram {
    * @constructor
    * @memberof CCGram
    */
-  public constructor() {
+  constructor() {
     if (document.readyState === 'complete') {
       this.applyFilter();
       return;
@@ -53,7 +53,7 @@ export class CCGram {
    * @type {FilterName[]}
    * @memberof CCGram
    */
-  public get filterNames(): FilterName[] {
+  get filterNames(): FilterName[] {
     return [...this._filters.keys()];
   }
 
@@ -64,7 +64,7 @@ export class CCGram {
    * @param {FilterSetting} setting - the Filter setting
    * @memberof CCGram
    */
-  public setFilter(name: FilterName, setting: FilterSetting): void {
+  setFilter(name: FilterName, setting: FilterSetting): void {
     this._filters.set(name, setting);
   }
 
@@ -75,19 +75,18 @@ export class CCGram {
    * @returns {boolean} Whether the removal was successful
    * @memberof CCGram
    */
-  public removeFilter(name: FilterName): boolean {
+  removeFilter(name: FilterName): boolean {
     return this._filters.delete(name);
   }
 
   /**
    * Get the CSS inline style of filter
    *
-   * @private
    * @param {FilterName} [name=''] - The filter name
    * @returns {string} filter CSS inline style
    * @memberof CCGram
    */
-  private _getFilterStyle(name: FilterName = ''): string {
+  getFilterStyle(name: FilterName = ''): string {
     const setting = this._filters.get(name);
 
     return parseSettingToStyle(setting);
@@ -99,12 +98,12 @@ export class CCGram {
    * @param {string} [selectors='img[data-filter]'] - selectors
    * @memberof CCGram
    */
-  public applyFilter(selectors = 'img[data-filter]'): void {
+  applyFilter(selectors = 'img[data-filter]'): void {
     const targets = document.querySelectorAll<HTMLImageElement>(selectors);
 
     targets.forEach((target): void => {
       const { dataset: { filter } } = target;
-      target.style.filter = this._getFilterStyle(filter);
+      target.style.filter = this.getFilterStyle(filter);
     });
   }
 
@@ -125,7 +124,7 @@ export class CCGram {
       dataset: { filter },
     } = image;
 
-    return createFilterImageCanvas(src, this._getFilterStyle(filter));
+    return createFilterImageCanvas(src, this.getFilterStyle(filter));
   }
 
   /**
@@ -136,7 +135,7 @@ export class CCGram {
    * @returns {Promise<string>} data url
    * @memberof CCGram
    */
-  public async getDataUrl(
+  async getDataURL(
     element: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<string> {
@@ -153,7 +152,7 @@ export class CCGram {
    * @returns {(Promise<Blob | null>)} blob
    * @memberof CCGram
    */
-  public async getBlob(
+  async getBlob(
     element: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<Blob | null> {
