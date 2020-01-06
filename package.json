@@ -13,7 +13,7 @@
     "build:js": "webpack -p",
     "build:js:dev": "webpack -d",
     "build": "yarn build:types && yarn build:js",
-    "test": "jest tests/",
+    "test": "jest __tests__/",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
     "release": "sh bin/release.sh",
     "deploy": "sh bin/deploy.sh"
