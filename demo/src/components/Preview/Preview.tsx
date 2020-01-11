@@ -1,10 +1,10 @@
 import React, { useState, useEffect } from 'react';
 
+import './Preview.scss';
+
 import { cg } from '../../cg';
 
-const Preview: React.FC<{
-  imageURL: string;
-}> = ({ imageURL }) => {
+const Preview: React.FC<{ imageURL: string }> = ({ imageURL }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
 
   useEffect(() => {
@@ -29,6 +29,7 @@ const Preview: React.FC<{
             <figure
             // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
               role="button"
+              className={selectedFilter === filterName ? 'selected' : ''}
               key={filterName}
               onClick={(): void => setSelectedFilter(filterName)}
               onKeyPress={(): void => setSelectedFilter(filterName)}
