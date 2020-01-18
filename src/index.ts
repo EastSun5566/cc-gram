@@ -13,6 +13,29 @@ import {
 } from './utils';
 
 /**
+ * The Options for canvas
+ *
+ * @interface Options
+ */
+interface Options {
+  /**
+   * MIME types, default is `image/png`
+   *
+   * @type {string}
+   * @memberof Options
+   */
+  type?: string;
+
+  /**
+   * [0 - 1], default is `0.92`
+   *
+   * @type {number}
+   * @memberof Options
+   */
+  quality?: number;
+}
+
+/**
  * 🖼 A CSS & Canvas Instagram filters based on CSSgram
  *
  * @class CCGram
@@ -165,26 +188,3 @@ export class CCGram {
 }
 
 export default CCGram;
-
-/**
- * The Options for canvas
- *
- * @interface Options
- */
-interface Options {
-  /**
-   * MIME types, default is `image/png`
-   *
-   * @type {string}
-   * @memberof Options
-   */
-  type?: string;
-
-  /**
-   * [0 - 1], default is `0.92`
-   *
-   * @type {number}
-   * @memberof Options
-   */
-  quality?: number;
-}

@@ -5,6 +5,30 @@
  * @see CSSgram <https://github.com/una/CSSgram>
  */
 
+/**
+ * The Name of Filter
+ *
+ * @type {string}
+ */
+export type FilterName = string;
+
+/**
+ * The Setting of Filter
+ *
+ * @interface FilterSetting
+ */
+export interface FilterSetting {
+  blur?: number;
+  brightness?: number;
+  contrast?: number;
+  grayscale?: number;
+  'hue-rotate'?: number;
+  invert?: number;
+  saturate?: number;
+  sepia?: number;
+  [key: string]: number | undefined;
+}
+
 /** The default Filter List */
 export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
@@ -205,27 +229,3 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
 ]);
 
 export default DEFAULT_FILTERS;
-
-/**
- * The Name of Filter
- *
- * @type {string}
- */
-export type FilterName = string;
-
-/**
- * The Setting of Filter
- *
- * @interface FilterSetting
- */
-export interface FilterSetting {
-  blur?: number;
-  brightness?: number;
-  contrast?: number;
-  grayscale?: number;
-  'hue-rotate'?: number;
-  invert?: number;
-  saturate?: number;
-  sepia?: number;
-  [key: string]: number | undefined;
-}
