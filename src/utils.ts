@@ -42,18 +42,15 @@ export const createFilterImageCanvas = (
     canvas.height = height;
 
     const ctx = canvas.getContext('2d', { alpha: false });
-    if (!ctx) {
-      reject(new Error('The 2d context canvas is not supported.'));
-      return;
-    }
+    if (!ctx) return reject(new Error('The 2d context canvas is not supported.'));
 
     ctx.filter = filterStyle;
     ctx.drawImage(image, 0, 0);
 
-    resolve(canvas);
+    return resolve(canvas);
   };
 
-  image.onerror = (error): void => reject(error);
+  image.onerror = reject;
 
   image.crossOrigin = 'anonymous';
   image.src = src;
