@@ -36,6 +36,16 @@ interface Options {
 }
 
 /**
+ * Init Param
+ *
+ * @interface Init
+ */
+interface Init {
+  init?: boolean;
+  dataAttribute?: string;
+}
+
+/**
  * 🖼 A CSS & Canvas Instagram filters based on CSSgram
  *
  * @class CCGram
@@ -44,10 +54,18 @@ export class CCGram {
   /**
    * The default filter list
    *
-   * @private
+   * @protected
    * @memberof CCGram
    */
-  private readonly _filters = DEFAULT_FILTERS;
+  protected readonly _filters = DEFAULT_FILTERS;
+
+  /**
+   * The default data attribute
+   *
+   * @protected
+   * @memberof CCGram
+   */
+  protected _dataAttribute = 'filter';
 
   /**
    * Initialize CSS filter to all targets
@@ -55,7 +73,10 @@ export class CCGram {
    * @constructor
    * @memberof CCGram
    */
-  constructor() {
+  constructor({ init = true, dataAttribute }: Init) {
+    if (!init) return;
+    if (dataAttribute) this._dataAttribute = dataAttribute;
+
     if (document.readyState === 'complete') {
       this.applyFilter();
       return;
@@ -103,6 +124,17 @@ export class CCGram {
   }
 
   /**
+   * Get setting of filter
+   *
+   * @param {FilterName} [name=''] - The filter name
+   * @returns {(FilterSetting | void)} filter Setting
+   * @memberof CCGram
+   */
+  getFilterSetting(name: FilterName = ''): FilterSetting | void {
+    return this._filters.get(name);
+  }
+
+  /**
    * Get the CSS inline style of filter
    *
    * @param {FilterName} [name=''] - The filter name
@@ -121,13 +153,13 @@ export class CCGram {
    * @param {string} [selectors='img[data-filter]'] - selectors
    * @memberof CCGram
    */
-  applyFilter(selectors = 'img[data-filter]'): void {
-    const targets = document.querySelectorAll<HTMLImageElement>(selectors);
-
-    targets.forEach((target): void => {
-      const { dataset: { filter } } = target;
-      target.style.filter = this.getFilterStyle(filter);
-    });
+  applyFilter(selectors = `img[data-${this._dataAttribute}]`): void {
+    document
+      .querySelectorAll<HTMLImageElement>(selectors)
+      .forEach((element): void => {
+        const { dataset: { filter } } = element;
+        element.style.filter = this.getFilterStyle(filter);
+      });
   }
 
   /**
