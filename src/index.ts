@@ -35,7 +35,7 @@ export class CCGram {
   protected _dataAttribute = 'filter';
 
   /** Initialize CSS filter to all targets */
-  constructor({ init = true, dataAttribute }: Init) {
+  constructor({ init = true, dataAttribute }: Init = {}) {
     if (!init) return;
     if (dataAttribute) this._dataAttribute = dataAttribute;
 
