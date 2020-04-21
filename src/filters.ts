@@ -1,22 +1,12 @@
 /**
- * @module filters - The default Filter List
- *
  * Base on CSSgram by Una Kravets
  * @see CSSgram <https://github.com/una/CSSgram>
  */
 
-/**
- * The Name of Filter
- *
- * @type {string}
- */
+/** The Name of Filter */
 export type FilterName = string;
 
-/**
- * The Setting of Filter
- *
- * @interface FilterSetting
- */
+/** The Setting of Filter */
 export interface FilterSetting {
   blur?: number;
   brightness?: number;
