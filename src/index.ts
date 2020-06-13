@@ -121,9 +121,10 @@ export class CCGram {
     if (!image || image.tagName !== 'IMG') throw new Error('The first argument is required and must be an <img> element.');
     if (!image.src) throw new Error('The <img> element src attribute is empty.');
 
-    const { src, dataset } = image;
-
-    return createFilterImageCanvas(src, this.getFilterStyle(dataset[this._dataAttribute]));
+    return createFilterImageCanvas(
+      image,
+      this.getFilterStyle(image.dataset[this._dataAttribute]),
+    );
   }
 
   /**
