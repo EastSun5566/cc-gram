@@ -18,6 +18,8 @@ describe('CCGram class', (): void => {
 
   test('remove filter', (): void => {
     const cg = new CCGram();
+
+    cg.setFilter('my-filter', { saturate: 0.8 });
     cg.removeFilter('my-filter');
 
     expect(cg.filterNames.includes('my-filter')).toBe(false);
