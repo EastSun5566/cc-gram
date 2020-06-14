@@ -4,7 +4,7 @@ import { FilterSetting } from './filters';
  * Parse setting to style
  * @param {FilterSetting} setting - The filter setting
  */
-export const parseSettingToStyle = (setting: FilterSetting | undefined): string => {
+export const parseSettingToStyle = (setting?: FilterSetting): string => {
   if (!setting) return 'none';
 
   return Object
