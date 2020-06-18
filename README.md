@@ -94,7 +94,7 @@ const { filterNames } = cg;
 ```js
 cg.setFilter("my-filter", {
   saturate: 0.8,
-  contrast: 1.2
+  contrast: 1.2,
 });
 ```
 
@@ -142,7 +142,7 @@ const dataUrl = await ccGram.getDataURL(target);
 ```js
 const blob = await cg.getBlob(target, {
   type: "image/jpeg",
-  quality: 0.8
+  quality: 0.8,
 });
 ```
 
