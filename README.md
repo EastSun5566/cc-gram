@@ -129,7 +129,7 @@ const target = document.querySelector('img[data-filter="1977"]');
 
 #### Data URL
 
-> `getDataURL(element[, options = {}])`
+> `getDataURL(image[, options = {}])`
 
 ```js
 const dataUrl = await ccGram.getDataURL(target);
@@ -137,7 +137,7 @@ const dataUrl = await ccGram.getDataURL(target);
 
 #### Blob
 
-> `getBlob(element[, options = {}])`
+> `getBlob(image[, options = {}])`
 
 ```js
 const blob = await cg.getBlob(target, {
