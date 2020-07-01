@@ -6,7 +6,11 @@
  * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
  */
 
-import { DEFAULT_FILTERS, FilterName, FilterSetting } from './filters';
+import {
+  DEFAULT_FILTERS,
+  FilterName,
+  FilterSetting,
+} from './filters';
 import {
   parseSettingToStyle,
   createFilterImageCanvas,
@@ -28,10 +32,10 @@ interface Config {
   init?: boolean;
 }
 
-const DEFAULT_DATA_ATTRIBUTE = 'filter';
-
 /** 🖼 A CSS & Canvas Instagram filters based on CSSgram */
 export class CCGram {
+  static readonly DEFAULT_DATA_ATTRIBUTE = 'filter'
+
   /** filter list */
   protected readonly _filters = DEFAULT_FILTERS;
 
@@ -40,7 +44,7 @@ export class CCGram {
 
   /** Initialize CSS filter to all targets */
   constructor({
-    dataAttribute = DEFAULT_DATA_ATTRIBUTE,
+    dataAttribute = CCGram.DEFAULT_DATA_ATTRIBUTE,
     init = true,
   }: Config = {}) {
     this._dataAttribute = dataAttribute;
