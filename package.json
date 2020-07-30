@@ -15,7 +15,9 @@
     "build": "yarn build:types && yarn build:js",
     "test": "jest __tests__/",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
-    "release": "sh bin/release.sh",
+    "release:patch": "sh bin/release.sh patch",
+    "release:minor": "sh bin/release.sh minor",
+    "release:major": "sh bin/release.sh major",
     "deploy": "sh bin/deploy.sh"
   },
   "keywords": [
