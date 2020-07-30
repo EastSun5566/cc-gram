@@ -102,7 +102,7 @@ describe.skip('Access filter image data', () => {
     cg = null;
   });
 
-  test('getDataURL method', async (): Promise<void> => {
+  test('use getDataURL method', async (): Promise<void> => {
     const target = getTargetImage()!;
 
     const dataURL = await cg!.getDataURL(target, { quality: 0.8 });
@@ -110,7 +110,7 @@ describe.skip('Access filter image data', () => {
     expect(dataURL).toBeTruthy();
   });
 
-  test('getDataURL method', async (): Promise<void> => {
+  test('use getBlob method', async (): Promise<void> => {
     const target = getTargetImage()!;
 
     const blob = await cg!.getBlob(target, { quality: 0.8 });
