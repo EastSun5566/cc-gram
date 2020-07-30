@@ -8,6 +8,7 @@
     "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
+    "analyze": "source-map-explorer 'build/static/js/*.js'",
     "predeploy": "npm run build",
     "deploy": "gh-pages -d build"
   },
@@ -149,6 +150,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "gh-pages": "^3.1.0"
+    "gh-pages": "^3.1.0",
+    "source-map-explorer": "^2.4.2"
   }
 }
