@@ -7,13 +7,13 @@ cache: yarn
 
 before_deploy:
   - yarn build
-  - if ! [ $NPM_PUBLISH ];
-    then
-    NPM_PUBLISH=true;
-    yarn build;
-    else
-    yarn deploy;
-    fi
+  # - if ! [ $NPM_PUBLISH ];
+  #   then
+  #   NPM_PUBLISH=true;
+  #   yarn build;
+  #   else
+  #   yarn deploy;
+  #   fi
 
 deploy:
   - provider: npm
@@ -22,10 +22,9 @@ deploy:
     skip_cleanup: true
     on:
       tags: true
-
-  - provider: pages
-    github_token: $GITHUB_TOKEN
-    skip_cleanup: true
-    local_dir: demo/build
-    on:
-      tags: true
+  # - provider: pages
+  #   github_token: $GITHUB_TOKEN
+  #   skip_cleanup: true
+  #   local_dir: demo/build
+  #   on:
+  #     tags: true
