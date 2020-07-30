@@ -4,12 +4,14 @@
 
 > 🖼 A CSS & Canvas Instagram filters based on CSSgram
 
+## 🖥 Demo
+
+<https://eastsun5566.github.io/cc-gram/>
+
 ## ✨ Install
 
 ```sh
 npm i cc-gram
-
-# or yarn add cc-gram
 ```
 
 ## 🚀 Usage
@@ -32,6 +34,12 @@ npm i cc-gram
 import CCGram from "cc-gram";
 
 const cg = new CCGram();
+
+// or you can turn off init apply
+const cg = new CCGram({ init: false });
+
+// you can also specify data attribute
+const cg = new CCGram({ dataAttribute: "my-cool-filter" });
 ```
 
 ---
@@ -132,7 +140,7 @@ const target = document.querySelector('img[data-filter="1977"]');
 > `getDataURL(image[, options = {}])`
 
 ```js
-const dataUrl = await ccGram.getDataURL(target);
+const dataUrl = await cg.getDataURL(target);
 ```
 
 #### Blob
