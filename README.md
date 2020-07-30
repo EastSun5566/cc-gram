@@ -8,8 +8,6 @@
 
 ```sh
 npm i cc-gram
-
-# or yarn add cc-gram
 ```
 
 ## 🚀 Usage
@@ -35,6 +33,9 @@ const cg = new CCGram();
 
 // or you can turn off init apply
 const cg = new CCGram({ init: false });
+
+// you can also specify data attribute
+const cg = new CCGram({ dataAttribute: "my-cool-filter" });
 ```
 
 ---
@@ -135,7 +136,7 @@ const target = document.querySelector('img[data-filter="1977"]');
 > `getDataURL(image[, options = {}])`
 
 ```js
-const dataUrl = await ccGram.getDataURL(target);
+const dataUrl = await cg.getDataURL(target);
 ```
 
 #### Blob
