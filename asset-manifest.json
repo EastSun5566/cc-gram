@@ -1,0 +1,24 @@
+{
+  "files": {
+    "main.css": "/cc-gram/static/css/main.34a7607b.chunk.css",
+    "main.js": "/cc-gram/static/js/main.72c5a4cd.chunk.js",
+    "main.js.map": "/cc-gram/static/js/main.72c5a4cd.chunk.js.map",
+    "runtime-main.js": "/cc-gram/static/js/runtime-main.1e2cb8a3.js",
+    "runtime-main.js.map": "/cc-gram/static/js/runtime-main.1e2cb8a3.js.map",
+    "static/js/2.f71e6a0f.chunk.js": "/cc-gram/static/js/2.f71e6a0f.chunk.js",
+    "static/js/2.f71e6a0f.chunk.js.map": "/cc-gram/static/js/2.f71e6a0f.chunk.js.map",
+    "index.html": "/cc-gram/index.html",
+    "service-worker.js": "/cc-gram/service-worker.js",
+    "service-worker.js.map": "/cc-gram/service-worker.js.map",
+    "static/css/main.34a7607b.chunk.css.map": "/cc-gram/static/css/main.34a7607b.chunk.css.map",
+    "static/js/2.f71e6a0f.chunk.js.LICENSE.txt": "/cc-gram/static/js/2.f71e6a0f.chunk.js.LICENSE.txt",
+    "workbox-dce9cbc5.js": "/cc-gram/workbox-dce9cbc5.js",
+    "workbox-dce9cbc5.js.map": "/cc-gram/workbox-dce9cbc5.js.map"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.1e2cb8a3.js",
+    "static/js/2.f71e6a0f.chunk.js",
+    "static/css/main.34a7607b.chunk.css",
+    "static/js/main.72c5a4cd.chunk.js"
+  ]
+}
