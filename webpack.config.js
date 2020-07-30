@@ -1,10 +1,11 @@
-const path = require('path');
+/* eslint-disable @typescript-eslint/no-var-requires */
+const { resolve } = require('path');
 const ForkTsCheckerWebpackPlugin = require('fork-ts-checker-webpack-plugin');
 
 module.exports = {
   entry: './src/index',
   output: {
-    path: path.resolve(__dirname, 'dist'),
+    path: resolve(__dirname, 'dist'),
     filename: 'index.js',
     library: 'CCGram',
     libraryTarget: 'umd',

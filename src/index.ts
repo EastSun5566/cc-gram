@@ -34,6 +34,7 @@ interface Config {
 
 /** 🖼 A CSS & Canvas Instagram filters based on CSSgram */
 export class CCGram {
+  /** default option */
   static readonly DEFAULT_DATA_ATTRIBUTE = 'filter'
 
   /** filter list */

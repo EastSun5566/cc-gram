@@ -1,34 +1,44 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CCGram } from '../src';
-
 import { DEFAULT_FILTERS } from '../src/filters';
 
-describe('CCGram class', (): void => {
-  test('get filter names list', (): void => {
-    const cg = new CCGram();
+describe('Read/Write filter list', (): void => {
+  let cg: CCGram | null = null;
 
-    expect(cg.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
+  beforeEach(() => { cg = new CCGram({ init: false }); });
+  afterEach(() => { cg = null; });
+
+  test('get filter names list', (): void => {
+    expect(cg!.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
   });
 
   test('add filter', (): void => {
-    const cg = new CCGram();
-    cg.setFilter('my-filter', { saturate: 0.8 });
+    cg!.setFilter('my-filter', { saturate: 0.8 });
 
-    expect(cg.filterNames).toContain('my-filter');
+    expect(cg!.filterNames).toContain('my-filter');
   });
 
   test('remove filter', (): void => {
-    const cg = new CCGram();
+    const { filterNames } = cg!;
+    const targetFilterName = filterNames[Math.floor(Math.random() * (filterNames.length - 1))];
 
-    cg.setFilter('my-filter', { saturate: 0.8 });
-    cg.removeFilter('my-filter');
+    cg!.removeFilter(targetFilterName);
 
-    expect(cg.filterNames.includes('my-filter')).toBe(false);
+    expect(cg!.filterNames.includes(targetFilterName)).toBe(false);
   });
+});
 
-  test('applyFilter method', (): void => {
-    const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
-    const FILTER_NAME = '1977';
+const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
+const FILTER_NAME = '1977';
 
+const getTargetImage = (dateAttr = 'filter'): HTMLImageElement | null => (
+  document.querySelector<HTMLImageElement>(`img[data-${dateAttr}="${FILTER_NAME}"]`)
+);
+
+describe('Apply filter to target Image', () => {
+  afterEach(() => { document.body.innerHTML = ''; });
+
+  test('apply filter from init', (): void => {
     document.body.innerHTML = `
       <img
         src="${IMAGE_SRC}"
@@ -37,21 +47,74 @@ describe('CCGram class', (): void => {
 
     const cg = new CCGram();
 
-    const target = document.querySelector<HTMLImageElement>(`img[data-filter="${FILTER_NAME}"]`);
-    if (!target) throw new Error('No target');
+    const { style } = getTargetImage()!;
 
-    expect(cg.getFilterStyle(FILTER_NAME)).toBe(target.style.filter);
+    expect(cg.getFilterStyle(FILTER_NAME)).toBe(style.filter);
   });
 
-  // test('getDataURL method', async (): Promise<void> => {
-  //   const dataURL = await cg.getDataURL(target, { quality: 0.8 });
+  test('apply filter use applyFilter method', (): void => {
+    const cg = new CCGram({ init: false });
 
-  //   expect(dataURL).toBeTruthy();
-  // });
+    document.body.innerHTML = `
+      <img
+        src="${IMAGE_SRC}"
+        data-filter="${FILTER_NAME}">
+    `;
 
-  // test('getDataURL method', async (): Promise<void> => {
-  //   const blob = await cg.getBlob(target, { quality: 0.8 });
+    cg.applyFilter();
 
-  //   expect(blob).toBeTruthy();
-  // });
+    const { style } = getTargetImage()!;
+
+    expect(cg.getFilterStyle(FILTER_NAME)).toBe(style.filter);
+  });
+
+  test('apply filter with customized data attr', (): void => {
+    const DATA_ATTR = 'cg';
+
+    document.body.innerHTML = `
+      <img
+        src="${IMAGE_SRC}"
+        data-${DATA_ATTR}="${FILTER_NAME}">
+    `;
+
+    const cg = new CCGram({ dataAttribute: DATA_ATTR });
+
+    const { style } = getTargetImage(DATA_ATTR)!;
+
+    expect(cg.getFilterStyle(FILTER_NAME)).toBe(style.filter);
+  });
+});
+
+describe.skip('Access filter image data', () => {
+  let cg: CCGram | null = null;
+
+  beforeEach(() => {
+    document.body.innerHTML = `
+        <img
+          src="${IMAGE_SRC}"
+          data-filter="${FILTER_NAME}">
+      `;
+
+    cg = new CCGram();
+  });
+  afterEach(() => {
+    document.body.innerHTML = '';
+    cg = null;
+  });
+
+  test('getDataURL method', async (): Promise<void> => {
+    const target = getTargetImage()!;
+
+    const dataURL = await cg!.getDataURL(target, { quality: 0.8 });
+
+    expect(dataURL).toBeTruthy();
+  });
+
+  test('getDataURL method', async (): Promise<void> => {
+    const target = getTargetImage()!;
+
+    const blob = await cg!.getBlob(target, { quality: 0.8 });
+
+    expect(blob).toBeTruthy();
+  });
 });
