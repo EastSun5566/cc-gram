@@ -18,7 +18,7 @@
     "release:patch": "sh bin/release.sh patch",
     "release:minor": "sh bin/release.sh minor",
     "release:major": "sh bin/release.sh major",
-    "deploy": "sh bin/deploy.sh"
+    "deploy:demo": "cd demo; npm run deploy; cd -"
   },
   "keywords": [
     "image",
