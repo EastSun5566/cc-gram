@@ -1,3 +1,4 @@
+/* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
 import React, { useState, useEffect } from 'react';
 
 import './Preview.scss';
@@ -6,6 +7,13 @@ import { cg } from '../../cg';
 
 const Preview: React.FC<{ imageURL: string }> = ({ imageURL }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
+
+  const download = async (image: HTMLImageElement) => {
+    const a = document.createElement('a');
+    a.href = await cg.getDataURL(image);
+    a.download = selectedFilter;
+    a.click();
+  };
 
   useEffect(() => {
     cg.applyFilter('#preview-image');
@@ -16,10 +24,13 @@ const Preview: React.FC<{ imageURL: string }> = ({ imageURL }) => {
 
       <div className="image-container">
         <img
+          role="button"
           id="preview-image"
           src={imageURL}
           data-filter={selectedFilter}
           alt={selectedFilter.toUpperCase()}
+          onClick={({ target }) => download(target as HTMLImageElement)}
+          onKeyPress={({ target }) => download(target as HTMLImageElement)}
         />
       </div>
 
@@ -27,7 +38,6 @@ const Preview: React.FC<{ imageURL: string }> = ({ imageURL }) => {
         {
           cg.filterNames.map((filterName) => (
             <figure
-            // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
               role="button"
               className={selectedFilter === filterName ? 'selected' : ''}
               key={filterName}

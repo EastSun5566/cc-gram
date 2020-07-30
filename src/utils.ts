@@ -28,11 +28,11 @@ export const createFilterImageCanvas = (
   image: HTMLImageElement,
   filterStyle: string,
 ): Promise<HTMLCanvasElement> => new Promise((resolve, reject): void => {
-  const { width, height } = image;
+  const { naturalWidth, naturalHeight } = image;
 
   const canvas = document.createElement('canvas');
-  canvas.width = width;
-  canvas.height = height;
+  canvas.width = naturalWidth;
+  canvas.height = naturalHeight;
 
   const ctx = canvas.getContext('2d', { alpha: false });
   if (!ctx) return reject(new Error('The 2d context canvas is not supported.'));
