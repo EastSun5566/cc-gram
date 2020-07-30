@@ -13,9 +13,11 @@
     "build:js": "webpack -p",
     "build:js:dev": "webpack -d",
     "build": "yarn build:types && yarn build:js",
-    "test": "jest tests/",
+    "test": "jest __tests__/",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
-    "release": "sh bin/release.sh",
+    "release:patch": "sh bin/release.sh patch",
+    "release:minor": "sh bin/release.sh minor",
+    "release:major": "sh bin/release.sh major",
     "deploy": "sh bin/deploy.sh"
   },
   "keywords": [
@@ -56,6 +58,7 @@
     "eslint": "^6.8.0",
     "eslint-config-airbnb-base": "^14.0.0",
     "eslint-plugin-import": "^2.19.1",
+    "fork-ts-checker-webpack-plugin": "^3.1.1",
     "husky": "^3.1.0",
     "jest": "^24.7.1",
     "ts-jest": "^24.0.2",

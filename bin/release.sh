@@ -1,12 +1,17 @@
 #!/bin/sh
 
-# check out & sync master
+set -e
+
+echo "check out & sync master"
+
 git checkout master
 git pull
 
-# Update & tag version
-npm version patch
+echo "update & tag $1 version"
 
-# push update
+npm version $1
+
+echo "push tags"
+
 git push --follow-tags
 git checkout -

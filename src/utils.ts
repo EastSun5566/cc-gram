@@ -2,11 +2,9 @@ import { FilterSetting } from './filters';
 
 /**
  * Parse setting to style
- *
  * @param {FilterSetting} setting - The filter setting
- * @returns {string} The filter style
  */
-export const parseSettingToStyle = (setting: FilterSetting | undefined): string => {
+export const parseSettingToStyle = (setting?: FilterSetting): string => {
   if (!setting) return 'none';
 
   return Object
@@ -23,38 +21,24 @@ export const parseSettingToStyle = (setting: FilterSetting | undefined): string 
 
 /**
  * Create filter image canvas
- *
- * @param {HTMLImageElement['src']} src - The src of image
+ * @param {HTMLImageElement} image - The image
  * @param {string} filterStyle - The filter style
- * @returns {Promise<HTMLCanvasElement>}
  */
 export const createFilterImageCanvas = (
-  src: HTMLImageElement['src'],
+  image: HTMLImageElement,
   filterStyle: string,
 ): Promise<HTMLCanvasElement> => new Promise((resolve, reject): void => {
-  const image = new Image();
+  const { width, height } = image;
 
-  image.onload = (): void => {
-    const { width, height } = image;
+  const canvas = document.createElement('canvas');
+  canvas.width = width;
+  canvas.height = height;
 
-    const canvas = document.createElement('canvas');
-    canvas.width = width;
-    canvas.height = height;
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) return reject(new Error('The 2d context canvas is not supported.'));
 
-    const ctx = canvas.getContext('2d', { alpha: false });
-    if (!ctx) {
-      reject(new Error('The 2d context canvas is not supported.'));
-      return;
-    }
+  ctx.filter = filterStyle;
+  ctx.drawImage(image, 0, 0);
 
-    ctx.filter = filterStyle;
-    ctx.drawImage(image, 0, 0);
-
-    resolve(canvas);
-  };
-
-  image.onerror = (error): void => reject(error);
-
-  image.crossOrigin = 'anonymous';
-  image.src = src;
+  return resolve(canvas);
 });

@@ -6,33 +6,52 @@
  * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
  */
 
-import { DEFAULT_FILTERS, FilterName, FilterSetting } from './filters';
+import {
+  DEFAULT_FILTERS,
+  FilterName,
+  FilterSetting,
+} from './filters';
 import {
   parseSettingToStyle,
   createFilterImageCanvas,
 } from './utils';
 
-/**
- * 🖼 A CSS & Canvas Instagram filters based on CSSgram
- *
- * @class CCGram
- */
-export class CCGram {
-  /**
-   * The default filter list
-   *
-   * @private
-   * @memberof CCGram
-   */
-  private readonly _filters = DEFAULT_FILTERS;
+/** The options for canvas */
+interface Options {
+  /** MIME types, default is `image/png` */
+  type?: string;
+  /** [0 - 1], default is `0.92` */
+  quality?: number;
+}
 
-  /**
-   * Initialize CSS filter to all targets
-   *
-   * @constructor
-   * @memberof CCGram
-   */
-  public constructor() {
+/** Initial Config */
+interface Config {
+  /** The default data attribute */
+  dataAttribute?: string;
+  /** is Init CSS filter to all targets */
+  init?: boolean;
+}
+
+/** 🖼 A CSS & Canvas Instagram filters based on CSSgram */
+export class CCGram {
+  /** default option */
+  static readonly DEFAULT_DATA_ATTRIBUTE = 'filter'
+
+  /** filter list */
+  protected readonly _filters = DEFAULT_FILTERS;
+
+  /** data attribute */
+  protected _dataAttribute: string;
+
+  /** Initialize CSS filter to all targets */
+  constructor({
+    dataAttribute = CCGram.DEFAULT_DATA_ATTRIBUTE,
+    init = true,
+  }: Config = {}) {
+    this._dataAttribute = dataAttribute;
+
+    if (!init) return;
+
     if (document.readyState === 'complete') {
       this.applyFilter();
       return;
@@ -46,48 +65,41 @@ export class CCGram {
     document.addEventListener('DOMContentLoaded', handleLoaded);
   }
 
-  /**
-   * The filter name list
-   *
-   * @readonly
-   * @type {FilterName[]}
-   * @memberof CCGram
-   */
-  public get filterNames(): FilterName[] {
+  /** The filter name list */
+  get filterNames(): FilterName[] {
     return [...this._filters.keys()];
   }
 
   /**
    * Add/Set filter
-   *
    * @param {FilterName} name - the Filter name
    * @param {FilterSetting} setting - the Filter setting
-   * @memberof CCGram
    */
-  public setFilter(name: FilterName, setting: FilterSetting): void {
+  setFilter(name: FilterName, setting: FilterSetting): void {
     this._filters.set(name, setting);
   }
 
   /**
    * Remove filter
-   *
    * @param {FilterName} name - the Filter name
-   * @returns {boolean} Whether the removal was successful
-   * @memberof CCGram
    */
-  public removeFilter(name: FilterName): boolean {
+  removeFilter(name: FilterName): boolean {
     return this._filters.delete(name);
   }
 
   /**
-   * Get the CSS inline style of filter
-   *
-   * @private
+   * Get setting of filter
    * @param {FilterName} [name=''] - The filter name
-   * @returns {string} filter CSS inline style
-   * @memberof CCGram
    */
-  private _getFilterStyle(name: FilterName = ''): string {
+  getFilterSetting(name: FilterName = ''): FilterSetting | void {
+    return this._filters.get(name);
+  }
+
+  /**
+   * Get the CSS inline style of filter
+   * @param {FilterName} [name=''] - The filter name
+   */
+  getFilterStyle(name: FilterName = ''): string {
     const setting = this._filters.get(name);
 
     return parseSettingToStyle(setting);
@@ -95,69 +107,55 @@ export class CCGram {
 
   /**
    * Apply CSS filter to all targets
-   *
-   * @param {string} [selectors='img[data-filter]'] - selectors
-   * @memberof CCGram
+   * @param {string} [selectors='img[data-${this._dataAttribute}]'] - selectors
    */
-  public applyFilter(selectors = 'img[data-filter]'): void {
-    const targets = document.querySelectorAll<HTMLImageElement>(selectors);
-
-    targets.forEach((target): void => {
-      const { dataset: { filter } } = target;
-      target.style.filter = this._getFilterStyle(filter);
-    });
+  applyFilter(selectors = `img[data-${this._dataAttribute}]`): void {
+    document
+      .querySelectorAll<HTMLImageElement>(selectors)
+      .forEach((target): void => {
+        const { dataset } = target;
+        target.style.filter = this.getFilterStyle(dataset[this._dataAttribute]);
+      });
   }
 
   /**
    * Create canvas of image element
-   *
-   * @private
    * @param {HTMLImageElement} image
-   * @returns {Promise<HTMLCanvasElement>}
-   * @memberof CCGram
    */
-  private _getImageCanvas(image: HTMLImageElement): Promise<HTMLCanvasElement> {
+  protected _getImageCanvas(image: HTMLImageElement): Promise<HTMLCanvasElement> {
     if (!image || image.tagName !== 'IMG') throw new Error('The first argument is required and must be an <img> element.');
     if (!image.src) throw new Error('The <img> element src attribute is empty.');
 
-    const {
-      src,
-      dataset: { filter },
-    } = image;
-
-    return createFilterImageCanvas(src, this._getFilterStyle(filter));
+    return createFilterImageCanvas(
+      image,
+      this.getFilterStyle(image.dataset[this._dataAttribute]),
+    );
   }
 
   /**
    * Get the data URL of image element
-   *
-   * @param {HTMLImageElement} element - image element
+   * @param {HTMLImageElement} image - image element
    * @param {Options} [options={}] - options
-   * @returns {Promise<string>} data url
-   * @memberof CCGram
    */
-  public async getDataUrl(
-    element: HTMLImageElement,
+  async getDataURL(
+    image: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<string> {
-    const canvas = await this._getImageCanvas(element);
+    const canvas = await this._getImageCanvas(image);
 
     return canvas.toDataURL(type, quality);
   }
 
   /**
    * Get the blob of image element
-   *
-   * @param {HTMLImageElement} element - image element
+   * @param {HTMLImageElement} image - image element
    * @param {Options} [options={}] - options
-   * @returns {(Promise<Blob | null>)} blob
-   * @memberof CCGram
    */
-  public async getBlob(
-    element: HTMLImageElement,
+  async getBlob(
+    image: HTMLImageElement,
     { type, quality }: Options = {},
   ): Promise<Blob | null> {
-    const canvas = await this._getImageCanvas(element);
+    const canvas = await this._getImageCanvas(image);
 
     return new Promise((resolve): void => {
       canvas.toBlob((blob): void => resolve(blob), type, quality);
@@ -166,26 +164,3 @@ export class CCGram {
 }
 
 export default CCGram;
-
-/**
- * The Options for canvas
- *
- * @interface Options
- */
-interface Options {
-  /**
-   * MIME types, default is `image/png`
-   *
-   * @type {string}
-   * @memberof Options
-   */
-  type?: string;
-
-  /**
-   * [0 - 1], default is `0.92`
-   *
-   * @type {number}
-   * @memberof Options
-   */
-  quality?: number;
-}
