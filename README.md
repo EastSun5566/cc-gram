@@ -4,6 +4,10 @@
 
 > 🖼 A CSS & Canvas Instagram filters based on CSSgram
 
+## 🖥 Demo
+
+<https://eastsun5566.github.io/cc-gram/>
+
 ## ✨ Install
 
 ```sh
