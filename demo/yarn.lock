@@ -3189,10 +3189,10 @@ caseless@~0.12.0:
   resolved "https://registry.yarnpkg.com/caseless/-/caseless-0.12.0.tgz#1b681c21ff84033c826543090689420d187151dc"
   integrity sha1-G2gcIf+EAzyCZUMJBolCDRhxUdw=
 
-cc-gram@^0.2.0:
-  version "0.2.0"
-  resolved "https://registry.yarnpkg.com/cc-gram/-/cc-gram-0.2.0.tgz#eb307e46b2ad3ea5199ff3c6c4287abdc044de85"
-  integrity sha512-7UVnbno2C8wVsCMLpxym5C6kRObwcyz9ijkNQ861c9fkA/aZ955sh/PunwLsjB7kI0vRgJqrh/cWw7xjgucB4w==
+cc-gram@^0.2.1:
+  version "0.2.1"
+  resolved "https://registry.yarnpkg.com/cc-gram/-/cc-gram-0.2.1.tgz#64641c5731dd0e6b8c55943d383ee0470487bae1"
+  integrity sha512-G1q1I0ZuTljzek4AWTFWr24tMBhBows/FDXKQSaeHWoGj8yW9fn8u7uFys3VyIUnv9+16kd7EDI/EUcpvSc8Tg==
   dependencies:
     "@babel/runtime" "^7.4.4"
 
@@ -9513,7 +9513,7 @@ react-app-polyfill@^1.0.5:
     regenerator-runtime "^0.13.3"
     whatwg-fetch "^3.0.0"
 
-react-dev-utils@10.1:
+react-dev-utils@10.1.0:
   version "10.1.0"
   resolved "https://registry.yarnpkg.com/react-dev-utils/-/react-dev-utils-10.1.0.tgz#ccf82135f6dc2fc91969bc729ce57a69d8e86025"
   integrity sha512-KmZChqxY6l+ed28IHetGrY8J9yZSvzlAHyFXduEIhQ42EBGtqftlbqQZ+dDTaC7CwNW2tuXN+66bRKE5h2HgrQ==

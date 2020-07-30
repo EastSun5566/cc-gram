@@ -32,6 +32,9 @@ npm i cc-gram
 import CCGram from "cc-gram";
 
 const cg = new CCGram();
+
+// or you can turn off init apply
+const cg = new CCGram({ init: false });
 ```
 
 ---
