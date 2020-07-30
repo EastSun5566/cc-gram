@@ -1,15 +1,18 @@
 import React from 'react';
 
 const UploadInput: React.FC<{
-  uploadImage: ((event: React.ChangeEvent<HTMLInputElement>) => void);
-}> = ({ uploadImage }) => (
+  setImageURL: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ setImageURL }) => (
   <div className="input-container">
     <i className="fas fa-cloud-upload-alt" />
 
     <input
       type="file"
       accept="image/*"
-      onChange={uploadImage}
+      onChange={({ target }) => {
+        if (!target.files) return;
+        setImageURL(URL.createObjectURL(target.files[0]));
+      }}
     />
   </div>
 );

@@ -15,19 +15,12 @@ const App: FC = () => {
     cg.applyFilter();
   }, [imageURL]);
 
-  const uploadImage = ({ target }: React.ChangeEvent<HTMLInputElement>): void => {
-    if (!target.files) return;
-
-    const image = target.files[0];
-    setImageURL(URL.createObjectURL(image));
-  };
-
   return (
     <>
       <div id="app">
         {imageURL
           ? <Preview imageURL={imageURL} />
-          : <UploadInput uploadImage={uploadImage} /> }
+          : <UploadInput setImageURL={setImageURL} /> }
       </div>
 
       <GithubCorner />
