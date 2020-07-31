@@ -3,7 +3,7 @@ import './GithubCorner.scss';
 
 const GithubCorner: React.FC = () => (
   <a
-    href="https://github.com/EastSun5566/get-some-cool-emojis/"
+    href="https://github.com/EastSun5566/cc-gram"
     className="github-corner"
     aria-label="View source on GitHub"
     title="View source on GitHub"

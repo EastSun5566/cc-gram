@@ -5,36 +5,35 @@
   text-align: center;
 
   .image-container {
-    max-width: 400px;
-    margin: 0 auto 16px auto;
-
-    &::after {
-      content: "\f381";
-      font-family: "Font Awesome 5 Free";
-      font-weight: 900;
-      position: absolute;
-      top: 0;
-      left: 0;
-
-      @include size;
-      background-color: rgba(black, 0.3);
-
-      @include flex;
-      cursor: pointer;
-
-      opacity: 0;
-      transition: opacity 0.3s;
-      pointer-events: none;
-    }
-
-    &:hover::after {
-      opacity: 1;
-    }
+    max-width: 375px;
+    margin: 0 auto 24px auto;
 
     img {
       display: block;
       width: 100%;
       @include shadow;
+    }
+
+    button {
+      position: absolute;
+      border-radius: 0;
+      @include size(38px);
+      background-color: $bg-dark;
+      padding: 0;
+
+      transition: transform 0.3s;
+
+      &.btn-cross {
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+      }
+
+      &.btn-download {
+        left: 0;
+        bottom: 0;
+        transform: translate(-50%, 50%);
+      }
     }
   }
 
@@ -54,7 +53,7 @@
         transform: translateY(-3px);
 
         figcaption {
-          background-color: rgba(black, 0.8);
+          background-color: $bg-dark;
         }
       }
 
