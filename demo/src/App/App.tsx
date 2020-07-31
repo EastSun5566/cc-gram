@@ -1,10 +1,12 @@
 import React, { FC, useState, useEffect } from 'react';
+import { CSSTransition } from 'react-transition-group';
 
 import './App.scss';
 
 import UploadInput from '../components/UploadInput/UploadInput';
 import Preview from '../components/Preview/Preview';
 import GithubCorner from '../components/GithubCorner/GithubCorner';
+import Note from '../components/Note/Note';
 
 import { cg } from '../cg';
 
@@ -18,14 +20,24 @@ const App: FC = () => {
   return (
     <>
       <div id="app">
-        {imageURL
-          ? (
-            <Preview
-              imageURL={imageURL}
-              setImageURL={setImageURL}
-            />
-          )
-          : <UploadInput setImageURL={setImageURL} /> }
+        <h4 className="title my-3">🖼 CCgram</h4>
+
+        <CSSTransition
+          in={!!imageURL}
+          timeout={200}
+          classNames="fade"
+        >
+          {imageURL
+            ? (
+              <Preview
+                imageURL={imageURL}
+                setImageURL={setImageURL}
+              />
+            )
+            : <UploadInput setImageURL={setImageURL} /> }
+        </CSSTransition>
+
+        <Note />
       </div>
 
       <GithubCorner />

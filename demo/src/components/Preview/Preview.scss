@@ -15,23 +15,33 @@
     }
 
     button {
-      border-radius: 50%;
+      position: absolute;
+      border-radius: 0;
       @include size(38px);
+      background-color: $bg-dark;
       padding: 0;
-    }
 
-    .btn-cross {
-      position: absolute;
-      top: 0;
-      right: 0;
-      transform: translate(50%, -50%);
-    }
+      transition: transform 0.3s;
 
-    .btn-download {
-      position: absolute;
-      left: 0;
-      bottom: 0;
-      transform: translate(-50%, 50%);
+      &.btn-cross {
+        top: 0;
+        right: 0;
+        transform: translate(50%, -50%);
+
+        &:hover {
+          transform: translate(50%, -55%);
+        }
+      }
+
+      &.btn-download {
+        left: 0;
+        bottom: 0;
+        transform: translate(-50%, 50%);
+
+        &:hover {
+          transform: translate(-50%, 45%);
+        }
+      }
     }
   }
 
@@ -51,7 +61,7 @@
         transform: translateY(-3px);
 
         figcaption {
-          background-color: rgba(black, 0.8);
+          background-color: $bg-dark;
         }
       }
 

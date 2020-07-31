@@ -39,14 +39,14 @@ const Preview: React.FC<{
         />
         <button
           type="button"
-          className="btn btn-light btn-cross"
+          className="btn btn-cross"
           onClick={() => setImageURL('')}
         >
           <i className="fa fa-times" />
         </button>
         <button
           type="button"
-          className="btn btn-light btn-download"
+          className="btn btn-download"
           onClick={download}
         >
           <i className="fas fa-cloud-download-alt" />

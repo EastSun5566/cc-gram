@@ -4,4 +4,11 @@
   min-height: 100vh;
   padding: 0 8px;
   @include flex;
+  flex-direction: column;
+
+  .title {
+    color: $color-font;
+    background-color: $bg-dark;
+    padding: 8px;
+  }
 }
