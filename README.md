@@ -6,6 +6,10 @@
 
 🔗 <https://eastsun5566.github.io/cc-gram/>
 
+## 🤔 Why
+
+> [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram come into the play. It use CSS to preview filters and draw filter image with canvas filter API when you need it.
+
 ## ✨ Install
 
 ```sh
@@ -32,12 +36,15 @@ npm i cc-gram
 import CCGram from "cc-gram";
 
 const cg = new CCGram();
+```
 
+```js
 // or you can turn off init apply
 const cg = new CCGram({ init: false });
 
 // you can also specify data attribute
-const cg = new CCGram({ dataAttribute: "my-cool-filter" });
+// i.e., <img data-my-attr="1977">
+const cg = new CCGram({ dataAttribute: "my-attr" });
 ```
 
 ---
@@ -50,7 +57,7 @@ const cg = new CCGram({ dataAttribute: "my-cool-filter" });
 // apply to All targets has `data-filter` attribute
 cg.applyFilter();
 
-// or you can just use selector
+// or you can just use selector for performance
 cg.applyFilter("#my-image");
 ```
 
@@ -130,7 +137,7 @@ cg.removeFilter("my-filter");
 ### Access Filter image
 
 ```js
-const target = document.querySelector('img[data-filter="1977"]');
+const image = document.querySelector('img[data-filter="1977"]');
 ```
 
 #### Data URL
@@ -138,7 +145,7 @@ const target = document.querySelector('img[data-filter="1977"]');
 > `getDataURL(image[, options = {}])`
 
 ```js
-const dataUrl = await cg.getDataURL(target);
+const dataUrl = await cg.getDataURL(image);
 ```
 
 #### Blob
@@ -146,7 +153,7 @@ const dataUrl = await cg.getDataURL(target);
 > `getBlob(image[, options = {}])`
 
 ```js
-const blob = await cg.getBlob(target, {
+const blob = await cg.getBlob(image, {
   type: "image/jpeg",
   quality: 0.8,
 });
@@ -160,7 +167,7 @@ const blob = await cg.getBlob(target, {
 ## 🔧 Develop
 
 ```sh
-# install dependencies
+# install dep
 yarn
 
 # fix style
@@ -169,6 +176,6 @@ yarn lint
 # run test
 yarn test
 
-# build for production
+# build for prod
 yarn build
 ```
