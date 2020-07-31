@@ -1,37 +1,56 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 
 import './Preview.scss';
 
 import { cg } from '../../cg';
 
-const Preview: React.FC<{ imageURL: string }> = ({ imageURL }) => {
+const Preview: React.FC<{
+  imageURL: string;
+  setImageURL: React.Dispatch<React.SetStateAction<string>>;
+}> = ({ imageURL, setImageURL }) => {
   const [selectedFilter, setSelectedFilter] = useState('');
-
-  const download = async (image: HTMLImageElement) => {
-    const a = document.createElement('a');
-    a.href = await cg.getDataURL(image);
-    a.download = selectedFilter;
-    a.click();
-  };
+  const image = useRef<HTMLImageElement>(null);
 
   useEffect(() => {
     cg.applyFilter('#preview-image');
   }, [selectedFilter]);
+
+  const download = async () => {
+    const { current } = image;
+    if (!current) throw new Error('No Image');
+
+    const a = document.createElement('a');
+    a.href = await cg.getDataURL(current);
+    a.download = selectedFilter;
+    a.click();
+  };
 
   return (
     <div className="preview">
 
       <div className="image-container">
         <img
-          role="button"
           id="preview-image"
           src={imageURL}
           data-filter={selectedFilter}
           alt={selectedFilter.toUpperCase()}
-          onClick={({ target }) => download(target as HTMLImageElement)}
-          onKeyPress={({ target }) => download(target as HTMLImageElement)}
+          ref={image}
         />
+        <button
+          type="button"
+          className="btn btn-light btn-cross"
+          onClick={() => setImageURL('')}
+        >
+          <i className="fa fa-times" />
+        </button>
+        <button
+          type="button"
+          className="btn btn-light btn-download"
+          onClick={download}
+        >
+          <i className="fas fa-cloud-download-alt" />
+        </button>
       </div>
 
       <div className="filters-container">
@@ -41,16 +60,14 @@ const Preview: React.FC<{ imageURL: string }> = ({ imageURL }) => {
               role="button"
               className={selectedFilter === filterName ? 'selected' : ''}
               key={filterName}
-              onClick={(): void => setSelectedFilter(filterName)}
-              onKeyPress={(): void => setSelectedFilter(filterName)}
+              onClick={() => setSelectedFilter(filterName)}
+              onKeyPress={() => setSelectedFilter(filterName)}
             >
-
               <img
                 src={imageURL}
                 data-filter={filterName}
                 alt={filterName.toUpperCase()}
               />
-
               <figcaption>{filterName.toUpperCase()}</figcaption>
             </figure>
           ))

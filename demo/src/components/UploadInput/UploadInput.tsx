@@ -1,11 +1,12 @@
 import React from 'react';
 
+import './UploadInput.scss';
+
 const UploadInput: React.FC<{
   setImageURL: React.Dispatch<React.SetStateAction<string>>;
 }> = ({ setImageURL }) => (
   <div className="input-container">
     <i className="fas fa-cloud-upload-alt" />
-
     <input
       type="file"
       accept="image/*"

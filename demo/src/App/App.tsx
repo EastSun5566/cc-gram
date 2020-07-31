@@ -19,7 +19,12 @@ const App: FC = () => {
     <>
       <div id="app">
         {imageURL
-          ? <Preview imageURL={imageURL} />
+          ? (
+            <Preview
+              imageURL={imageURL}
+              setImageURL={setImageURL}
+            />
+          )
           : <UploadInput setImageURL={setImageURL} /> }
       </div>
 
