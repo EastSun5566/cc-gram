@@ -1,5 +1,6 @@
 #!/bin/sh
 
+# abort on errors
 set -e
 
 echo "check out & sync master"

@@ -9,8 +9,7 @@
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "predeploy": "npm run build",
-    "deploy": "gh-pages -d build"
+    "deploy": "npm run build && gh-pages -d build"
   },
   "dependencies": {
     "@babel/core": "7.10.5",
