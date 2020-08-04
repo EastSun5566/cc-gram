@@ -10,7 +10,7 @@
 
 > [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram come into the play. It use CSS to preview filters and draw filter image with canvas filter API when you need it.
 
-## ✨ Install
+## ✨ Installation
 
 ```sh
 npm i cc-gram
@@ -164,7 +164,7 @@ const blob = await cg.getBlob(image, {
   - type: `string` - MIME types, default is `image/png`,
   - quality: `number`- [0 - 1], default is `0.92`
 
-## 🔧 Develop
+## 🔧 Development
 
 ```sh
 # install dep
