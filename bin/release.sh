@@ -8,7 +8,7 @@ echo "check out & sync master"
 git checkout master
 git pull
 
-echo "update & tag $1 version"
+echo "update & tag ${1:="patch"} version"
 
 npm version $1
 

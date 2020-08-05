@@ -6,7 +6,6 @@ describe('Read/Write filter list', (): void => {
   let cg: CCGram | null = null;
 
   beforeEach(() => { cg = new CCGram({ init: false }); });
-  afterEach(() => { cg = null; });
 
   test('get filter names list', (): void => {
     expect(cg!.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
@@ -36,7 +35,7 @@ const getTargetImage = (dateAttr = 'filter'): HTMLImageElement | null => (
 );
 
 describe('Apply filter to target Image', () => {
-  afterEach(() => { document.body.innerHTML = ''; });
+  beforeEach(() => { document.body.innerHTML = ''; });
 
   test('apply filter from init', (): void => {
     document.body.innerHTML = `
@@ -96,10 +95,6 @@ describe.skip('Access filter image data', () => {
       `;
 
     cg = new CCGram();
-  });
-  afterEach(() => {
-    document.body.innerHTML = '';
-    cg = null;
   });
 
   test('use getDataURL method', async (): Promise<void> => {
