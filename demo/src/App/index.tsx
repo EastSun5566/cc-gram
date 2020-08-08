@@ -3,10 +3,10 @@ import { CSSTransition } from 'react-transition-group';
 
 import './App.scss';
 
-import UploadInput from '../components/UploadInput/UploadInput';
-import Preview from '../components/Preview/Preview';
-import GithubCorner from '../components/GithubCorner/GithubCorner';
-import Note from '../components/Note/Note';
+import UploadInput from '../components/UploadInput';
+import Preview from '../components/Preview';
+import GithubCorner from '../components/GithubCorner';
+import Note from '../components/Note';
 
 import { cg } from '../cg';
 
