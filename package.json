@@ -15,9 +15,9 @@
     "build": "yarn build:types && yarn build:js",
     "test": "jest __tests__/ --coverage",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
-    "release:patch": "sh bin/release.sh patch",
-    "release:minor": "sh bin/release.sh minor",
-    "release:major": "sh bin/release.sh major",
+    "release:patch": "sh scripts/release.sh patch",
+    "release:minor": "sh scripts/release.sh minor",
+    "release:major": "sh scripts/release.sh major",
     "changelog": "conventional-changelog -p angular -i CHANGELOG.md -s -r 0",
     "deploy:demo": "cd demo; npm run deploy; cd -"
   },
