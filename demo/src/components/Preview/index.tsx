@@ -1,46 +1,39 @@
 /* eslint-disable jsx-a11y/no-noninteractive-element-to-interactive-role */
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 
 import './Preview.scss';
 
 import { cg } from '../../cg';
+import { useFilters, useDownloadImage } from '../../hooks';
 
-const Preview: React.FC<{
+interface PreviewProp {
   imageURL: string;
-  setImageURL: React.Dispatch<React.SetStateAction<string>>;
-}> = ({ imageURL, setImageURL }) => {
-  const [selectedFilter, setSelectedFilter] = useState('');
-  const image = useRef<HTMLImageElement>(null);
+  onClear: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+}
 
-  useEffect(() => {
-    cg.applyFilter('#preview-image');
-  }, [selectedFilter]);
-
-  const download = async () => {
-    const { current } = image;
-    if (!current) throw new Error('No Image');
-
-    const a = document.createElement('a');
-    a.href = await cg.getDataURL(current);
-    a.download = selectedFilter;
-    a.click();
-  };
+export const Preview: React.FC<PreviewProp> = ({
+  imageURL,
+  onClear,
+}) => {
+  const [selectedFilter, setSelectedFilter] = useFilters({
+    selectors: '#preview-image',
+  });
+  const { imageRef, download } = useDownloadImage({ downloadFileName: selectedFilter });
 
   return (
     <div className="preview">
-
       <div className="image-container">
         <img
           id="preview-image"
           src={imageURL}
           data-filter={selectedFilter}
           alt={selectedFilter.toUpperCase()}
-          ref={image}
+          ref={imageRef}
         />
         <button
           type="button"
           className="btn btn-cross"
-          onClick={() => setImageURL('')}
+          onClick={onClear}
         >
           <i className="fa fa-times" />
         </button>
@@ -73,7 +66,6 @@ const Preview: React.FC<{
           ))
         }
       </div>
-
     </div>
   );
 };

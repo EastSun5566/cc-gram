@@ -1,7 +1,7 @@
 import React from 'react';
 import './GithubCorner.scss';
 
-const GithubCorner: React.FC = () => (
+export const GithubCorner: React.FC = () => (
   <a
     href="https://github.com/EastSun5566/cc-gram"
     className="github-corner"

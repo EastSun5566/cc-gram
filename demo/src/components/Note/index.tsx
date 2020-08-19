@@ -1,6 +1,6 @@
 import React from 'react';
 
-const Note: React.FC = () => (
+export const Note: React.FC = () => (
   <small className="d-block text-center my-3">
     Made with
     <span role="img" aria-label="heart"> ❤️ </span>

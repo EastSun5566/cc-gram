@@ -1,21 +1,18 @@
-import React, { FC, useState, useEffect } from 'react';
+import React from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import './App.scss';
 
-import UploadInput from '../components/UploadInput';
-import Preview from '../components/Preview';
-import GithubCorner from '../components/GithubCorner';
-import Note from '../components/Note';
+import {
+  UploadInput,
+  Preview,
+  GithubCorner,
+  Note,
+} from '../components';
+import { useFilters } from '../hooks';
 
-import { cg } from '../cg';
-
-const App: FC = () => {
-  const [imageURL, setImageURL] = useState('');
-
-  useEffect(() => {
-    cg.applyFilter();
-  }, [imageURL]);
+const App: React.FC = () => {
+  const [imageURL, setImageURL] = useFilters();
 
   return (
     <>
@@ -27,14 +24,22 @@ const App: FC = () => {
           timeout={200}
           classNames="fade"
         >
-          {imageURL
+          {
+          imageURL
             ? (
               <Preview
                 imageURL={imageURL}
-                setImageURL={setImageURL}
+                onClear={() => setImageURL('')}
               />
             )
-            : <UploadInput setImageURL={setImageURL} /> }
+            : (
+              <UploadInput
+                onUpload={
+                  ({ target }) => target.files && setImageURL(URL.createObjectURL(target.files[0]))
+                }
+              />
+            )
+          }
         </CSSTransition>
 
         <Note />
