@@ -6,12 +6,12 @@ import './Preview.scss';
 import { cg } from '../../cg';
 import { useFilters, useDownloadImage } from '../../hooks';
 
-interface PreviewProp {
+interface PreviewProps {
   imageURL: string;
   onClear: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
-export const Preview: React.FC<PreviewProp> = ({
+export const Preview: React.FC<PreviewProps> = ({
   imageURL,
   onClear,
 }) => {
