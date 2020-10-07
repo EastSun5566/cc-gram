@@ -20,7 +20,7 @@ export const Preview: React.FC<PreviewProps> = ({
   });
   const { imageRef, download } = useDownloadImage({ downloadFileName: selectedFilter });
 
-  if(!imageURL) return null;
+  if (!imageURL) return null;
 
   return (
     <div className="preview">
