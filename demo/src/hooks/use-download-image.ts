@@ -8,8 +8,8 @@ interface useDownloadImageOptions {
 export const useDownloadImage = ({
   downloadFileName = 'download',
 }: useDownloadImageOptions = {}): {
-  imageRef: React.RefObject<HTMLImageElement>,
-  download: () => void,
+  imageRef: React.RefObject<HTMLImageElement>;
+  download: () => void;
 } => {
   const imageRef = useRef<HTMLImageElement>(null);
 

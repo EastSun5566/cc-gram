@@ -24,8 +24,7 @@ const App: React.FC = () => {
           timeout={200}
           classNames="fade"
         >
-          {
-          imageURL
+          {imageURL
             ? (
               <Preview
                 imageURL={imageURL}
@@ -38,8 +37,7 @@ const App: React.FC = () => {
                   ({ target }) => target.files && setImageURL(URL.createObjectURL(target.files[0]))
                 }
               />
-            )
-          }
+            )}
         </CSSTransition>
 
         <Note />
