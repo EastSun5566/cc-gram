@@ -6,6 +6,8 @@
 
 🔗 <https://eastsun5566.github.io/cc-gram/>
 
+![Demo GIF](./demo.gif)
+
 ## 🤔 Why
 
 > [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram come into the play. It use CSS to preview filters and draw filter image with canvas filter API when you need it.
