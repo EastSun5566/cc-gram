@@ -7,8 +7,8 @@ import { cg } from '../../cg';
 import { useFilters, useDownloadImage } from '../../hooks';
 
 interface PreviewProps {
-  imageURL: string;
-  onClear: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
+  imageURL?: string;
+  onClear?: (event: React.MouseEvent<HTMLButtonElement, MouseEvent>) => void
 }
 
 export const Preview: React.FC<PreviewProps> = ({
@@ -19,6 +19,8 @@ export const Preview: React.FC<PreviewProps> = ({
     selectors: '#preview-image',
   });
   const { imageRef, download } = useDownloadImage({ downloadFileName: selectedFilter });
+
+  if(!imageURL) return null;
 
   return (
     <div className="preview">
