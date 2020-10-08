@@ -1,6 +1,9 @@
 # CCgram
 
-[![Build Status](https://travis-ci.org/EastSun5566/cc-gram.svg?branch=master)](https://travis-ci.org/EastSun5566/cc-gram) [![npm](https://img.shields.io/npm/v/cc-gram.svg)](https://www.npmjs.com/package/cc-gram)
+[![NPM Version](https://img.shields.io/npm/v/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
+[![NPM Downloads](https://img.shields.io/npm/dt/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
+[![Build Status](https://img.shields.io/travis/EastSun5566/cc-gram/master.svg?style=for-the-badge)](https://travis-ci.org/EastSun5566/cc-gram)
+[![NPM Downloads](https://img.shields.io/github/license/EastSun5566/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 
 > 🖼 A CSS & Canvas Instagram filters based on CSSgram
 
