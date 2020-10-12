@@ -13,7 +13,7 @@
 
 ## 🤔 Why
 
-> [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram come into the play. It use CSS to preview filters and draw filter image with canvas filter API when you need it.
+> [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram comes into the play. It uses CSS to preview filters and draw filter images with canvas filter API when you need it.
 
 ## ✨ Installation
 
