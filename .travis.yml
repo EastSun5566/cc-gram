@@ -3,16 +3,16 @@ language: node_js
 node_js:
   - "lts/*"
 
-cache: yarn
+cache: npm
 
 before_deploy:
-  - yarn build
+  - npm run build
   # - if ! [ $NPM_PUBLISH ];
   #   then
   #   NPM_PUBLISH=true;
-  #   yarn build;
+  #   npm run build;
   #   else
-  #   yarn deploy;
+  #   npm run deploy;
   #   fi
 
 deploy:

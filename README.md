@@ -173,14 +173,14 @@ const blob = await cg.getBlob(image, {
 
 ```sh
 # install dep
-yarn
+npm i
 
 # fix style
-yarn lint
+npm run lint
 
 # run test
-yarn test
+npm test
 
 # build for prod
-yarn build
+npm run build
 ```

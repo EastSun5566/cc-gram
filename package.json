@@ -12,7 +12,7 @@
     "build:types": "tsc --emitDeclarationOnly",
     "build:js": "webpack -p",
     "build:js:dev": "webpack -d",
-    "build": "yarn build:types && yarn build:js",
+    "build": "npm run build:types && npm run build:js",
     "test": "jest __tests__/ --coverage",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src/",
     "release:patch": "sh scripts/release.sh patch",
@@ -43,7 +43,7 @@
   },
   "husky": {
     "hooks": {
-      "pre-commit": "yarn lint"
+      "pre-commit": "npm run lint"
     }
   },
   "devDependencies": {
