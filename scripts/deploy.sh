@@ -6,7 +6,7 @@ set -e
 cd demo
 
 # make sure pkg is latest version
-npm i cc-gram
+npm i cc-gram@latest
 
 # deploy
 npm run deploy
