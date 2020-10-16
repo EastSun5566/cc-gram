@@ -10,7 +10,7 @@
 
 🔗 <https://eastsun5566.github.io/cc-gram/>
 
-![Demo GIF](./demo.gif)
+![Demo GIF](./demo/demo.gif)
 
 ## 🤔 Why
 
