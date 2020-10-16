@@ -6,9 +6,9 @@ set -e
 cd demo
 
 # make sure pkg is latest version
-yarn add cc-gram
+npm i cc-gram@latest
 
 # deploy
-yarn deploy
+npm run deploy
 
 cd -

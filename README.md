@@ -3,6 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 [![NPM Downloads](https://img.shields.io/npm/dt/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 [![Build Status](https://img.shields.io/travis/EastSun5566/cc-gram/master.svg?style=for-the-badge)](https://travis-ci.org/EastSun5566/cc-gram)
+[![Build Status](https://img.shields.io/github/workflow/status/EastSun5566/cc-gram/Test/master.svg?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/actions?query=workflow%3ATest)
 [![License](https://img.shields.io/github/license/EastSun5566/cc-gram.svg?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/blob/master/LICENSE)
 
 > 🖼 A CSS & Canvas Instagram filters based on CSSgram
@@ -173,14 +174,14 @@ const blob = await cg.getBlob(image, {
 
 ```sh
 # install dep
-yarn
+npm i
 
 # fix style
-yarn lint
+npm run lint
 
 # run test
-yarn test
+npm test
 
 # build for prod
-yarn build
+npm run build
 ```
