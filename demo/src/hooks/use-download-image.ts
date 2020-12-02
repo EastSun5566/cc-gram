@@ -15,7 +15,7 @@ export const useDownloadImage = ({
 
   const download = async () => {
     const { current } = imageRef;
-    if (!current) throw new Error('No Image');
+    if (!current || !(current instanceof HTMLImageElement)) throw new TypeError('ref must be an image');
 
     const a = document.createElement('a');
     a.href = await cg.getDataURL(current);
