@@ -123,8 +123,8 @@ export class CCGram {
    * @param {HTMLImageElement} image
    */
   protected _getImageCanvas(image: HTMLImageElement): Promise<HTMLCanvasElement> {
-    if (!image || image.tagName !== 'IMG') throw new Error('The first argument is required and must be an <img> element.');
-    if (!image.src) throw new Error('The <img> element src attribute is empty.');
+    if (!image || image.tagName !== 'IMG') throw new TypeError('The first argument is required and must be an <img> element.');
+    if (!image.src) throw new TypeError('The <img> element src attribute is empty.');
 
     return createFilterImageCanvas(
       image,
