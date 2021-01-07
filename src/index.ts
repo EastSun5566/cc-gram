@@ -16,16 +16,16 @@ import {
   createFilterImageCanvas,
 } from './utils';
 
-/** The options for canvas */
-interface Options {
+/** The parse options for canvas */
+interface ParseOptions {
   /** MIME types, default is `image/png` */
   type?: string;
   /** [0 - 1], default is `0.92` */
   quality?: number;
 }
 
-/** Initial Config */
-interface Config {
+/** constructor Options */
+interface Options {
   /** The default data attribute */
   dataAttribute?: string;
   /** is Init CSS filter to all targets */
@@ -47,7 +47,7 @@ export class CCGram {
   constructor({
     dataAttribute = CCGram.DEFAULT_DATA_ATTRIBUTE,
     init = true,
-  }: Config = {}) {
+  }: Options = {}) {
     this._dataAttribute = dataAttribute;
 
     if (!init) return;
@@ -135,11 +135,11 @@ export class CCGram {
   /**
    * Get the data URL of image element
    * @param {HTMLImageElement} image - image element
-   * @param {Options} [options={}] - options
+   * @param {ParseOptions} [parseOptions={}] - options
    */
   async getDataURL(
     image: HTMLImageElement,
-    { type, quality }: Options = {},
+    { type, quality }: ParseOptions = {},
   ): Promise<string> {
     const canvas = await this._getImageCanvas(image);
 
@@ -149,11 +149,11 @@ export class CCGram {
   /**
    * Get the blob of image element
    * @param {HTMLImageElement} image - image element
-   * @param {Options} [options={}] - options
+   * @param {ParseOptions} [parseOptions={}] - options
    */
   async getBlob(
     image: HTMLImageElement,
-    { type, quality }: Options = {},
+    { type, quality }: ParseOptions = {},
   ): Promise<Blob | null> {
     const canvas = await this._getImageCanvas(image);
 
