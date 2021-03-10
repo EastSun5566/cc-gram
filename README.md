@@ -11,7 +11,7 @@
 
 ![Demo GIF](./demo/demo.gif)
 
-## 🤔 Why
+## 🤔 The Why
 
 > [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram comes into the play. It uses CSS to preview filters and draw filter images with canvas filter API when you need it.
 
