@@ -25,7 +25,7 @@ const config = {
   ],
   plugins: [
     nodeResolve({ extensions: [...DEFAULTS.extensions, '.ts'] }),
-    typescript(),
+    typescript({ tsconfig: 'tsconfig.build.json' }),
     terser(),
   ],
 };
