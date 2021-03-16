@@ -19,7 +19,7 @@ describe('Read/Write filter list', (): void => {
 
   test('remove filter', (): void => {
     const { filterNames } = cg!;
-    const targetFilterName = filterNames[Math.floor(Math.random() * (filterNames.length - 1))];
+    const targetFilterName = filterNames[Math.floor(Math.random() * (filterNames.length - 1))]!;
 
     cg!.removeFilter(targetFilterName);
 
