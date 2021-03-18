@@ -1,7 +1,7 @@
 import { FilterSetting } from './filters';
 import { MessageData } from './drawWorker';
 
-export const hasOffscreenCanvas = !!OffscreenCanvas;
+export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
 // export const hasWorker = !!Worker;
 
 export const assert = <C = unknown>(condition: C, message: string): void => {
