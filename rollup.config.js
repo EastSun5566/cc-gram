@@ -1,8 +1,14 @@
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
-import { terser } from 'rollup-plugin-terser';
+// import { terser } from 'rollup-plugin-terser';
 
 import { main, module } from './package.json';
+
+const plugins = [
+  nodeResolve({ extensions: [...DEFAULTS.extensions, '.ts'] }),
+  typescript({ tsconfig: 'tsconfig.build.json' }),
+  // terser(),
+];
 
 /**
  * @type {import('rollup').RollupOptions}
@@ -23,11 +29,21 @@ const config = {
       sourcemap: true,
     },
   ],
-  plugins: [
-    nodeResolve({ extensions: [...DEFAULTS.extensions, '.ts'] }),
-    typescript({ tsconfig: 'tsconfig.build.json' }),
-    terser(),
-  ],
+  plugins,
 };
 
-export default config;
+/**
+ * @type {import('rollup').RollupOptions}
+ */
+const workerConfig = {
+  input: 'src/drawWorker.ts',
+  output: [
+    {
+      file: 'dist/drawWorker.js',
+      format: 'es',
+    },
+  ],
+  plugins,
+};
+
+export default [config, workerConfig];

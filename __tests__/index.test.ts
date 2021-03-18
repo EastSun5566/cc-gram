@@ -1,11 +1,11 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { CCGram } from '../src';
+import { CCgram } from '../src';
 import { DEFAULT_FILTERS } from '../src/filters';
 
 describe('Read/Write filter list', (): void => {
-  let cg: CCGram | null = null;
+  let cg: CCgram | null = null;
 
-  beforeEach(() => { cg = new CCGram({ init: false }); });
+  beforeEach(() => { cg = new CCgram({ init: false }); });
 
   test('get filter names list', (): void => {
     expect(cg!.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
@@ -44,7 +44,7 @@ describe('Apply filter to target Image', () => {
         data-filter="${FILTER_NAME}">
     `;
 
-    const cg = new CCGram();
+    const cg = new CCgram();
 
     const { style } = getTargetImage()!;
 
@@ -52,7 +52,7 @@ describe('Apply filter to target Image', () => {
   });
 
   test('apply filter use applyFilter method', (): void => {
-    const cg = new CCGram({ init: false });
+    const cg = new CCgram({ init: false });
 
     document.body.innerHTML = `
       <img
@@ -76,7 +76,7 @@ describe('Apply filter to target Image', () => {
         data-${DATA_ATTR}="${FILTER_NAME}">
     `;
 
-    const cg = new CCGram({ dataAttribute: DATA_ATTR });
+    const cg = new CCgram({ dataAttribute: DATA_ATTR });
 
     const { style } = getTargetImage(DATA_ATTR)!;
 
@@ -85,7 +85,7 @@ describe('Apply filter to target Image', () => {
 });
 
 describe.skip('Access filter image data', () => {
-  let cg: CCGram | null = null;
+  let cg: CCgram | null = null;
 
   beforeEach(() => {
     document.body.innerHTML = `
@@ -94,7 +94,7 @@ describe.skip('Access filter image data', () => {
           data-filter="${FILTER_NAME}">
       `;
 
-    cg = new CCGram();
+    cg = new CCgram();
   });
 
   test('use getDataURL method', async (): Promise<void> => {
