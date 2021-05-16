@@ -10,7 +10,7 @@ import { CCgram as _CCgram } from './CCgram';
 
 export * from './filters';
 export * from './CCgram';
-/** old Name, same as CCgram */
+/** old Name, alias for `CCgram` */
 export const CCGram = _CCgram;
 
 export default _CCgram;

@@ -1,18 +1,40 @@
 import { FilterSetting } from './filters';
-import { MessageData } from './drawWorker';
+
+import { ParseOptions } from './types';
 
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
-// export const hasWorker = !!Worker;
 
-export const assert = <C = unknown>(condition: C, message: string): void => {
-  if (!condition) throw new Error(`[CCgram] ${message}`);
-};
+export function assert<TCond = unknown>(condition: TCond, message = 'internal error.'): asserts condition {
+  if (!condition) throw Error(`[CCgram] ${message}`);
+}
+
+export function assertIsImage(image: HTMLImageElement): asserts image is HTMLImageElement {
+  assert(image && image.tagName === 'IMG', 'The first argument is required and must be an <img> element.');
+  assert(image.src, 'The <img> element src attribute is empty.');
+}
+
+export function createWorker<
+  TData = unknown,
+  TMessage = unknown
+>(fn: (messageEvent: MessageEvent<TData>) => TMessage): Worker {
+  const code = `
+    const work = ${fn.toString()};
+
+    addEventListener('message', async (...params) => {
+      const res = await work(...params);
+      postMessage(res);
+    });
+  `;
+
+  const url = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
+  return new Worker(url);
+}
 
 /**
  * Parse setting to style string
  * @param {FilterSetting} setting - The filter setting
  */
-export const parseSettingToStyle = (setting?: FilterSetting): string => {
+export function parseSettingToStyle(setting?: FilterSetting): string {
   if (!setting) return 'none';
 
   return Object
@@ -25,47 +47,48 @@ export const parseSettingToStyle = (setting?: FilterSetting): string => {
           : ''
     })`)
     .join(' ');
-};
+}
 
-/**
- * Create filter image canvas
- * @param {HTMLImageElement} image - The image
- * @param {string} filterStyle - The filter style
- */
-export const createFilterImageCanvas = (
-  image: HTMLImageElement,
-  filterStyle: string,
-): Promise<HTMLCanvasElement | OffscreenCanvas> => new Promise((resolve, reject): void => {
-  const { naturalWidth, naturalHeight } = image;
+interface CreateBlobOptions<
+  TCanvas extends HTMLCanvasElement | OffscreenCanvas = HTMLCanvasElement
+> {
+  canvas: TCanvas;
+  image: CanvasImageSource;
+  filterStyle: string;
+  options: ParseOptions;
+}
 
-  const canvas = document.createElement('canvas');
-  canvas.width = naturalWidth;
-  canvas.height = naturalHeight;
-
-  // fallback regular canvas if don't support OffscreenCanvas
-  if (hasOffscreenCanvas) {
-    const drawWorker = new Worker('./drawWorker.js');
-    const OffscreenCanvas = canvas.transferControlToOffscreen();
-
-    drawWorker.addEventListener('message', ({ data }: MessageEvent<string>) => {
-      console.log(`${data} in main thread`);
-
-      resolve(canvas);
-    });
-
-    drawWorker.postMessage({ canvas: OffscreenCanvas } as MessageData, [OffscreenCanvas]);
-    return;
-  }
+export function createBlobWorker({
+  data,
+}: MessageEvent<CreateBlobOptions<OffscreenCanvas>>): Promise<Blob | null> {
+  const {
+    canvas,
+    image,
+    filterStyle,
+    options,
+  } = data;
 
   const ctx = canvas.getContext('2d', { alpha: false });
-
-  if (!ctx) {
-    reject(new Error('The 2d context canvas is not supported.'));
-    return;
-  }
+  if (!ctx) throw new Error('The 2d context canvas is not supported.');
 
   ctx.filter = filterStyle;
   ctx.drawImage(image, 0, 0);
 
-  resolve(canvas);
-});
+  return canvas.convertToBlob(options);
+}
+
+export function createBlob({
+  canvas,
+  image,
+  filterStyle,
+  options,
+}: CreateBlobOptions): Promise<Blob | null> {
+  const ctx = canvas.getContext('2d', { alpha: false });
+  if (!ctx) throw new Error('The 2d context canvas is not supported.');
+
+  ctx.filter = filterStyle;
+  ctx.drawImage(image, 0, 0);
+
+  const { type, quality } = options;
+  return new Promise((resolve) => canvas.toBlob((blob): void => resolve(blob), type, quality));
+}

@@ -5,30 +5,14 @@ import {
 } from './filters';
 import {
   parseSettingToStyle,
-  createFilterImageCanvas,
-  assert,
+  hasOffscreenCanvas,
+  assertIsImage,
+  createWorker,
+  createBlobWorker,
+  createBlob,
 } from './utils';
 
-/** The parse options for canvas */
-export interface ParseOptions {
-  /** MIME types, defaults to `image/png` */
-  type?: string;
-  /** [0 - 1], defaults to `0.92` */
-  quality?: number;
-}
-
-/** constructor Options */
-export interface Options {
-  /** The default data attribute */
-  dataAttribute?: string;
-  /** is Init CSS filter to all targets */
-  init?: boolean;
-}
-
-const assertImage = (image: HTMLImageElement): void | never => {
-  assert(image && image.tagName === 'IMG', 'The first argument is required and must be an <img> element.');
-  assert(image.src, 'The <img> element src attribute is empty.');
-};
+import { Options, ParseOptions } from './types';
 
 export const DEFAULT_DATA_ATTRIBUTE = 'filter';
 
@@ -119,43 +103,29 @@ export class CCgram {
   }
 
   /**
-   * Create canvas of image element
-   * @param {HTMLImageElement} image
-   */
-  protected _getImageCanvas(image: HTMLImageElement): Promise<HTMLCanvasElement | OffscreenCanvas> {
-    return createFilterImageCanvas(
-      image,
-      this.getFilterStyle(image.dataset[this._dataAttribute]),
-    );
-  }
-
-  /**
    * Get the data URL of image element
    * @param {HTMLImageElement} image - image element
    * @param {ParseOptions} [parseOptions={}] - options
    */
   async getDataURL(
     image: HTMLImageElement,
-    { type, quality }: ParseOptions = {},
+    options: ParseOptions = {},
   ): Promise<string | null> {
-    assertImage(image);
+    assertIsImage(image);
 
-    const canvas = await this._getImageCanvas(image);
+    // don't use canvas.toDataURL, use blob to DataURL
+    const blob = await this.getBlob(image, options);
+    if (!blob) return null;
 
-    if (canvas instanceof OffscreenCanvas) {
-      const blob = await canvas.convertToBlob({ type, quality });
-      const reader = new FileReader();
+    const reader = new FileReader();
 
-      return new Promise((resolve) => {
-        reader.addEventListener('load', () => {
-          resolve(reader.result as string);
-        });
-
-        reader.readAsDataURL(blob);
+    return new Promise((resolve) => {
+      reader.addEventListener('load', () => {
+        resolve(reader.result as string);
       });
-    }
 
-    return canvas.toDataURL(type, quality);
+      reader.readAsDataURL(blob);
+    });
   }
 
   /**
@@ -165,18 +135,44 @@ export class CCgram {
    */
   async getBlob(
     image: HTMLImageElement,
-    { type, quality }: ParseOptions = {},
+    options: ParseOptions = {},
   ): Promise<Blob | null> {
-    assertImage(image);
+    assertIsImage(image);
 
-    const canvas = await this._getImageCanvas(image);
+    const { naturalWidth, naturalHeight } = image;
+    const filterStyle = this.getFilterStyle(image.dataset[this._dataAttribute]);
 
-    if (canvas instanceof OffscreenCanvas) {
-      return canvas.convertToBlob({ type, quality });
+    if (hasOffscreenCanvas) {
+      const canvas = new OffscreenCanvas(naturalWidth, naturalHeight);
+      const bmp = await createImageBitmap(image);
+
+      return new Promise((resolve) => {
+        console.log('get in to worker');
+        const worker = createWorker(createBlobWorker);
+
+        worker.addEventListener('message', ({ data }: MessageEvent<Blob>) => {
+          console.log('back to main thread');
+          resolve(data);
+        });
+
+        worker.postMessage({
+          canvas,
+          image: bmp,
+          filterStyle,
+          options,
+        }, [canvas, bmp]);
+      });
     }
 
-    return new Promise((resolve): void => {
-      canvas.toBlob((blob): void => resolve(blob), type, quality);
+    const canvas = document.createElement('canvas');
+    canvas.width = naturalWidth;
+    canvas.height = naturalHeight;
+
+    return createBlob({
+      canvas,
+      image,
+      filterStyle,
+      options,
     });
   }
 }
