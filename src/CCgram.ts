@@ -9,7 +9,6 @@ import {
   assertIsImage,
   createWorker,
   createBlobWorker,
-  createBlob,
 } from './utils';
 
 import { Options, ParseOptions } from './types';
@@ -153,6 +152,8 @@ export class CCgram {
         worker.addEventListener('message', ({ data }: MessageEvent<Blob>) => {
           console.log('back to main thread');
           resolve(data);
+
+          worker.terminate();
         });
 
         worker.postMessage({
@@ -168,11 +169,13 @@ export class CCgram {
     canvas.width = naturalWidth;
     canvas.height = naturalHeight;
 
-    return createBlob({
-      canvas,
-      image,
-      filterStyle,
-      options,
-    });
+    const ctx = canvas.getContext('2d', { alpha: false });
+    if (!ctx) throw new Error('The 2d context canvas is not supported.');
+
+    ctx.filter = filterStyle;
+    ctx.drawImage(image, 0, 0);
+
+    const { type, quality } = options;
+    return new Promise((resolve) => canvas.toBlob((blob): void => resolve(blob), type, quality));
   }
 }

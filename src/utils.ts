@@ -27,7 +27,15 @@ export function createWorker<
   `;
 
   const url = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
-  return new Worker(url);
+  const worker = new Worker(url);
+
+  const { terminate } = worker;
+  worker.terminate = (): void => {
+    URL.revokeObjectURL(url);
+    terminate.call(worker);
+  };
+
+  return worker;
 }
 
 /**
@@ -75,20 +83,4 @@ export function createBlobWorker({
   ctx.drawImage(image, 0, 0);
 
   return canvas.convertToBlob(options);
-}
-
-export function createBlob({
-  canvas,
-  image,
-  filterStyle,
-  options,
-}: CreateBlobOptions): Promise<Blob | null> {
-  const ctx = canvas.getContext('2d', { alpha: false });
-  if (!ctx) throw new Error('The 2d context canvas is not supported.');
-
-  ctx.filter = filterStyle;
-  ctx.drawImage(image, 0, 0);
-
-  const { type, quality } = options;
-  return new Promise((resolve) => canvas.toBlob((blob): void => resolve(blob), type, quality));
 }
