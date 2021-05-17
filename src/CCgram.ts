@@ -146,13 +146,10 @@ export class CCgram {
       const bmp = await createImageBitmap(image);
 
       return new Promise((resolve) => {
-        console.log('get in to worker');
         const worker = createWorker(createBlobWorker);
 
         worker.addEventListener('message', ({ data }: MessageEvent<Blob>) => {
-          console.log('back to main thread');
           resolve(data);
-
           worker.terminate();
         });
 
