@@ -18,7 +18,7 @@ export const useDownloadImage = ({
     if (!current || !(current instanceof HTMLImageElement)) throw new TypeError('ref must be an image');
 
     const a = document.createElement('a');
-    a.href = await cg.getDataURL(current);
+    a.href = await cg.getDataURL(current, {});
     a.download = downloadFileName;
     a.click();
   };

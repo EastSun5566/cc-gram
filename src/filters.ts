@@ -6,7 +6,7 @@
 /** The Name of Filter */
 export type FilterName = string;
 
-/** The Setting of Filter */
+/** The Setting object of Filter */
 export interface FilterSetting {
   blur?: number;
   brightness?: number;
@@ -217,5 +217,3 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
     },
   ],
 ]);
-
-export default DEFAULT_FILTERS;

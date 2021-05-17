@@ -1,11 +1,11 @@
 {
-  "name": "ccgram-demo",
+  "name": "cc-gram-demo",
   "version": "0.1.0",
   "author": "汪東陽 EastSun5566",
   "license": "MIT",
   "homepage": "https://eastsun5566.github.io/cc-gram/",
   "scripts": {
-    "dev": "node scripts/start.js",
+    "dev": "rm -rf build && node scripts/start.js",
     "build": "node scripts/build.js",
     "test": "node scripts/test.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
