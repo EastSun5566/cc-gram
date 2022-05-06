@@ -97,14 +97,14 @@ export class CCgram {
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {
         const { dataset } = target;
-        target.style.filter = this.getFilterStyle(dataset[this._dataAttribute]);
+        target.style.setProperty('filter', this.getFilterStyle(dataset[this._dataAttribute]));
       });
   }
 
   /**
    * Get the data URL of image element
    * @param {HTMLImageElement} image - image element
-   * @param {ParseOptions} [parseOptions={}] - options
+   * @param {ParseOptions} [options] - options
    */
   async getDataURL(
     image: HTMLImageElement,
