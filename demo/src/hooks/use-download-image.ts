@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { cg } from '../cg';
+import { cg } from '../filter';
 
 interface useDownloadImageOptions {
   downloadFileName?: string;
