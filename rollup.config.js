@@ -1,7 +1,7 @@
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import filesize from 'rollup-plugin-filesize';
-// import { terser } from 'rollup-plugin-terser';
+import { terser } from 'rollup-plugin-terser';
 
 import { main, module } from './package.json';
 
@@ -27,7 +27,7 @@ const config = {
   plugins: [
     nodeResolve({ extensions: [...DEFAULTS.extensions, '.ts'] }),
     typescript({ tsconfig: 'tsconfig.build.json' }),
-    // terser(),
+    terser(),
     filesize(),
   ],
 };
