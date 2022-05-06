@@ -1,23 +1,23 @@
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
-import { CCGram } from '../src';
+import { CCgram } from '../src';
 import { DEFAULT_FILTERS } from '../src/filters';
 
 describe('Read/Write filter list', (): void => {
-  let cg: CCGram | null = null;
+  let cg: CCgram | null = null;
 
-  beforeEach(() => { cg = new CCGram({ init: false }); });
+  beforeEach(() => { cg = new CCgram({ init: false }); });
 
-  test('get filter names list', (): void => {
+  it('should get all filter name', (): void => {
     expect(cg!.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
   });
 
-  test('add filter', (): void => {
+  it('should add filter', (): void => {
     cg!.setFilter('my-filter', { saturate: 0.8 });
 
     expect(cg!.filterNames).toContain('my-filter');
   });
 
-  test('remove filter', (): void => {
+  it('should remove filter', (): void => {
     const { filterNames } = cg!;
     const targetFilterName = filterNames[Math.floor(Math.random() * (filterNames.length - 1))]!;
 
@@ -37,22 +37,21 @@ const getTargetImage = (dateAttr = 'filter'): HTMLImageElement | null => (
 describe('Apply filter to target Image', () => {
   beforeEach(() => { document.body.innerHTML = ''; });
 
-  test('apply filter from init', (): void => {
+  it('should apply CSS filter when init', (): void => {
     document.body.innerHTML = `
       <img
         src="${IMAGE_SRC}"
         data-filter="${FILTER_NAME}">
     `;
 
-    const cg = new CCGram();
-
+    const cg = new CCgram();
     const { style } = getTargetImage()!;
 
     expect(cg.getFilterStyle(FILTER_NAME)).toBe(style.filter);
   });
 
-  test('apply filter use applyFilter method', (): void => {
-    const cg = new CCGram({ init: false });
+  it('should apply CSS filter when call applyFilter method', (): void => {
+    const cg = new CCgram({ init: false });
 
     document.body.innerHTML = `
       <img
@@ -61,13 +60,12 @@ describe('Apply filter to target Image', () => {
     `;
 
     cg.applyFilter();
-
     const { style } = getTargetImage()!;
 
     expect(cg.getFilterStyle(FILTER_NAME)).toBe(style.filter);
   });
 
-  test('apply filter with customized data attr', (): void => {
+  it(' should apply filter with customized data attr', (): void => {
     const DATA_ATTR = 'cg';
 
     document.body.innerHTML = `
@@ -76,8 +74,7 @@ describe('Apply filter to target Image', () => {
         data-${DATA_ATTR}="${FILTER_NAME}">
     `;
 
-    const cg = new CCGram({ dataAttribute: DATA_ATTR });
-
+    const cg = new CCgram({ dataAttribute: DATA_ATTR });
     const { style } = getTargetImage(DATA_ATTR)!;
 
     expect(cg.getFilterStyle(FILTER_NAME)).toBe(style.filter);
@@ -85,7 +82,7 @@ describe('Apply filter to target Image', () => {
 });
 
 describe.skip('Access filter image data', () => {
-  let cg: CCGram | null = null;
+  let cg: CCgram | null = null;
 
   beforeEach(() => {
     document.body.innerHTML = `
@@ -94,22 +91,21 @@ describe.skip('Access filter image data', () => {
           data-filter="${FILTER_NAME}">
       `;
 
-    cg = new CCGram();
+    cg = new CCgram();
   });
 
-  test('use getDataURL method', async (): Promise<void> => {
+  it('should return dataURL when call getDataURL method', async (): Promise<void> => {
     const target = getTargetImage()!;
-
     const dataURL = await cg!.getDataURL(target, { quality: 0.8 });
 
-    expect(dataURL).toBeTruthy();
+    const regEx = /data:([\w/+]+);(charset=[\w-]+|base64).*,([a-zA-Z0-9+/]+={0,2})/;
+    expect(regEx.test(dataURL!)).toBe(true);
   });
 
-  test('use getBlob method', async (): Promise<void> => {
+  test('should return blob when call getBlob method', async (): Promise<void> => {
     const target = getTargetImage()!;
-
     const blob = await cg!.getBlob(target, { quality: 0.8 });
 
-    expect(blob).toBeTruthy();
+    expect(blob instanceof Blob).toBe(true);
   });
 });

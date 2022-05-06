@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cg } from '../cg';
+import { cg } from '../filter';
 
 interface useFiltersOptions {
   initialValue?: string;

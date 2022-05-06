@@ -3,7 +3,7 @@ import React from 'react';
 
 import './Preview.scss';
 
-import { cg } from '../../cg';
+import { cg } from '../../filter';
 import { useFilters, useDownloadImage } from '../../hooks';
 
 interface PreviewProps {
