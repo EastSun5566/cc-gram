@@ -102,7 +102,7 @@ describe.skip('Access filter image data', () => {
     expect(regEx.test(dataURL!)).toBe(true);
   });
 
-  test('should return blob when call getBlob method', async (): Promise<void> => {
+  it('should return blob when call getBlob method', async (): Promise<void> => {
     const target = getTargetImage()!;
     const blob = await cg!.getBlob(target, { quality: 0.8 });
 

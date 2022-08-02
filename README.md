@@ -166,13 +166,13 @@ const blob = await cg.getBlob(image, {
 
 - Options
 
-  - type: `string` - MIME types, default is `image/png`,
-  - quality: `number`- [0 - 1], default is `0.92`
+  - type: `string` - MIME types, defaults to `image/png`,
+  - quality: `number`- [0 - 1], defaults to `0.92`
 
 ## 🔧 Development
 
 ```sh
-# install dep
+# install deps
 npm i
 
 # fix style
