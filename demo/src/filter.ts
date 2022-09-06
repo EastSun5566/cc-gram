@@ -1,5 +1,5 @@
 // import CCGram from 'cc-gram';
-import { CCgram } from '../../dist/index.esm';
+import { createFilter } from '../../dist/index.esm';
 
-export const cg = new CCgram({ init: false });
-export default cg;
+export const filter = createFilter({ init: false });
+export default filter;

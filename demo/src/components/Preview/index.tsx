@@ -3,7 +3,7 @@ import React from 'react';
 
 import './Preview.scss';
 
-import { cg } from '../../filter';
+import { filter } from '../../filter';
 import { useFilters, useDownloadImage } from '../../hooks';
 
 interface PreviewProps {
@@ -50,7 +50,7 @@ export const Preview: React.FC<PreviewProps> = ({
 
       <div className="filters-container">
         {
-          cg.filterNames.map((filterName) => (
+          filter.filterNames.map((filterName) => (
             <figure
               role="button"
               className={selectedFilter === filterName ? 'selected' : ''}

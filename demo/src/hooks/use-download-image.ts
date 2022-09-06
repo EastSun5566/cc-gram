@@ -1,5 +1,5 @@
 import { useRef } from 'react';
-import { cg } from '../filter';
+import { filter } from '../filter';
 
 interface useDownloadImageOptions {
   downloadFileName?: string;
@@ -18,7 +18,7 @@ export const useDownloadImage = ({
     if (!current || !(current instanceof HTMLImageElement)) throw new TypeError('ref must be an image');
 
     const a = document.createElement('a');
-    a.href = await cg.getDataURL(current, {});
+    a.href = await filter.getDataURL(current, { type: 'image/jpeg' }) || '';
     a.download = downloadFileName;
     a.click();
   };

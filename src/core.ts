@@ -17,9 +17,9 @@ export const DEFAULT_DATA_ATTRIBUTE = 'filter';
 
 /** 🖼 A CSS & Canvas Instagram filters based on CSSgram */
 export class CCgram {
-  static readonly DEFAULT_DATA_ATTRIBUTE = DEFAULT_DATA_ATTRIBUTE
+  static readonly DEFAULT_DATA_ATTRIBUTE = DEFAULT_DATA_ATTRIBUTE;
 
-  static readonly DEFAULT_FILTERS = DEFAULT_FILTERS
+  static readonly DEFAULT_FILTERS = DEFAULT_FILTERS;
 
   /** filter list */
   protected readonly _filters = DEFAULT_FILTERS;
@@ -175,4 +175,12 @@ export class CCgram {
     const { type, quality } = options;
     return new Promise((resolve) => canvas.toBlob((blob): void => resolve(blob), type, quality));
   }
+}
+
+/** old Name, alias for `CCgram` */
+export const CCGram = CCgram;
+/** alias for `CCgram` */
+export const Filter = CCgram;
+export function createFilter(options: Options): CCgram {
+  return new Filter(options);
 }

@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { cg } from '../filter';
+import { filter } from '../filter';
 
 interface useFiltersOptions {
   initialValue?: string;
@@ -16,7 +16,7 @@ export const useFilters = ({
   const [value, setValue] = useState(initialValue);
 
   useEffect(() => {
-    cg.applyFilter(selectors);
+    filter.applyFilter(selectors);
   }, [value]);
 
   return [value, setValue];
