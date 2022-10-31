@@ -1,19 +1,24 @@
 import { useRef } from 'react';
-import { filter } from '../filter';
+import { Filter } from '../../../dist/index.esm';
 
-interface useDownloadImageOptions {
+interface UseDownloadFilterImageOptions {
   downloadFileName?: string;
+  filter: InstanceType<typeof Filter>;
 }
 
-export const useDownloadImage = ({
-  downloadFileName = 'download',
-}: useDownloadImageOptions = {}): {
+interface DownloadOptions {
+  downloadFileName?: string
+}
+
+export const useDownloadFilterImage = ({ filter }: UseDownloadFilterImageOptions): {
   imageRef: React.RefObject<HTMLImageElement>;
-  download: () => void;
+  download(downloadOptions: DownloadOptions): Promise<void>;
 } => {
   const imageRef = useRef<HTMLImageElement>(null);
 
-  const download = async () => {
+  const download = async ({
+    downloadFileName = 'download',
+  } = {}) => {
     const { current } = imageRef;
     if (!current || !(current instanceof HTMLImageElement)) throw new TypeError('ref must be an image');
 
@@ -26,4 +31,4 @@ export const useDownloadImage = ({
   return { imageRef, download };
 };
 
-export default useDownloadImage;
+export default useDownloadFilterImage;

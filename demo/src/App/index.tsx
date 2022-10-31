@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import './App.scss';
@@ -9,10 +9,9 @@ import {
   GithubCorner,
   Note,
 } from '../components';
-import { useFilters } from '../hooks';
 
 const App: React.FC = () => {
-  const [imageURL, setImageURL] = useFilters();
+  const [imageURL, setImageURL] = useState('');
 
   return (
     <>

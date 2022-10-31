@@ -3,8 +3,7 @@ import React from 'react';
 
 import './Preview.scss';
 
-import { filter } from '../../filter';
-import { useFilters, useDownloadImage } from '../../hooks';
+import { useFilters, useDownloadFilterImage } from '../../hooks';
 
 interface PreviewProps {
   imageURL?: string;
@@ -15,12 +14,10 @@ export const Preview: React.FC<PreviewProps> = ({
   imageURL,
   onClear,
 }) => {
-  const [selectedFilter, setSelectedFilter] = useFilters({
-    selectors: '#preview-image',
-  });
-  const { imageRef, download } = useDownloadImage({ downloadFileName: selectedFilter });
-
   if (!imageURL) return null;
+
+  const { filter, selectedFilterName, setSelectedFilterName } = useFilters();
+  const { imageRef, download } = useDownloadFilterImage({ filter });
 
   return (
     <div className="preview">
@@ -28,8 +25,8 @@ export const Preview: React.FC<PreviewProps> = ({
         <img
           id="preview-image"
           src={imageURL}
-          data-filter={selectedFilter}
-          alt={selectedFilter.toUpperCase()}
+          data-filter={selectedFilterName}
+          alt={selectedFilterName.toUpperCase()}
           ref={imageRef}
         />
         <button
@@ -42,7 +39,7 @@ export const Preview: React.FC<PreviewProps> = ({
         <button
           type="button"
           className="btn btn-download"
-          onClick={download}
+          onClick={() => download({ downloadFileName: selectedFilterName })}
         >
           <i className="fas fa-cloud-download-alt" />
         </button>
@@ -53,10 +50,10 @@ export const Preview: React.FC<PreviewProps> = ({
           filter.filterNames.map((filterName) => (
             <figure
               role="button"
-              className={selectedFilter === filterName ? 'selected' : ''}
+              className={selectedFilterName === filterName ? 'selected' : ''}
               key={filterName}
-              onClick={() => setSelectedFilter(filterName)}
-              onKeyPress={() => setSelectedFilter(filterName)}
+              onClick={() => setSelectedFilterName(filterName)}
+              onKeyPress={() => setSelectedFilterName(filterName)}
             >
               <img
                 src={imageURL}

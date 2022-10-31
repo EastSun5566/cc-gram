@@ -1,2 +1,2 @@
 export * from './use-filters';
-export * from './use-download-image';
+export * from './use-download-filter-image';
