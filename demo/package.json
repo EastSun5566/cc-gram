@@ -5,8 +5,9 @@
   "license": "MIT",
   "homepage": "https://eastsun5566.github.io/cc-gram/",
   "scripts": {
-    "dev": "rm -rf build && node scripts/start.js",
+    "dev": "node scripts/start.js",
     "build": "node scripts/build.js",
+    "preview": "serve -s build",
     "test": "node scripts/test.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
     "deploy": "npm run build && gh-pages -d build"
@@ -152,6 +153,7 @@
     "eslint-plugin-react-hooks": "^4.0.8",
     "gh-pages": "^3.1.0",
     "sass": "^1.51.0",
+    "serve": "^14.0.1",
     "source-map-explorer": "^2.4.2"
   }
 }

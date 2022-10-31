@@ -1,25 +1,31 @@
 import { useState, useEffect } from 'react';
-import { filter } from '../filter';
+
+import { createFilter, Filter } from '../../../dist/index.esm';
 
 interface useFiltersOptions {
-  initialValue?: string;
-  selectors?: string;
+  initialFilterName?: string;
 }
 
 export const useFilters = ({
-  initialValue = '',
-  selectors,
-}: useFiltersOptions = {}): [
-  string,
-  React.Dispatch<React.SetStateAction<string>>
-] => {
-  const [value, setValue] = useState(initialValue);
+  initialFilterName = '',
+}: useFiltersOptions = {}): {
+  selectedFilterName: string;
+  setSelectedFilterName: React.Dispatch<React.SetStateAction<string>>;
+  filter: InstanceType<typeof Filter>;
+} => {
+  const [selectedFilterName, setSelectedFilterName] = useState(initialFilterName);
+
+  const filter = createFilter({ init: false });
 
   useEffect(() => {
-    filter.applyFilter(selectors);
-  }, [value]);
+    filter.applyFilter();
+  }, [selectedFilterName]);
 
-  return [value, setValue];
+  return {
+    selectedFilterName,
+    setSelectedFilterName,
+    filter,
+  };
 };
 
 export default useFilters;
