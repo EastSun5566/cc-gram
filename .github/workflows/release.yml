@@ -9,27 +9,29 @@ jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
+      - uses: pnpm/action-setup@v2
       - run: |
-          npm ci
-          npm test
+          pnpm i
+          pnpm test
 
   publish-npm:
     needs: test
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v3
+      - uses: actions/setup-node@v3
         with:
           node-version: 16.x
           registry-url: https://registry.npmjs.org/
+      - uses: pnpm/action-setup@v2
       - run: |
-          npm ci
-          npm run build
-          npm publish
+          pnpm i
+          pnpm build
+          pnpm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
 
@@ -41,11 +43,12 @@ jobs:
       - uses: actions/setup-node@v1
         with:
           node-version: 16.x
+      - uses: pnpm/action-setup@v2
       - run: |
           cd demo
-          npm ci
-          npm i cc-gram@latest
-          npm run build
+          pnpm i
+          pnpm i cc-gram@latest
+          pnpm build
       - uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GH_TOKEN }}
