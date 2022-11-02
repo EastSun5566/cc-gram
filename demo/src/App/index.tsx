@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, lazy, Suspense } from 'react';
 import { CSSTransition } from 'react-transition-group';
-
-import './App.scss';
 
 import {
   UploadInput,
-  Preview,
   GithubCorner,
   Note,
 } from '../components';
+
+import './App.scss';
+
+const LazyPreview = lazy(() => import('../components/Preview'));
 
 const App: React.FC = () => {
   const [imageURL, setImageURL] = useState('');
@@ -25,10 +26,12 @@ const App: React.FC = () => {
         >
           {imageURL
             ? (
-              <Preview
-                imageURL={imageURL}
-                onClear={() => setImageURL('')}
-              />
+              <Suspense fallback={<p>loading...</p>}>
+                <LazyPreview
+                  imageURL={imageURL}
+                  onClear={() => setImageURL('')}
+                />
+              </Suspense>
             )
             : (
               <UploadInput
