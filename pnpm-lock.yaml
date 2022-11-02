@@ -3,7 +3,6 @@ lockfileVersion: 5.4
 specifiers:
   '@rollup/plugin-node-resolve': ^11.1.0
   '@types/jest': ^29.2.1
-  '@types/offscreencanvas': ^2019.6.4
   '@typescript-eslint/eslint-plugin': ^2.14.0
   '@typescript-eslint/parser': ^2.14.0
   babel-eslint: ^10.0.1
@@ -24,7 +23,6 @@ specifiers:
 devDependencies:
   '@rollup/plugin-node-resolve': 11.2.1_rollup@2.79.1
   '@types/jest': 29.2.1
-  '@types/offscreencanvas': 2019.7.0
   '@typescript-eslint/eslint-plugin': 2.34.0_izpcerxjnbrrlhffcttpz7zrma
   '@typescript-eslint/parser': 2.34.0_gjkzpvg3kr4mru3ob5fvm4vice
   babel-eslint: 10.1.0_eslint@6.8.0
@@ -867,10 +865,6 @@ packages:
 
   /@types/normalize-package-data/2.4.1:
     resolution: {integrity: sha512-Gj7cI7z+98M282Tqmp2K5EIsoouUEzbBJhQQzDE3jSIRk6r9gsz0oUokqIUR4u1R3dMHo0pDHM7sNOHyhulypw==}
-    dev: true
-
-  /@types/offscreencanvas/2019.7.0:
-    resolution: {integrity: sha512-PGcyveRIpL1XIqK8eBsmRBt76eFgtzuPiSTyKHZxnGemp2yzGzWpjYKAfK3wIMiU7eH+851yEpiuP8JZerTmWg==}
     dev: true
 
   /@types/prettier/2.7.1:
