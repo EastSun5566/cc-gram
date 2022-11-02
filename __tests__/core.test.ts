@@ -1,3 +1,4 @@
+// @ts-nocheck
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CCgram } from '../src';
 import { DEFAULT_FILTERS } from '../src/filters';
