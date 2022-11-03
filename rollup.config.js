@@ -1,25 +1,23 @@
+import { defineConfig } from 'rollup';
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from 'rollup-plugin-typescript2';
 import filesize from 'rollup-plugin-filesize';
 import { terser } from 'rollup-plugin-terser';
 
-import { main, module } from './package.json';
+import pkg from './package.json' assert { type: 'json' };
 
-/**
- * @type {import('rollup').RollupOptions}
- */
-const config = {
+export default defineConfig({
   input: 'src/index.ts',
   output: [
     {
       name: 'CCGram',
-      file: main,
+      file: pkg.main,
       format: 'umd',
       // sourcemap: true,
       exports: 'named',
     },
     {
-      file: module,
+      file: pkg.module,
       format: 'es',
       // sourcemap: true,
     },
@@ -30,6 +28,4 @@ const config = {
     terser(),
     filesize(),
   ],
-};
-
-export default config;
+});
