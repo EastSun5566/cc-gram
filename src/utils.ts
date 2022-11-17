@@ -1,5 +1,4 @@
 import { FilterSetting } from './filters';
-
 import { ParseOptions } from './types';
 
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
@@ -40,7 +39,7 @@ export function createWorker<
 
 /**
  * Parse setting to style string
- * @param {FilterSetting} setting - The filter setting
+ * @param setting - The filter setting
  */
 export function parseSettingToStyle(setting?: FilterSetting): string {
   if (!setting) return 'none';
