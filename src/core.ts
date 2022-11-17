@@ -55,8 +55,8 @@ export class CCgram {
 
   /**
    * Add/Set filter
-   * @param {FilterName} name - the Filter name
-   * @param {FilterSetting} setting - the Filter setting
+   * @param name - the Filter name
+   * @param setting - the Filter setting
    */
   setFilter(name: FilterName, setting: FilterSetting): void {
     this._filters.set(name, setting);
@@ -64,7 +64,7 @@ export class CCgram {
 
   /**
    * Remove filter
-   * @param {FilterName} name - the Filter name
+   * @param name - the Filter name
    */
   removeFilter(name: FilterName): boolean {
     return this._filters.delete(name);
@@ -72,7 +72,7 @@ export class CCgram {
 
   /**
    * Get setting object of filter
-   * @param {FilterName} [name=''] - The filter name
+   * @param [name=''] - The filter name
    */
   getFilterSetting(name: FilterName = ''): FilterSetting | void {
     return this._filters.get(name);
@@ -80,7 +80,7 @@ export class CCgram {
 
   /**
    * Get the CSS inline style string of filter
-   * @param {FilterName} [name=''] - The filter name
+   * @param [name=''] - The filter name
    */
   getFilterStyle(name: FilterName = ''): string {
     const setting = this._filters.get(name);
@@ -90,7 +90,7 @@ export class CCgram {
 
   /**
    * Apply CSS filter to all targets
-   * @param {string} [selectors='img[data-${this._dataAttribute}]'] - selectors
+   * @param [selectors='img[data-${this._dataAttribute}]'] - selectors
    */
   applyFilter(selectors = `img[data-${this._dataAttribute}]`): void {
     document
@@ -103,8 +103,8 @@ export class CCgram {
 
   /**
    * Get the data URL of image element
-   * @param {HTMLImageElement} image - image element
-   * @param {ParseOptions} [options] - options
+   * @param image - image element
+   * @param [options] - options
    */
   async getDataURL(
     image: HTMLImageElement,
@@ -129,8 +129,8 @@ export class CCgram {
 
   /**
    * Get the blob of image element
-   * @param {HTMLImageElement} image - image element
-   * @param {ParseOptions} [parseOptions={}] - options
+   * @param image - image element
+   * @param [options={}] - parse options
    */
   async getBlob(
     image: HTMLImageElement,
