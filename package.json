@@ -21,6 +21,7 @@
     "test": "jest __tests__/ --coverage",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src",
     "release": "sh scripts/release.sh",
+    "release:dry-run": "release-it --dry-run",
     "demo:dev": "pnpm -C demo dev"
   },
   "keywords": [
@@ -63,6 +64,7 @@
     "husky": "^3.1.0",
     "jest": "^29.2.2",
     "jest-environment-jsdom": "^29.2.2",
+    "release-it": "^15.5.0",
     "rimraf": "^3.0.2",
     "rollup": "^3.2.5",
     "rollup-plugin-filesize": "^9.1.2",
