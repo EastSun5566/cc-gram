@@ -6,9 +6,7 @@
  * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
  */
 
-import { Filter } from './core';
+export { Filter as default } from './core';
 
 export * from './filters';
 export * from './core';
-
-export default Filter;
