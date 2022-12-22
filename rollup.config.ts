@@ -1,3 +1,4 @@
+/* eslint-disable import/no-extraneous-dependencies */
 import { defineConfig } from 'rollup';
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
