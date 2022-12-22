@@ -25,7 +25,7 @@ export default defineConfig({
   ],
   plugins: [
     nodeResolve({ extensions: [...DEFAULTS.extensions, '.ts'] }),
-    typescript({ tsconfig: 'tsconfig.build.json' }),
+    typescript(),
     terser(),
     filesize(),
   ],
