@@ -21,6 +21,7 @@
     "test": "vitest __tests__",
     "test:coverage": "vitest run __tests__ --coverage",
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src",
+    "prepublishOnly": "pnpm build",
     "release": "sh scripts/release.sh",
     "demo:dev": "pnpm -C demo dev"
   },

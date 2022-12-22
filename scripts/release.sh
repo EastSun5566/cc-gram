@@ -3,11 +3,11 @@
 # abort on errors
 set -e
 
-echo "check out & sync master"
-git checkout master
+echo "check out & sync main"
+git checkout main
 git pull
 
-npx standard-version
+pnpx standard-version
 
 echo "push tags"
 git push --follow-tags
