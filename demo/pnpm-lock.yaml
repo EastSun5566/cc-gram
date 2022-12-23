@@ -54,6 +54,7 @@ specifiers:
   react-app-polyfill: ^1.0.5
   react-dev-utils: 11.0.4
   react-dom: ^16.12.0
+  react-ga: ^3.3.1
   react-snap: ^1.23.0
   react-transition-group: ^4.4.1
   resolve: 1.17.0
@@ -118,6 +119,7 @@ dependencies:
   react-app-polyfill: 1.0.6
   react-dev-utils: 11.0.4_np2jsocuwqicvjh63cemexwyqu
   react-dom: 16.14.0_react@16.14.0
+  react-ga: 3.3.1_react@16.14.0
   react-transition-group: 4.4.1_wcqkhtmu7mswc6yz4uyexck3ty
   resolve: 1.17.0
   resolve-url-loader: 3.1.1
@@ -11020,6 +11022,15 @@ packages:
 
   /react-error-overlay/6.0.9:
     resolution: {integrity: sha512-nQTTcUu+ATDbrSD1BZHr5kgSD4oF8OFjxun8uAaL8RwPBacGBNPf/yAuVVdx17N8XNzRDMrZ9XcKZHCjPW+9ew==}
+    dev: false
+
+  /react-ga/3.3.1_react@16.14.0:
+    resolution: {integrity: sha512-4Vc0W5EvXAXUN/wWyxvsAKDLLgtJ3oLmhYYssx+YzphJpejtOst6cbIHCIyF50Fdxuf5DDKqRYny24yJ2y7GFQ==}
+    peerDependencies:
+      prop-types: ^15.6.0
+      react: ^15.6.2 || ^16.0 || ^17 || ^18
+    dependencies:
+      react: 16.14.0
     dev: false
 
   /react-is/16.13.1:
