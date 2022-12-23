@@ -20,7 +20,7 @@ specifiers:
   babel-preset-react-app: ^9.1.0
   camelcase: ^6.0.0
   case-sensitive-paths-webpack-plugin: 2.3.0
-  cc-gram: 0.2.2-beta.0
+  cc-gram: 1.0.1
   css-loader: 4.1.0
   dotenv: 8.2.0
   dotenv-expand: 5.1.0
@@ -92,7 +92,7 @@ dependencies:
   babel-preset-react-app: 9.1.2
   camelcase: 6.3.0
   case-sensitive-paths-webpack-plugin: 2.3.0
-  cc-gram: 0.2.2-beta.0
+  cc-gram: 1.0.1
   css-loader: 4.1.0_webpack@4.44.0
   dotenv: 8.2.0
   dotenv-expand: 5.1.0
@@ -4447,8 +4447,8 @@ packages:
     resolution: {integrity: sha512-4tYFyifaFfGacoiObjJegolkwSU4xQNGbVgUiNYVUxbQ2x2lUsFvY4hVgVzGiIe6WLOPqycWXA40l+PWsxthUw==}
     dev: false
 
-  /cc-gram/0.2.2-beta.0:
-    resolution: {integrity: sha512-j+XMFLIyzcUbJ7F9Z0V93eY6z/CQumvHb2zN//Y3xAalLt9AW2jWmp++IGrR3sRjFbzBYjNR57hsZAI0A486JQ==}
+  /cc-gram/1.0.1:
+    resolution: {integrity: sha512-bQP8Im9uQu6ZeAAk7kMYIxA8NV2g2zUkE+6ZPAmulISpUmHqkj7eH7lzdtl02mmKMhs6wyhY8Btv1pPJo2D3BQ==}
     requiresBuild: true
     dev: false
 
