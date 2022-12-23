@@ -47,7 +47,7 @@ export const Preview: React.FC<PreviewProps> = ({
 
       <div className="filters-container">
         {
-          filter.filterNames.map((filterName) => (
+          filter.filterNames.map((filterName: string) => (
             <figure
               role="button"
               className={selectedFilterName === filterName ? 'selected' : ''}

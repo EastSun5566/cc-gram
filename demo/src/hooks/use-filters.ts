@@ -1,6 +1,9 @@
 import { useState, useEffect } from 'react';
 
-import { createFilter, Filter } from '../../../dist/index.esm';
+// TODO
+// eslint-disable-next-line @typescript-eslint/ban-ts-comment
+// @ts-ignore
+import { createFilter, FilterInstance } from '../../../dist/index.esm';
 
 interface useFiltersOptions {
   initialFilterName?: string;
@@ -11,7 +14,7 @@ export const useFilters = ({
 }: useFiltersOptions = {}): {
   selectedFilterName: string;
   setSelectedFilterName: React.Dispatch<React.SetStateAction<string>>;
-  filter: InstanceType<typeof Filter>;
+  filter: FilterInstance;
 } => {
   const [selectedFilterName, setSelectedFilterName] = useState(initialFilterName);
 

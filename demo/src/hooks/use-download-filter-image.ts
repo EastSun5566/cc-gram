@@ -1,9 +1,11 @@
 import { useRef } from 'react';
-import { Filter } from '../../../dist/index.esm';
+
+// TODO
+import { FilterInstance } from '../../../dist';
 
 interface UseDownloadFilterImageOptions {
   downloadFileName?: string;
-  filter: InstanceType<typeof Filter>;
+  filter: FilterInstance;
 }
 
 interface DownloadOptions {
