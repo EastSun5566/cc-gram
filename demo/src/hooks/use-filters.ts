@@ -1,9 +1,5 @@
 import { useState, useEffect } from 'react';
-
-// TODO
-// eslint-disable-next-line @typescript-eslint/ban-ts-comment
-// @ts-ignore
-import { createFilter, FilterInstance } from '../../../dist/index.esm';
+import { createFilter, FilterInstance } from 'cc-gram';
 
 interface useFiltersOptions {
   initialFilterName?: string;

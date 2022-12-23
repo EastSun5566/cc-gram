@@ -1,7 +1,5 @@
 import { useRef } from 'react';
-
-// TODO
-import { FilterInstance } from '../../../dist';
+import { FilterInstance } from 'cc-gram';
 
 interface UseDownloadFilterImageOptions {
   downloadFileName?: string;
