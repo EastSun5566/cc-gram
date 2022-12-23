@@ -9,7 +9,7 @@
 
 🔗 <https://eastsun5566.github.io/cc-gram/>
 
-![Demo GIF](./demo/demo.gif)
+![Demo GIF](./demo.gif)
 
 ## 🤔 The Why
 
@@ -173,14 +173,14 @@ const blob = await cg.getBlob(image, {
 
 ```sh
 # install deps
-npm i
+pnpm i
 
 # fix style
-npm run lint
+pnpm run lint
 
 # run test
-npm test
+pnpm test
 
 # build for prod
-npm run build
+pnpm run build
 ```
