@@ -13,7 +13,10 @@
 
 ## 🤔 The Why
 
-> [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram comes into the play. It uses CSS to preview filters and draw filter images with canvas filter API when you need it.
+> [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram comes into the play. It uses pure CSS to preview filters and draw it with Canvas when you need it.
+
+- On-Demand: Uses CSS to preview & draw with Canvas API on demand.
+- Non-Blocking: Draw an image on Web Worker with `OffscreenCanvas` & `ImageBitmap`.
 
 ## ✨ Installation
 
@@ -38,18 +41,18 @@ npm i cc-gram
 > Initialize to apply CSS filter to All targets has `data-filter` attribute
 
 ```js
-import CCGram from "cc-gram";
+import { createFilter } from "cc-gram";
 
-const cg = new CCGram();
+const filter = createFilter();
 ```
 
 ```js
 // or you can turn off init apply
-const cg = new CCGram({ init: false });
+const filter = createFilter({ init: false });
 
 // you can also specify data attribute
 // i.e., <img data-my-attr="1977">
-const cg = new CCGram({ dataAttribute: "my-attr" });
+const filter = createFilter({ dataAttribute: "my-attr" });
 ```
 
 ---
@@ -60,10 +63,10 @@ const cg = new CCGram({ dataAttribute: "my-attr" });
 
 ```js
 // apply to All targets has `data-filter` attribute
-cg.applyFilter();
+filter.applyFilter();
 
 // or you can just use selector for performance
-cg.applyFilter("#my-image");
+filter.applyFilter("#my-image");
 ```
 
 ##### All available filter name list
@@ -71,7 +74,7 @@ cg.applyFilter("#my-image");
 > `filterNames`
 
 ```js
-const { filterNames } = cg;
+const filterNames = filter.filterNames;
 ```
 
 - Default filter Name list:
@@ -102,7 +105,7 @@ const { filterNames } = cg;
   - `stinson`
   - `amaro`
 
-##### Add / Set filter to filter list
+##### Add / Set filter to the filter list
 
 > `setFilter(name, setting)`
 
@@ -110,7 +113,7 @@ const { filterNames } = cg;
 - setting: `object` - The filter setting
 
 ```js
-cg.setFilter("my-filter", {
+filter.setFilter("my-filter", {
   saturate: 0.8,
   contrast: 1.2,
 });
@@ -127,14 +130,14 @@ cg.setFilter("my-filter", {
   - `saturate`
   - `sepia`
 
-##### Remove filter from filter list
+##### Remove the filter from the filter list
 
 > `removeFilter(name)`
 
 - name: `string` - The filter name
 
 ```js
-cg.removeFilter("my-filter");
+filter.removeFilter("my-filter");
 ```
 
 ---
@@ -150,7 +153,7 @@ const image = document.querySelector('img[data-filter="1977"]');
 > `getDataURL(image[, options = {}])`
 
 ```js
-const dataUrl = await cg.getDataURL(image);
+const dataUrl = await filter.getDataURL(image);
 ```
 
 #### Blob
@@ -158,7 +161,7 @@ const dataUrl = await cg.getDataURL(image);
 > `getBlob(image[, options = {}])`
 
 ```js
-const blob = await cg.getBlob(image, {
+const blob = await filter.getBlob(image, {
   type: "image/jpeg",
   quality: 0.8,
 });

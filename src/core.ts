@@ -181,6 +181,8 @@ export class CCgram {
 export const CCGram = CCgram;
 /** alias for `CCgram` */
 export const Filter = CCgram;
-export function createFilter(options: Options): CCgram {
+
+export type FilterInstance = InstanceType<typeof CCgram>;
+export function createFilter(options: Options): FilterInstance {
   return new Filter(options);
 }

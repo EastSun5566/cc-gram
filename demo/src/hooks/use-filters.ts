@@ -1,6 +1,5 @@
 import { useState, useEffect } from 'react';
-
-import { createFilter, Filter } from '../../../dist/index.esm';
+import { createFilter, FilterInstance } from 'cc-gram';
 
 interface useFiltersOptions {
   initialFilterName?: string;
@@ -11,7 +10,7 @@ export const useFilters = ({
 }: useFiltersOptions = {}): {
   selectedFilterName: string;
   setSelectedFilterName: React.Dispatch<React.SetStateAction<string>>;
-  filter: InstanceType<typeof Filter>;
+  filter: FilterInstance;
 } => {
   const [selectedFilterName, setSelectedFilterName] = useState(initialFilterName);
 

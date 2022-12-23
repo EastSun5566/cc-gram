@@ -1,9 +1,9 @@
 import { useRef } from 'react';
-import { Filter } from '../../../dist/index.esm';
+import { FilterInstance } from 'cc-gram';
 
 interface UseDownloadFilterImageOptions {
   downloadFileName?: string;
-  filter: InstanceType<typeof Filter>;
+  filter: FilterInstance;
 }
 
 interface DownloadOptions {
