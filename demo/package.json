@@ -10,7 +10,7 @@
     "preview": "serve -s build",
     "test": "node scripts/test.js",
     "analyze": "source-map-explorer 'build/static/js/*.js'",
-    "deploy": "npm run build && gh-pages -d build"
+    "deploy": "pnpm build && gh-pages -d build"
   },
   "dependencies": {
     "@babel/core": "7.10.5",
