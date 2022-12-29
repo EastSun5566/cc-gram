@@ -2,6 +2,19 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.1.0](https://github.com/EastSun5566/cc-gram/compare/v1.0.1...v1.1.0) (2022-12-29)
+
+
+### Features
+
+* add ga ([bb8b9e5](https://github.com/EastSun5566/cc-gram/commit/bb8b9e5b6a51c702f7ce438782518a2c3bdb4728))
+* bump cc-gram ([e01adad](https://github.com/EastSun5566/cc-gram/commit/e01adade2bc892c39bec24f85be26351fe851139))
+
+
+### Bug Fixes
+
+* should can be installed by any pkg manager ([5c807f4](https://github.com/EastSun5566/cc-gram/commit/5c807f437de2f78b1a539b325836acb357af73c9))
+
 ### [1.0.1](https://github.com/EastSun5566/cc-gram/compare/v1.0.0...v1.0.1) (2022-12-23)
 
 ## [1.0.0](https://github.com/EastSun5566/cc-gram/compare/v0.2.2-beta.0...v1.0.0) (2022-12-23)
