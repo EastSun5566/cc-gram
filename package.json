@@ -15,7 +15,6 @@
     "src"
   ],
   "scripts": {
-    "preinstall": "npx only-allow pnpm",
     "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin typescript",
     "type-check": "tsc --noEmit",
     "test": "vitest __tests__",
