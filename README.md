@@ -1,22 +1,22 @@
-# CCgram
+# 🖼 CCgram
 
 [![NPM Version](https://img.shields.io/npm/v/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 [![NPM Downloads](https://img.shields.io/npm/dt/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 [![Test Status](https://img.shields.io/github/actions/workflow/status/EastSun5566/cc-gram/test.yml?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/actions/workflows/test.yml)
 [![License](https://img.shields.io/github/license/EastSun5566/cc-gram.svg?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/blob/master/LICENSE)
 
-> 🖼 A CSS & Canvas Instagram filters based on CSSgram
+> A CSS & Canvas Instagram filter inspired by CSSgram
 
 🔗 <https://eastsun5566.github.io/cc-gram/>
 
 ![Demo GIF](./demo.gif)
 
-## 🤔 The Why
+## 🤔 Why
 
-> [CSSgram](https://github.com/una/CSSgram) is a great CSS filters library, but sometimes you want to access/download the filter image. Then CCgram comes into the play. It uses pure CSS to preview filters and draw it with Canvas when you need it.
+> [CSSgram](https://github.com/una/CSSgram) is an excellent CSS filter library. However, there are instances where you might need to access or download the image with filter. This is where CCgram comes into play. It enables you to preview filter using pure CSS and draw them with Canvas whenever you need to.
 
-- On-Demand: Uses CSS to preview & draw with Canvas API on demand.
-- Non-Blocking: Draw an image on Web Worker with `OffscreenCanvas` & `ImageBitmap`.
+- On-Demand: Utilizes CSS for previewing and draws with the Canvas API as needed
+- Non-Blocking: Images are drawn on a Web Worker using `OffscreenCanvas` & `ImageBitmap`
 
 ## ✨ Installation
 
@@ -142,7 +142,7 @@ filter.removeFilter("my-filter");
 
 ---
 
-### Access Filter image
+### Access image with filter
 
 ```js
 const image = document.querySelector('img[data-filter="1977"]');
