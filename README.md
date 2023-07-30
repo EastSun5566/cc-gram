@@ -3,7 +3,7 @@
 [![NPM Version](https://img.shields.io/npm/v/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 [![NPM Downloads](https://img.shields.io/npm/dt/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
 [![Test Status](https://img.shields.io/github/actions/workflow/status/EastSun5566/cc-gram/test.yml?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/actions/workflows/test.yml)
-[![License](https://img.shields.io/github/license/EastSun5566/cc-gram.svg?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/blob/master/LICENSE)
+[![License](https://img.shields.io/github/license/EastSun5566/cc-gram.svg?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/blob/main/LICENSE)
 
 > A CSS & Canvas Instagram filter inspired by CSSgram
 
