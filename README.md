@@ -1,3 +1,5 @@
+<img src="./logo.png" alt="CCgram Logo" width="180">
+
 # 🖼 CCgram
 
 [![NPM Version](https://img.shields.io/npm/v/cc-gram.svg?style=for-the-badge)](https://www.npmjs.com/package/cc-gram)
