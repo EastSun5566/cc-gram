@@ -1,4 +1,4 @@
-<img src="./logo.png" alt="CCgram Logo" width="180">
+<img src="./logo.webp" alt="CCgram Logo" width="180">
 
 # 🖼 CCgram
 
