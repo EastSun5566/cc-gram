@@ -1,7 +1,8 @@
 {
   "name": "cc-gram-demo",
-  "version": "0.1.0",
-  "author": "汪東陽 EastSun5566",
+  "private": true,
+  "version": "0.0.0",
+  "author": "Michael Wang",
   "license": "MIT",
   "homepage": "https://eastsun5566.github.io/cc-gram/",
   "scripts": {

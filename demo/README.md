@@ -2,4 +2,8 @@
 
 ## Dev
 
-`yarn dev`
+```sh
+pnpm i
+
+pnpm dev
+```
