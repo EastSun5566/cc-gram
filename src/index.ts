@@ -3,7 +3,7 @@
  *
  * @license MIT
  * @copyright (c) 2019 - present
- * @author 汪東陽 EastSun5566 <https://github.com/EastSun5566>
+ * @author Michael Wang
  */
 
 export { Filter as default } from './core';
