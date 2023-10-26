@@ -7,6 +7,8 @@
 [![Test Status](https://img.shields.io/github/actions/workflow/status/EastSun5566/cc-gram/test.yml?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/actions/workflows/test.yml)
 [![License](https://img.shields.io/github/license/EastSun5566/cc-gram.svg?style=for-the-badge)](https://github.com/EastSun5566/cc-gram/blob/main/LICENSE)
 
+[<img src="https://cdn.buymeacoffee.com/buttons/v2/default-blue.png" alt="Buy Me A Coffee" height="40">](https://www.buymeacoffee.com/eastsun5566)
+
 > A CSS & Canvas Instagram filter inspired by CSSgram
 
 🔗 <https://eastsun5566.github.io/cc-gram/>
