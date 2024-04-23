@@ -153,7 +153,7 @@
     "eslint-plugin-jsx-a11y": "^6.2.3",
     "eslint-plugin-react": "^7.17.0",
     "eslint-plugin-react-hooks": "^4.0.8",
-    "gh-pages": "^3.1.0",
+    "gh-pages": "^5.0.0",
     "react-snap": "^1.23.0",
     "sass": "^1.51.0",
     "serve": "^14.0.1",
