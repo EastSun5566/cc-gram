@@ -92,7 +92,8 @@ export class CCgram {
    * Apply CSS filter to all targets
    * @param [selectors='img[data-${this._dataAttribute}]'] - selectors
    */
-  applyFilter(selectors = `img[data-${this._dataAttribute}]`): void {
+  // eslint-disable-next-line @typescript-eslint/no-inferrable-types
+  applyFilter(selectors: string = `img[data-${this._dataAttribute}]`): void {
     document
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {
