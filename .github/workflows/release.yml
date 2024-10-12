@@ -18,9 +18,12 @@ jobs:
           pnpm i
           pnpm test
 
-  publish-npm:
+  publish:
     needs: test
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       - uses: actions/checkout@v3
       - uses: actions/setup-node@v3
@@ -28,14 +31,17 @@ jobs:
           node-version: 18.x
           registry-url: https://registry.npmjs.org/
       - uses: pnpm/action-setup@v4
-      - run: |
-          pnpm i
-          pnpm publish --no-git-checks
+      - name: Install deps
+        run: pnpm i
+      - name: Publish to NPM
+        run: pnpm publish --no-git-checks
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+      - name: Publish to JSR
+        run: pnpm dlx jsr publish
 
   deploy-demo:
-    needs: publish-npm
+    needs: publish
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v2
