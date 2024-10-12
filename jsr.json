@@ -1,0 +1,5 @@
+{
+  "name": "@eastsun5566/cc-gram",
+  "version": "1.1.0",
+  "exports": "./src/index.ts"
+}
