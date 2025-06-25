@@ -88,7 +88,7 @@ describe('Apply filter to target Image', () => {
   });
 });
 
-describe.skip('Access filter image data', () => {
+describe('Access filter image data', () => {
   let cg: CCgram | null = null;
 
   beforeEach(() => {
@@ -114,5 +114,25 @@ describe.skip('Access filter image data', () => {
     const blob = await cg!.getBlob(target, { quality: 0.8 });
 
     expect(blob instanceof Blob).toBe(true);
+  });
+
+  it('should overwrite filter when call getDataURL method with filter option', async (): Promise<void> => {
+    const target = getTargetImage()!;
+    const overwriteFilterName = 'aden';
+    // Mock getFilterStyle to check if the correct filter is applied
+    const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
+    await cg!.getDataURL(target, { filter: overwriteFilterName });
+
+    expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
+  });
+
+  it('should overwrite filter when call getBlob method with filter option', async (): Promise<void> => {
+    const target = getTargetImage()!;
+    const overwriteFilterName = 'gingham';
+    // Mock getFilterStyle to check if the correct filter is applied
+    const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
+    await cg!.getBlob(target, { filter: overwriteFilterName });
+
+    expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
   });
 });
