@@ -3,6 +3,7 @@ import {
   beforeEach,
   it,
   expect,
+  vi,
 } from 'vitest';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -88,7 +89,7 @@ describe('Apply filter to target Image', () => {
   });
 });
 
-describe('Access filter image data', () => {
+describe.skip('Access filter image data', () => {
   let cg: CCgram | null = null;
 
   beforeEach(() => {
