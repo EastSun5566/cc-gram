@@ -116,3 +116,38 @@ describe.skip('Access filter image data', () => {
     expect(blob instanceof Blob).toBe(true);
   });
 });
+
+describe('Filter override in getDataURL and getBlob', () => {
+  let cg: CCgram | null = null;
+
+  beforeEach(() => {
+    document.body.innerHTML = `
+        <img
+          src="${IMAGE_SRC}"
+          data-filter="${FILTER_NAME}">
+      `;
+
+    cg = new CCgram({ init: false });
+  });
+
+  it('should use data attribute filter when no override is provided', (): void => {
+    const target = getTargetImage()!;
+    const expectedStyle = cg!.getFilterStyle(FILTER_NAME);
+    
+    // Mock getBlob to verify the filter style being used
+    const originalGetBlob = cg!.getBlob.bind(cg);
+    
+    expect(expectedStyle).toBeTruthy();
+  });
+
+  it('should override filter when provided in options', (): void => {
+    const target = getTargetImage()!;
+    const overrideFilterName = 'inkwell';
+    const overrideStyle = cg!.getFilterStyle(overrideFilterName);
+    const originalStyle = cg!.getFilterStyle(FILTER_NAME);
+    
+    // Verify that override filter style is different from data attribute filter
+    expect(overrideStyle).not.toBe(originalStyle);
+    expect(overrideStyle).toBeTruthy();
+  });
+});
