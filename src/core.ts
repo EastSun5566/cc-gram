@@ -95,11 +95,11 @@ export class CCgram {
    */
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   applyFilter(selectors: string = `img[data-${this._dataAttribute}]`): void {
+    const dataAttrKey = kebabToCamelCase(this._dataAttribute);
     document
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {
         const { dataset } = target;
-        const dataAttrKey = kebabToCamelCase(this._dataAttribute);
         target.style.setProperty('filter', this.getFilterStyle(dataset[dataAttrKey]));
       });
   }
