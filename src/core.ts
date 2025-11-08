@@ -9,6 +9,7 @@ import {
   assertIsImage,
   createWorker,
   createBlobWorker,
+  camelize,
 } from './utils';
 
 import { Options, ParseOptions } from './types';
@@ -27,12 +28,16 @@ export class CCgram {
   /** data attribute */
   protected _dataAttribute: string;
 
+  /** data attribute key in camelCase for dataset access */
+  protected _dataAttributeKey: string;
+
   /** Initialize CSS filter to all targets */
   constructor({
     dataAttribute = DEFAULT_DATA_ATTRIBUTE,
     init = true,
   }: Options = {}) {
     this._dataAttribute = dataAttribute;
+    this._dataAttributeKey = camelize(dataAttribute);
 
     if (!init) return;
 
@@ -98,7 +103,7 @@ export class CCgram {
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {
         const { dataset } = target;
-        target.style.setProperty('filter', this.getFilterStyle(dataset[this._dataAttribute]));
+        target.style.setProperty('filter', this.getFilterStyle(dataset[this._dataAttributeKey]));
       });
   }
 
@@ -140,7 +145,7 @@ export class CCgram {
     assertIsImage(image);
 
     const { naturalWidth, naturalHeight } = image;
-    const filterName = options.filter ?? image.dataset[this._dataAttribute];
+    const filterName = options.filter ?? image.dataset[this._dataAttributeKey];
     const filterStyle = this.getFilterStyle(filterName);
 
     if (hasOffscreenCanvas) {

@@ -3,6 +3,10 @@ import { ParseOptions } from './types';
 
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
 
+export function camelize(string: string): string {
+  return string.replace(/-./g, (c) => (c[1] ? c[1].toUpperCase() : ''));
+}
+
 export function assert<TCond = unknown>(condition: TCond, message = 'internal error.'): asserts condition {
   if (!condition) throw Error(`[CCgram] ${message}`);
 }
