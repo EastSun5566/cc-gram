@@ -175,7 +175,7 @@ const blob = await filter.getBlob(image, {
 - Options
 
   - type: `string` - MIME types, defaults to `image/png`,
-  - quality: `number`- [0 - 1], defaults to `0.92`
+  - quality: `number` - [0 - 1], defaults to `0.92`
   - filter: `string` - Override filter name, defaults to reading from data attribute
 
 ##### Override filter
