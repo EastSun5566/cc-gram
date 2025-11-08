@@ -28,12 +28,16 @@ export class CCgram {
   /** data attribute */
   protected _dataAttribute: string;
 
+  /** data attribute key in camelCase for dataset access */
+  protected _dataAttributeKey: string;
+
   /** Initialize CSS filter to all targets */
   constructor({
     dataAttribute = DEFAULT_DATA_ATTRIBUTE,
     init = true,
   }: Options = {}) {
     this._dataAttribute = dataAttribute;
+    this._dataAttributeKey = kebabToCamelCase(dataAttribute);
 
     if (!init) return;
 
@@ -95,12 +99,11 @@ export class CCgram {
    */
   // eslint-disable-next-line @typescript-eslint/no-inferrable-types
   applyFilter(selectors: string = `img[data-${this._dataAttribute}]`): void {
-    const dataAttrKey = kebabToCamelCase(this._dataAttribute);
     document
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {
         const { dataset } = target;
-        target.style.setProperty('filter', this.getFilterStyle(dataset[dataAttrKey]));
+        target.style.setProperty('filter', this.getFilterStyle(dataset[this._dataAttributeKey]));
       });
   }
 
@@ -142,8 +145,7 @@ export class CCgram {
     assertIsImage(image);
 
     const { naturalWidth, naturalHeight } = image;
-    const dataAttrKey = kebabToCamelCase(this._dataAttribute);
-    const filterName = options.filter ?? image.dataset[dataAttrKey];
+    const filterName = options.filter ?? image.dataset[this._dataAttributeKey];
     const filterStyle = this.getFilterStyle(filterName);
 
     if (hasOffscreenCanvas) {
