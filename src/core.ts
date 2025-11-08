@@ -9,6 +9,7 @@ import {
   assertIsImage,
   createWorker,
   createBlobWorker,
+  kebabToCamelCase,
 } from './utils';
 
 import { Options, ParseOptions } from './types';
@@ -98,7 +99,8 @@ export class CCgram {
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {
         const { dataset } = target;
-        target.style.setProperty('filter', this.getFilterStyle(dataset[this._dataAttribute]));
+        const dataAttrKey = kebabToCamelCase(this._dataAttribute);
+        target.style.setProperty('filter', this.getFilterStyle(dataset[dataAttrKey]));
       });
   }
 
@@ -140,7 +142,8 @@ export class CCgram {
     assertIsImage(image);
 
     const { naturalWidth, naturalHeight } = image;
-    const filterStyle = this.getFilterStyle(image.dataset[this._dataAttribute]);
+    const dataAttrKey = kebabToCamelCase(this._dataAttribute);
+    const filterStyle = this.getFilterStyle(image.dataset[dataAttrKey]);
 
     if (hasOffscreenCanvas) {
       const canvas = new OffscreenCanvas(naturalWidth, naturalHeight);

@@ -25,11 +25,7 @@ describe('Custom data attribute with kebab-case', () => {
 
     const cg = new CCgram({ dataAttribute: DATA_ATTR });
     const img = document.querySelector<HTMLImageElement>(`img[data-${DATA_ATTR}="${FILTER_NAME}"]`)!;
-    
-    console.log('dataset:', img.dataset);
-    console.log('dataset["my-filter"]:', img.dataset["my-filter"]);
-    console.log('dataset.myFilter:', img.dataset.myFilter);
-    
+
     expect(cg.getFilterStyle(FILTER_NAME)).toBe(img.style.filter);
   });
 
@@ -44,7 +40,7 @@ describe('Custom data attribute with kebab-case', () => {
 
     const cg = new CCgram({ dataAttribute: DATA_ATTR });
     const img = document.querySelector<HTMLImageElement>(`img[data-${DATA_ATTR}="${FILTER_NAME}"]`)!;
-    
+
     expect(cg.getFilterStyle(FILTER_NAME)).toBe(img.style.filter);
   });
 });

@@ -3,6 +3,15 @@ import { ParseOptions } from './types';
 
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
 
+/**
+ * Convert kebab-case to camelCase for dataset access
+ * @param str - The kebab-case string
+ * @returns The camelCase string
+ */
+export function kebabToCamelCase(str: string): string {
+  return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+}
+
 export function assert<TCond = unknown>(condition: TCond, message = 'internal error.'): asserts condition {
   if (!condition) throw Error(`[CCgram] ${message}`);
 }
