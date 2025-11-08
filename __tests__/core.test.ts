@@ -134,7 +134,6 @@ describe('Filter override in getDataURL and getBlob', () => {
     const expectedStyle = cg!.getFilterStyle(FILTER_NAME);
     
     // Mock getBlob to verify the filter style being used
-    const originalGetBlob = cg!.getBlob.bind(cg);
     
     expect(expectedStyle).toBeTruthy();
   });
