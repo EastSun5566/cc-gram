@@ -43,4 +43,19 @@ describe('Custom data attribute with kebab-case', () => {
 
     expect(cg.getFilterStyle(FILTER_NAME)).toBe(img.style.filter);
   });
+
+  it('should work with single-word data attr (data-cg)', (): void => {
+    const DATA_ATTR = 'cg';
+
+    document.body.innerHTML = `
+      <img
+        src="${IMAGE_SRC}"
+        data-${DATA_ATTR}="${FILTER_NAME}">
+    `;
+
+    const cg = new CCgram({ dataAttribute: DATA_ATTR });
+    const img = document.querySelector<HTMLImageElement>(`img[data-${DATA_ATTR}="${FILTER_NAME}"]`)!;
+
+    expect(cg.getFilterStyle(FILTER_NAME)).toBe(img.style.filter);
+  });
 });
