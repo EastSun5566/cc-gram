@@ -12,4 +12,6 @@ export interface ParseOptions {
   type?: string;
   /** [0 - 1], defaults to `0.92` */
   quality?: number;
+  /** Override filter name, defaults to reading from data attribute */
+  filter?: string;
 }

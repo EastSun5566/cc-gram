@@ -143,7 +143,8 @@ export class CCgram {
 
     const { naturalWidth, naturalHeight } = image;
     const dataAttrKey = kebabToCamelCase(this._dataAttribute);
-    const filterStyle = this.getFilterStyle(image.dataset[dataAttrKey]);
+    const filterName = options.filter ?? image.dataset[dataAttrKey];
+    const filterStyle = this.getFilterStyle(filterName);
 
     if (hasOffscreenCanvas) {
       const canvas = new OffscreenCanvas(naturalWidth, naturalHeight);
