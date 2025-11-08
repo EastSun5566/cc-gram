@@ -9,7 +9,7 @@ export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
  * @returns The camelCase string
  */
 export function kebabToCamelCase(str: string): string {
-  return str.replace(/-([a-z])/g, (_, letter) => letter.toUpperCase());
+  return str.replace(/-([a-zA-Z])/g, (_, letter) => letter.toUpperCase());
 }
 
 export function assert<TCond = unknown>(condition: TCond, message = 'internal error.'): asserts condition {
