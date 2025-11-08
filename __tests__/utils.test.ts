@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   describe,
   beforeEach,
@@ -5,7 +6,6 @@ import {
   expect,
 } from 'vitest';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CCgram } from '../src';
 
 const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';

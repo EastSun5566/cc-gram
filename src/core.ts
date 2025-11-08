@@ -9,7 +9,7 @@ import {
   assertIsImage,
   createWorker,
   createBlobWorker,
-  kebabToCamelCase,
+  camelize,
 } from './utils';
 
 import { Options, ParseOptions } from './types';
@@ -37,7 +37,7 @@ export class CCgram {
     init = true,
   }: Options = {}) {
     this._dataAttribute = dataAttribute;
-    this._dataAttributeKey = kebabToCamelCase(dataAttribute);
+    this._dataAttributeKey = camelize(dataAttribute);
 
     if (!init) return;
 

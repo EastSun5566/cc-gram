@@ -3,13 +3,8 @@ import { ParseOptions } from './types';
 
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
 
-/**
- * Convert kebab-case to camelCase for dataset access
- * @param str - The kebab-case string
- * @returns The camelCase string
- */
-export function kebabToCamelCase(str: string): string {
-  return str.replace(/-([a-zA-Z])/g, (_, letter) => letter.toUpperCase());
+export function camelize(string: string): string {
+  return string.replace(/-./g, (c) => c[1]?.toUpperCase() ?? c);
 }
 
 export function assert<TCond = unknown>(condition: TCond, message = 'internal error.'): asserts condition {
