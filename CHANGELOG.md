@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/EastSun5566/cc-gram/compare/v1.1.0...v1.2.0) (2025-11-08)
+
+
+### Features
+
+* change logo ([801f64f](https://github.com/EastSun5566/cc-gram/commit/801f64fc4b81c8610714754c2f5751ddb2cdc901))
+
 ## [1.1.0](https://github.com/EastSun5566/cc-gram/compare/v1.0.1...v1.1.0) (2022-12-29)
 
 
