@@ -176,6 +176,20 @@ const blob = await filter.getBlob(image, {
 
   - type: `string` - MIME types, defaults to `image/png`,
   - quality: `number`- [0 - 1], defaults to `0.92`
+  - filter: `string` - Override filter name, defaults to reading from data attribute
+
+##### Override filter
+
+You can override the filter applied to the image by passing a `filter` option:
+
+```js
+// Image has data-filter="1977"
+const image = document.querySelector('img[data-filter="1977"]');
+
+// Apply a different filter when getting the image data
+const dataUrl = await filter.getDataURL(image, { filter: "inkwell" });
+const blob = await filter.getBlob(image, { filter: "valencia" });
+```
 
 ## 🔧 Development
 
