@@ -139,7 +139,6 @@ describe('Filter override in getDataURL and getBlob', () => {
   });
 
   it('should override filter when provided in options', (): void => {
-    const target = getTargetImage()!;
     const overrideFilterName = 'inkwell';
     const overrideStyle = cg!.getFilterStyle(overrideFilterName);
     const originalStyle = cg!.getFilterStyle(FILTER_NAME);
