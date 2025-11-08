@@ -1,8 +1,10 @@
 import {
   describe,
   beforeEach,
+  afterEach,
   it,
   expect,
+  vi,
 } from 'vitest';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -101,6 +103,10 @@ describe.skip('Access filter image data', () => {
     cg = new CCgram();
   });
 
+  afterEach(() => {
+    vi.restoreAllMocks();
+  });
+
   it('should return dataURL when call getDataURL method', async (): Promise<void> => {
     const target = getTargetImage()!;
     const dataURL = await cg!.getDataURL(target, { quality: 0.8 });
@@ -114,5 +120,25 @@ describe.skip('Access filter image data', () => {
     const blob = await cg!.getBlob(target, { quality: 0.8 });
 
     expect(blob instanceof Blob).toBe(true);
+  });
+
+  it('should overwrite filter when call getDataURL method with filter option', async (): Promise<void> => {
+    const target = getTargetImage()!;
+    const overwriteFilterName = 'aden';
+    // Mock getFilterStyle to check if the correct filter is applied
+    const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
+    await cg!.getDataURL(target, { filter: overwriteFilterName });
+
+    expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
+  });
+
+  it('should overwrite filter when call getBlob method with filter option', async (): Promise<void> => {
+    const target = getTargetImage()!;
+    const overwriteFilterName = 'gingham';
+    // Mock getFilterStyle to check if the correct filter is applied
+    const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
+    await cg!.getBlob(target, { filter: overwriteFilterName });
+
+    expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
   });
 });

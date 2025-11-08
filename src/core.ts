@@ -140,7 +140,8 @@ export class CCgram {
     assertIsImage(image);
 
     const { naturalWidth, naturalHeight } = image;
-    const filterStyle = this.getFilterStyle(image.dataset[this._dataAttribute]);
+    const filterName = options.filter ?? image.dataset[this._dataAttribute];
+    const filterStyle = this.getFilterStyle(filterName);
 
     if (hasOffscreenCanvas) {
       const canvas = new OffscreenCanvas(naturalWidth, naturalHeight);
