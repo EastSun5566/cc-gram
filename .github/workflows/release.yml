@@ -33,14 +33,12 @@ jobs:
       - uses: pnpm/action-setup@v4
       - name: Install deps
         run: pnpm i
-      - name: Build package
-        run: pnpm build
       - name: Ensure npm supports OIDC
         run: npm install -g npm@latest
       - name: Publish to NPM via OIDC
-        run: npm publish --access public
+        run: npm publish
       - name: Publish to JSR
-        run: pnpx jsr publish
+        run: npx jsr publish
 
   deploy-demo:
     needs: publish
