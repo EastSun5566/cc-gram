@@ -34,7 +34,7 @@ jobs:
       - name: Install deps
         run: pnpm i
       - name: Ensure npm supports OIDC
-        run: npm install -g npm@^11.5.1
+        run: npm install -g npm@latest
       - name: Publish to NPM via OIDC
         run: npm publish --access public
       - name: Publish to JSR
