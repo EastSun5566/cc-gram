@@ -1,6 +1,7 @@
 import {
   describe,
   beforeEach,
+  afterEach,
   it,
   expect,
   vi,
@@ -100,6 +101,10 @@ describe.skip('Access filter image data', () => {
       `;
 
     cg = new CCgram();
+  });
+
+  afterEach(() => {
+    vi.restoreAllMocks();
   });
 
   it('should return dataURL when call getDataURL method', async (): Promise<void> => {
