@@ -131,7 +131,6 @@ describe('Filter override in getDataURL and getBlob', () => {
   });
 
   it('should use data attribute filter when no override is provided', (): void => {
-    const target = getTargetImage()!;
     const expectedStyle = cg!.getFilterStyle(FILTER_NAME);
     
     // Mock getBlob to verify the filter style being used
