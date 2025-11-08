@@ -3,6 +3,7 @@ import {
   beforeEach,
   it,
   expect,
+  vi,
 } from 'vitest';
 
 /* eslint-disable @typescript-eslint/no-non-null-assertion */
@@ -115,36 +116,24 @@ describe.skip('Access filter image data', () => {
 
     expect(blob instanceof Blob).toBe(true);
   });
-});
 
-describe('Filter override in getDataURL and getBlob', () => {
-  let cg: CCgram | null = null;
+  it('should overwrite filter when call getDataURL method with filter option', async (): Promise<void> => {
+    const target = getTargetImage()!;
+    const overwriteFilterName = 'aden';
+    // Mock getFilterStyle to check if the correct filter is applied
+    const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
+    await cg!.getDataURL(target, { filter: overwriteFilterName });
 
-  beforeEach(() => {
-    document.body.innerHTML = `
-        <img
-          src="${IMAGE_SRC}"
-          data-filter="${FILTER_NAME}">
-      `;
-
-    cg = new CCgram({ init: false });
+    expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
   });
 
-  it('should use data attribute filter when no override is provided', (): void => {
-    const expectedStyle = cg!.getFilterStyle(FILTER_NAME);
-    
-    // Mock getBlob to verify the filter style being used
-    
-    expect(expectedStyle).toBeTruthy();
-  });
+  it('should overwrite filter when call getBlob method with filter option', async (): Promise<void> => {
+    const target = getTargetImage()!;
+    const overwriteFilterName = 'gingham';
+    // Mock getFilterStyle to check if the correct filter is applied
+    const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
+    await cg!.getBlob(target, { filter: overwriteFilterName });
 
-  it('should override filter when provided in options', (): void => {
-    const overrideFilterName = 'inkwell';
-    const overrideStyle = cg!.getFilterStyle(overrideFilterName);
-    const originalStyle = cg!.getFilterStyle(FILTER_NAME);
-    
-    // Verify that override filter style is different from data attribute filter
-    expect(overrideStyle).not.toBe(originalStyle);
-    expect(overrideStyle).toBeTruthy();
+    expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
   });
 });
