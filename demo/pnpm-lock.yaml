@@ -67,7 +67,7 @@ importers:
         specifier: ^6.1.0
         version: 6.3.0
       sass:
-        specifier: ^1.69.5
+        specifier: ^1.71.0
         version: 1.97.1
       typescript:
         specifier: ^5.2.2

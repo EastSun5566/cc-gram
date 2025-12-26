@@ -14,10 +14,10 @@ export const Preview: React.FC<PreviewProps> = ({
   imageURL,
   onClear,
 }) => {
-  if (!imageURL) return null;
-
   const { filter, selectedFilterName, setSelectedFilterName } = useFilters();
   const { imageRef, download } = useDownloadFilterImage({ filter });
+
+  if (!imageURL) return null;
 
   return (
     <div className="preview">
@@ -33,6 +33,7 @@ export const Preview: React.FC<PreviewProps> = ({
           type="button"
           className="btn btn-cross"
           onClick={onClear}
+          aria-label="Clear image"
         >
           <i className="fa fa-times" />
         </button>
@@ -40,6 +41,7 @@ export const Preview: React.FC<PreviewProps> = ({
           type="button"
           className="btn btn-download"
           onClick={() => download({ downloadFileName: selectedFilterName })}
+          aria-label="Download image"
         >
           <i className="fas fa-cloud-download-alt" />
         </button>
