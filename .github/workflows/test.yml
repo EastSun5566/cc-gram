@@ -19,3 +19,8 @@ jobs:
           pnpm i
           pnpm test
           pnpm build
+      - name: Build demo
+        run: |
+          cd demo
+          pnpm i
+          pnpm build

@@ -43,20 +43,31 @@ jobs:
   deploy-demo:
     needs: publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - uses: actions/checkout@v2
-      - uses: actions/setup-node@v1
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
         with:
-          node-version: 16.x
-      - uses: pnpm/action-setup@v2
-        with:
-          version: 7
-      - run: |
+          node-version: 18.x
+      - uses: pnpm/action-setup@v4
+      - name: Install and build
+        run: |
           cd demo
           pnpm i
           pnpm i cc-gram@latest
           pnpm build
-      - uses: peaceiris/actions-gh-pages@v3
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          github_token: ${{ secrets.GH_TOKEN }}
-          publish_dir: demo/build
+          path: 'demo/dist'
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
