@@ -1,8 +1,6 @@
 import React from 'react';
 import { createRoot } from 'react-dom/client';
 
-import ReactGA from 'react-ga';
-
 import './index.scss';
 
 import App from './App';
@@ -16,6 +14,3 @@ root.render(
     <App />
   </React.StrictMode>,
 );
-
-ReactGA.initialize('G-YGB6NCEQVB');
-ReactGA.pageview(window.location.pathname + window.location.search);
