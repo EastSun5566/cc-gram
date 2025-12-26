@@ -32,7 +32,7 @@
     "lint": "eslint --fix --ignore-path .gitignore --ext .js,.ts src",
     "prepublishOnly": "pnpm build",
     "release": "sh scripts/release.sh",
-    "demo:dev": "npm --prefix demo run dev"
+    "demo:dev": "pnpm -C demo dev"
   },
   "keywords": [
     "image",

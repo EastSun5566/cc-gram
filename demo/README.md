@@ -5,19 +5,19 @@ Built with [Vite](https://vitejs.dev/) and React 18.
 ## Development
 
 ```sh
-npm install
+pnpm install
 
-npm run dev
+pnpm dev
 ```
 
 ## Build
 
 ```sh
-npm run build
+pnpm build
 ```
 
 ## Preview Production Build
 
 ```sh
-npm run preview
+pnpm preview
 ```
