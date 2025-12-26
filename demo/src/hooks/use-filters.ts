@@ -18,7 +18,7 @@ export const useFilters = ({
 
   useEffect(() => {
     filter.applyFilter();
-  }, [selectedFilterName]);
+  }, [selectedFilterName, filter]);
 
   return {
     selectedFilterName,

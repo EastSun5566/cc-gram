@@ -1,9 +1,23 @@
 # CCgram demo site
 
-## Dev
+Built with [Vite](https://vitejs.dev/) and React 18.
+
+## Development
 
 ```sh
-pnpm i
+pnpm install
 
 pnpm dev
+```
+
+## Build
+
+```sh
+pnpm build
+```
+
+## Preview Production Build
+
+```sh
+pnpm preview
 ```
