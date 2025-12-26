@@ -60,7 +60,6 @@ jobs:
         run: |
           cd demo
           pnpm i
-          pnpm i cc-gram@latest
           pnpm build
       - name: Setup Pages
         uses: actions/configure-pages@v4
