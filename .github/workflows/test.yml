@@ -18,10 +18,12 @@ jobs:
       - name: Install and test
         run: |
           pnpm i --frozen-lockfile
+          pnpm lint
           pnpm test
           pnpm build
       - name: Build demo
         run: |
           cd demo
           pnpm i
+          pnpm lint
           pnpm build
