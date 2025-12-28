@@ -1,41 +1,36 @@
-import js from '@eslint/js';
-import tseslint from 'typescript-eslint';
-import globals from 'globals';
+import { configs, plugins } from 'eslint-config-airbnb-extended';
 
-export default tseslint.config(
+export default [
   {
     ignores: ['dist', 'node_modules', 'demo', 'rollup.config.ts'],
   },
-  js.configs.recommended,
-  ...tseslint.configs.recommended,
+  plugins.importX,
+  plugins.stylistic,
+  plugins.typescriptEslint,
+  ...configs.base.all,
   {
-    languageOptions: {
-      globals: {
-        ...globals.browser,
-        ...globals.es2021,
-      },
-      parserOptions: {
-        ecmaVersion: 'latest',
-        sourceType: 'module',
-      },
-    },
     rules: {
-      // Disable base indent rule as it conflicts with @typescript-eslint
-      'indent': 'off',
-      '@/indent': ['error', 2],
-      
-      // Airbnb-style rules
+      // Custom overrides from original config
       'no-underscore-dangle': ['error', { allowAfterThis: true }],
       'no-param-reassign': ['error', { props: false }],
       'no-nested-ternary': 'off',
+      'import-x/extensions': 'off',
       
-      // TypeScript rules
-      'no-use-before-define': 'off',
-      '@/no-use-before-define': ['error'],
-      'no-shadow': 'off',
-      '@/no-shadow': ['error'],
-      'no-unused-vars': 'off',
-      '@/no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
+      // Allow default export with name "default"
+      'no-restricted-exports': ['error', {
+        restrictedNamedExports: ['then'], // Only restrict 'then' as Airbnb does
+      }],
+      
+      // Allow return values from promise executor
+      'no-promise-executor-return': 'off',
+      
+      // Increase max line length to match existing code
+      '@stylistic/max-len': ['error', {
+        code: 120,
+        ignoreComments: true,
+        ignoreStrings: true,
+        ignoreTemplateLiterals: true,
+      }],
     },
   },
-);
+];

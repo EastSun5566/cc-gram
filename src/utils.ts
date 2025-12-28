@@ -18,7 +18,7 @@ export function assertIsImage(image: HTMLImageElement): asserts image is HTMLIma
 
 export function createWorker<
   TData = unknown,
-  TMessage = unknown
+  TMessage = unknown,
 >(fn: (messageEvent: MessageEvent<TData>) => TMessage): Worker {
   const code = `
     const work = ${fn.toString()};
@@ -61,7 +61,7 @@ export function parseSettingToStyle(setting?: FilterSetting): string {
 }
 
 interface CreateBlobOptions<
-  TCanvas extends HTMLCanvasElement | OffscreenCanvas = HTMLCanvasElement
+  TCanvas extends HTMLCanvasElement | OffscreenCanvas = HTMLCanvasElement,
 > {
   canvas: TCanvas;
   image: CanvasImageSource;
