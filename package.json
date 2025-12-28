@@ -4,7 +4,7 @@
   "description": "🖼 A CSS & Canvas Instagram filters based on CSSgram",
   "type": "module",
   "engines": {
-    "node": ">=20"
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
   "packageManager": "pnpm@9.1.0",
   "main": "dist/index.umd.js",
