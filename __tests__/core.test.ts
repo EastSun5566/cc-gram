@@ -185,18 +185,19 @@ describe('Access filter image data', () => {
   let cg: CCgram | null = null;
 
   beforeEach(() => {
-    // Mock canvas context for jsdom
+    // Mock canvas context for jsdom. This is a minimal subset of
+    // CanvasRenderingContext2D needed for the tests.
     const mockContext = {
       filter: '',
       drawImage: vi.fn(),
     };
 
-    HTMLCanvasElement.prototype.getContext = vi.fn(() => mockContext) as any;
-    HTMLCanvasElement.prototype.toBlob = vi.fn((callback) => {
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext').mockReturnValue(mockContext as any);
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation((callback) => {
       // Create a mock blob
       const blob = new Blob(['mock image data'], { type: 'image/png' });
       callback(blob);
-    }) as any;
+    });
 
     document.body.innerHTML = `
         <img
@@ -245,14 +246,14 @@ describe('Access filter image data', () => {
     expect(getFilterStyleSpy).toHaveBeenCalledWith(overwriteFilterName);
   });
 
-  it('should handle different image types when calling getBlob', async (): Promise<void> => {
+  it('should return blob when calling getBlob with JPEG type and quality options', async (): Promise<void> => {
     const target = getTargetImage()!;
     const blob = await cg!.getBlob(target, { type: 'image/jpeg', quality: 0.5 });
 
     expect(blob instanceof Blob).toBe(true);
   });
 
-  it('should handle different quality values when calling getDataURL', async (): Promise<void> => {
+  it('should return data URL when calling getDataURL with maximum quality', async (): Promise<void> => {
     const target = getTargetImage()!;
     const dataURL = await cg!.getDataURL(target, { quality: 1.0 });
 
