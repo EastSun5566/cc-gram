@@ -92,6 +92,13 @@ const getTargetImage = (dataAttr = 'filter'): HTMLImageElement | null => (
   document.querySelector<HTMLImageElement>(`img[data-${dataAttr}="${FILTER_NAME}"]`)
 );
 
+// Helper to intentionally provide an invalid "image" element for testing.
+// Uses explicit type assertion to test runtime validation with an element
+// TypeScript would normally reject at compile time.
+const createInvalidImageElement = (): HTMLImageElement => (
+  document.createElement('div') as unknown as HTMLImageElement
+);
+
 describe('Apply filter to target Image', () => {
   beforeEach(() => { document.body.innerHTML = ''; });
 
@@ -283,13 +290,13 @@ describe('Access filter image data', () => {
   });
 
   it('should throw error for invalid image element in getDataURL', async (): Promise<void> => {
-    const invalidElement = document.createElement('div') as any;
+    const invalidElement = createInvalidImageElement();
 
     await expect(cg!.getDataURL(invalidElement)).rejects.toThrow('[CCgram]');
   });
 
   it('should throw error for invalid image element in getBlob', async (): Promise<void> => {
-    const invalidElement = document.createElement('div') as any;
+    const invalidElement = createInvalidImageElement();
 
     await expect(cg!.getBlob(invalidElement)).rejects.toThrow('[CCgram]');
   });
