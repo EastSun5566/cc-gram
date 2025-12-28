@@ -17,6 +17,7 @@ jobs:
       - name: Install and test
         run: |
           pnpm i --frozen-lockfile
+          pnpm lint
           pnpm test
 
   publish:
