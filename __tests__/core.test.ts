@@ -86,6 +86,7 @@ describe('Read/Write filter list', (): void => {
 
 const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
 const FILTER_NAME = '1977';
+const DATA_URL_REGEX = /data:([\w/+]+);(charset=[\w-]+|base64).*,([a-zA-Z0-9+/]+={0,2})/;
 
 const getTargetImage = (dateAttr = 'filter'): HTMLImageElement | null => (
   document.querySelector<HTMLImageElement>(`img[data-${dateAttr}="${FILTER_NAME}"]`)
@@ -149,7 +150,7 @@ describe('Apply filter to target Image', () => {
 
     expect(images.length).toBe(3);
     images.forEach((img) => {
-      const filterName = img.dataset.filter;
+      const filterName = img.dataset.filter!;
       expect(img.style.filter).toBe(cg.getFilterStyle(filterName));
     });
   });
@@ -214,8 +215,7 @@ describe('Access filter image data', () => {
     const target = getTargetImage()!;
     const dataURL = await cg!.getDataURL(target, { quality: 0.8 });
 
-    const regEx = /data:([\w/+]+);(charset=[\w-]+|base64).*,([a-zA-Z0-9+/]+={0,2})/;
-    expect(regEx.test(dataURL!)).toBe(true);
+    expect(DATA_URL_REGEX.test(dataURL!)).toBe(true);
   });
 
   it('should return blob when call getBlob method', async (): Promise<void> => {
@@ -256,8 +256,7 @@ describe('Access filter image data', () => {
     const target = getTargetImage()!;
     const dataURL = await cg!.getDataURL(target, { quality: 1.0 });
 
-    const regEx = /data:([\w/+]+);(charset=[\w-]+|base64).*,([a-zA-Z0-9+/]+={0,2})/;
-    expect(regEx.test(dataURL!)).toBe(true);
+    expect(DATA_URL_REGEX.test(dataURL!)).toBe(true);
   });
 
   it('should return null when getBlob returns null', async (): Promise<void> => {
