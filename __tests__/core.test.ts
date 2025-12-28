@@ -88,8 +88,8 @@ const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
 const FILTER_NAME = '1977';
 const DATA_URL_REGEX = /data:([\w/+]+);(charset=[\w-]+|base64).*,([a-zA-Z0-9+/]+={0,2})/;
 
-const getTargetImage = (dateAttr = 'filter'): HTMLImageElement | null => (
-  document.querySelector<HTMLImageElement>(`img[data-${dateAttr}="${FILTER_NAME}"]`)
+const getTargetImage = (dataAttr = 'filter'): HTMLImageElement | null => (
+  document.querySelector<HTMLImageElement>(`img[data-${dataAttr}="${FILTER_NAME}"]`)
 );
 
 describe('Apply filter to target Image', () => {
