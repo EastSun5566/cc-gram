@@ -30,10 +30,10 @@ importers:
         specifier: ^2.34.0
         version: 2.34.0(eslint@6.8.0)(typescript@4.9.5)
       '@vitest/coverage-v8':
-        specifier: ^4
+        specifier: ^4.0.16
         version: 4.0.16(vitest@4.0.16(@types/node@24.10.4)(@vitest/ui@4.0.16)(jsdom@20.0.3)(terser@5.44.1))
       '@vitest/ui':
-        specifier: ^4
+        specifier: ^4.0.16
         version: 4.0.16(vitest@4.0.16)
       babel-eslint:
         specifier: ^10.1.0
