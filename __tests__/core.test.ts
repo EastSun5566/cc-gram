@@ -264,9 +264,9 @@ describe('Access filter image data', () => {
     const target = getTargetImage()!;
     
     // Mock toBlob to return null
-    HTMLCanvasElement.prototype.toBlob = vi.fn((callback) => {
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation((callback) => {
       callback(null);
-    }) as any;
+    });
 
     const dataURL = await cg!.getDataURL(target, { quality: 0.8 });
 
