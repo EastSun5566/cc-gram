@@ -74,7 +74,7 @@
     "eslint-plugin-import-x": "^4.6.1",
     "globals": "^15.14.0",
     "husky": "^3.1.0",
-    "jsdom": "^20.0.3",
+    "jsdom": "^27.4.0",
     "rimraf": "^3.0.2",
     "rollup": "^4.54.0",
     "rollup-plugin-filesize": "^9.1.2",
