@@ -1,11 +1,13 @@
 /* eslint-disable import/no-extraneous-dependencies */
+import { createRequire } from 'node:module';
 import { defineConfig } from 'rollup';
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
 import terser from '@rollup/plugin-terser';
 import filesize from 'rollup-plugin-filesize';
 
-import pkg from './package.json' assert { type: 'json' };
+const require = createRequire(import.meta.url);
+const pkg = require('./package.json');
 
 export default defineConfig({
   input: 'src/index.ts',

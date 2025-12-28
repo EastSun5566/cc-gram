@@ -1,22 +1,23 @@
 name: Test
 
 on:
-  push:
-    branches: [main]
   pull_request:
-    branches: [main]
+  push:
+    branches:
+      - main
 
 jobs:
   test:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v5
+      - uses: actions/setup-node@v6
         with:
-          node-version: 18.x
+          node-version: "lts/*"
       - uses: pnpm/action-setup@v4
-      - run: |
-          pnpm i
+      - name: Install and test
+        run: |
+          pnpm i --frozen-lockfile
           pnpm test
           pnpm build
       - name: Build demo
