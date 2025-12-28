@@ -1,4 +1,4 @@
-@import "../../assets/styles.scss";
+@use "../../assets/styles.scss" as *;
 
 .input-container {
   width: 100%;
