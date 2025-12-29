@@ -98,7 +98,7 @@ export class CCgram {
    * @param [selectors='img[data-${this._dataAttribute}]'] - selectors
    */
 
-  applyFilter(selectors = `img[data-${this._dataAttribute}]`): void {
+  applyFilter(selectors: string = `img[data-${this._dataAttribute}]`): void {
     document
       .querySelectorAll<HTMLImageElement>(selectors)
       .forEach((target): void => {

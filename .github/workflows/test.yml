@@ -22,6 +22,8 @@ jobs:
           pnpm typecheck
           pnpm test
           pnpm build
+      - name: Validate JSR publish
+        run: npx jsr publish --dry-run
       - name: Build demo
         run: |
           cd demo
