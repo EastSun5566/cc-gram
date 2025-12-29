@@ -19,11 +19,12 @@ pnpm build
 
 # navigate into the build output directory
 cd dist || exit 1
+DIST_DIR="$(pwd)"
 
 # setup cleanup function to remove git metadata
 cleanup() {
-  if [ -d ".git" ]; then
-    rm -rf .git
+  if [ -d "${DIST_DIR}/.git" ]; then
+    rm -rf "${DIST_DIR}/.git"
   fi
 }
 
@@ -37,4 +38,5 @@ git commit -m 'chore: deploy demo'
 
 git push -f git@github.com:EastSun5566/cc-gram.git main:gh-pages
 
-cd -
+# return to demo directory
+cd ..
