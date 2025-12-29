@@ -31,6 +31,13 @@ export default [
         ignoreStrings: true,
         ignoreTemplateLiterals: true,
       }],
+
+      // Allow explicit type annotations on parameters with defaults for JSR compatibility
+      // JSR requires explicit types in public APIs even when inferrable
+      '@typescript-eslint/no-inferrable-types': ['error', {
+        ignoreParameters: true,
+        ignoreProperties: false,
+      }],
     },
   },
 ];
