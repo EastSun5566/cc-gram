@@ -44,6 +44,7 @@ jobs:
         run: npx jsr publish
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
+        continue-on-error: true
         with:
           generate_release_notes: true
 
