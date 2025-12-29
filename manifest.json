@@ -1,0 +1,20 @@
+{
+  "short_name": "CCGram",
+  "name": "CCGram",
+  "icons": [
+    {
+      "src": "logo.webp",
+      "type": "image/webp",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo.webp",
+      "type": "image/webp",
+      "sizes": "512x512"
+    }
+  ],
+  "start_url": ".",
+  "display": "standalone",
+  "theme_color": "#000000",
+  "background_color": "#ffffff"
+}
