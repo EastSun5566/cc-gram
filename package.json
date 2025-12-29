@@ -26,13 +26,14 @@
   ],
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin typescript",
-    "type-check": "tsc --noEmit",
+    "typecheck": "tsc --noEmit",
     "test": "vitest __tests__",
     "test:coverage": "vitest run __tests__ --coverage",
     "lint": "eslint --fix src",
     "prepublishOnly": "pnpm build",
     "release": "sh scripts/release.sh",
-    "demo:dev": "pnpm -C demo dev"
+    "demo:dev": "pnpm -C demo dev",
+    "demo:build": "pnpm -C demo build"
   },
   "keywords": [
     "image",

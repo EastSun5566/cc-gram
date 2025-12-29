@@ -19,6 +19,7 @@ jobs:
         run: |
           pnpm i --frozen-lockfile
           pnpm lint
+          pnpm typecheck
           pnpm test
           pnpm build
       - name: Build demo
