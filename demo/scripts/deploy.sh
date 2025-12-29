@@ -39,4 +39,4 @@ git commit -m 'chore: deploy demo'
 git push -f git@github.com:EastSun5566/cc-gram.git main:gh-pages
 
 # return to demo directory
-cd ..
+cd .. || true
