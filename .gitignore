@@ -86,4 +86,7 @@ typings/
 # demo production
 build/
 
+# package-lock.json (using pnpm)
+package-lock.json
+
 # End of https://www.gitignore.io/api/node

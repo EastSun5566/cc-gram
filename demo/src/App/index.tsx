@@ -17,6 +17,7 @@ const App: React.FC = () => {
   return (
     <>
       <div id="app">
+        <img src="/logo.webp" alt="CCgram Logo" style={{ width: '100px', height: '100px' }} />
         <h4 className="title my-3">🖼 CCgram</h4>
 
         <CSSTransition
