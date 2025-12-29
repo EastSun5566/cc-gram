@@ -10,7 +10,7 @@ if [ ! -f "package.json" ] || [ ! -d "../src" ]; then
 fi
 
 # build parent package first to ensure dist files exist
-cd ..
+cd .. || exit 1
 pnpm build
 cd demo || exit 1
 
