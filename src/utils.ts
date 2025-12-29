@@ -1,5 +1,5 @@
-import { FilterSetting } from './filters';
-import { ParseOptions } from './types';
+import type { FilterSetting } from './filters';
+import type { ParseOptions } from './types';
 
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
 

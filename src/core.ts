@@ -1,7 +1,7 @@
 import {
   DEFAULT_FILTERS,
-  FilterName,
-  FilterSetting,
+  type FilterName,
+  type FilterSetting,
 } from './filters';
 import {
   parseSettingToStyle,
@@ -12,7 +12,7 @@ import {
   camelize,
 } from './utils';
 
-import { Options, ParseOptions } from './types';
+import type { Options, ParseOptions } from './types';
 
 export const DEFAULT_DATA_ATTRIBUTE = 'filter';
 
