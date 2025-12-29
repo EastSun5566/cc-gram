@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.6](https://github.com/EastSun5566/cc-gram/compare/v1.2.5...v1.2.6) (2025-12-29)
+
+
+### Bug Fixes
+
+* create annotated tag when force-updating in release script ([#145](https://github.com/EastSun5566/cc-gram/issues/145)) ([7eee9c3](https://github.com/EastSun5566/cc-gram/commit/7eee9c3e2394ff1f85bcd6bbf3002334bb985fac))
+
 ### [1.2.5](https://github.com/EastSun5566/cc-gram/compare/v1.2.4...v1.2.5) (2025-12-29)
 
 ### [1.2.4](https://github.com/EastSun5566/cc-gram/compare/v1.2.3...v1.2.4) (2025-12-29)
