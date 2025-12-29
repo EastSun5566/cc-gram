@@ -12,12 +12,12 @@ npx standard-version
 # Sync jsr.json version with package.json
 echo "syncing jsr.json version with package.json"
 PACKAGE_VERSION=$(node -p "require('./package.json').version")
-node -e "
+PACKAGE_VERSION="$PACKAGE_VERSION" node -e "
 const fs = require('fs');
 const jsr = JSON.parse(fs.readFileSync('jsr.json', 'utf8'));
-jsr.version = process.argv[1];
+jsr.version = process.env.PACKAGE_VERSION;
 fs.writeFileSync('jsr.json', JSON.stringify(jsr, null, 2) + '\n');
-" "$PACKAGE_VERSION"
+"
 
 # Check if jsr.json was modified
 if git diff --quiet jsr.json; then
@@ -26,6 +26,8 @@ else
   echo "updating release commit to include jsr.json"
   git add jsr.json
   git commit --amend --no-edit
+  # Update the tag created by standard-version to point to the amended commit
+  git tag -f "v$PACKAGE_VERSION"
 fi
 
 echo "push tags"
