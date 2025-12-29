@@ -39,8 +39,19 @@ export default defineConfig({
       writeBundle() {
         // Copy .d.ts to .d.cts for CommonJS types
         if (existsSync(INDEX_DTS)) {
-          const dtsContent = readFileSync(INDEX_DTS, 'utf-8');
-          writeFileSync(INDEX_DCTS, dtsContent);
+          try {
+            const dtsContent = readFileSync(INDEX_DTS, 'utf-8');
+            writeFileSync(INDEX_DCTS, dtsContent);
+          } catch (error) {
+            console.error('Failed to generate CommonJS type declarations:', error);
+            throw error;
+          }
+        } else {
+          console.warn(
+            `[generate-cts] Expected type declaration file "${INDEX_DTS}" not found. ` +
+              `Skipping generation of "${INDEX_DCTS}". ` +
+              'Ensure TypeScript is configured to emit declaration files for proper CJS type resolution.',
+          );
         }
       },
     },
