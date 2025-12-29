@@ -27,7 +27,8 @@ else
   git add jsr.json
   git commit --amend --no-edit
   # Update the tag created by standard-version to point to the amended commit
-  git tag -f "v$PACKAGE_VERSION"
+  # Use -a to create an annotated tag so that --follow-tags will push it
+  git tag -f -a "v$PACKAGE_VERSION" -m "chore(release): $PACKAGE_VERSION"
 fi
 
 echo "push tags"
