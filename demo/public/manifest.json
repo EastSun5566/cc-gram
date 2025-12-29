@@ -5,6 +5,11 @@
     {
       "src": "logo.webp",
       "type": "image/webp",
+      "sizes": "192x192"
+    },
+    {
+      "src": "logo.webp",
+      "type": "image/webp",
       "sizes": "512x512"
     }
   ],
