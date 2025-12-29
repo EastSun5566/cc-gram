@@ -1,4 +1,4 @@
-<img src="./logo.webp" alt="CCgram Logo" width="180">
+<img src="https://github.com/EastSun5566/cc-gram/blob/main/logo.webp?raw=true" alt="CCgram Logo" width="180">
 
 # 🖼 CCgram
 

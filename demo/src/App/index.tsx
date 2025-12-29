@@ -16,8 +16,10 @@ const App: React.FC = () => {
 
   return (
     <>
-      <div id="app">
-        <h4 className="title my-3">🖼 CCgram</h4>
+      <main id="app">
+        <section className="my-3">
+          <img src="https://github.com/EastSun5566/cc-gram/blob/main/logo.webp?raw=true" alt="CCgram Logo" style={{ width: '100px', height: '100px' }} />
+        </section>
 
         <CSSTransition
           in={!!imageURL}
@@ -43,7 +45,7 @@ const App: React.FC = () => {
         </CSSTransition>
 
         <Note />
-      </div>
+      </main>
 
       <GithubCorner />
     </>
