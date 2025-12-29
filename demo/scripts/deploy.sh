@@ -3,16 +3,32 @@
 # abort on errors
 set -e
 
+# verify script is run from demo directory
+if [ ! -f "package.json" ] || [ ! -d "../src" ]; then
+  echo "Error: This script must be run from the demo directory" >&2
+  exit 1
+fi
+
 # build parent package first to ensure dist files exist
 cd ..
 pnpm build
-cd demo
+cd demo || exit 1
 
 # build demo
 pnpm build
 
 # navigate into the build output directory
-cd dist
+cd dist || exit 1
+
+# setup cleanup function to remove git metadata
+cleanup() {
+  if [ -d ".git" ]; then
+    rm -rf .git
+  fi
+}
+
+# ensure cleanup happens on exit
+trap cleanup EXIT
 
 git init
 git checkout -B main
