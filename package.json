@@ -30,6 +30,7 @@
     "test": "vitest __tests__",
     "test:coverage": "vitest run __tests__ --coverage",
     "lint": "eslint --fix src",
+    "lint:pkg": "npx publint",
     "prepublishOnly": "pnpm build",
     "release": "sh scripts/release.sh",
     "demo:dev": "pnpm -C demo dev",
