@@ -1,6 +1,6 @@
 {
   "name": "cc-gram",
-  "version": "1.2.3",
+  "version": "1.2.4",
   "description": "🖼 A CSS & Canvas Instagram filters based on CSSgram",
   "type": "module",
   "engines": {
