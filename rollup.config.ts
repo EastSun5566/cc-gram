@@ -1,6 +1,6 @@
 /* eslint-disable import/no-extraneous-dependencies */
 import { createRequire } from 'node:module';
-import { writeFileSync, readFileSync } from 'node:fs';
+import { writeFileSync, readFileSync, existsSync } from 'node:fs';
 import { defineConfig } from 'rollup';
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -9,6 +9,9 @@ import filesize from 'rollup-plugin-filesize';
 
 const require = createRequire(import.meta.url);
 const pkg = require('./package.json');
+
+const INDEX_DTS = 'dist/index.d.ts';
+const INDEX_DCTS = 'dist/index.d.cts';
 
 export default defineConfig({
   input: 'src/index.ts',
@@ -35,8 +38,10 @@ export default defineConfig({
       name: 'generate-cts',
       writeBundle() {
         // Copy .d.ts to .d.cts for CommonJS types
-        const dtsContent = readFileSync('dist/index.d.ts', 'utf-8');
-        writeFileSync('dist/index.d.cts', dtsContent);
+        if (existsSync(INDEX_DTS)) {
+          const dtsContent = readFileSync(INDEX_DTS, 'utf-8');
+          writeFileSync(INDEX_DCTS, dtsContent);
+        }
       },
     },
   ],
