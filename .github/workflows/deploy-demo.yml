@@ -1,0 +1,52 @@
+name: Deploy Demo
+
+on:
+  push:
+    tags:
+      - "**"
+  workflow_dispatch:
+
+concurrency:
+  group: "pages-demo"
+  cancel-in-progress: false
+
+jobs:
+  build-demo:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v6
+        with:
+          node-version: "lts/*"
+      - uses: pnpm/action-setup@v4
+      - name: Install and build
+        run: |
+          pnpm i --frozen-lockfile
+          pnpm build
+          cd demo
+          pnpm i --frozen-lockfile
+          pnpm build
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: "demo/dist"
+
+  deploy-demo:
+    needs: build-demo
+    runs-on: ubuntu-latest
+    permissions:
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
+      - name: Output deployment URL
+        run: echo "Deployed to ${{ steps.deployment.outputs.page_url }}"
