@@ -152,11 +152,16 @@ export class CCgram {
       const canvas = new OffscreenCanvas(naturalWidth, naturalHeight);
       const bmp = await createImageBitmap(image);
 
-      return new Promise((resolve) => {
+      return new Promise((resolve, reject) => {
         const worker = createWorker(createBlobWorker);
 
         worker.addEventListener('message', ({ data }: MessageEvent<Blob>) => {
           resolve(data);
+          worker.terminate();
+        });
+
+        worker.addEventListener('error', (error) => {
+          reject(error);
           worker.terminate();
         });
 
