@@ -1,4 +1,9 @@
-import React, { useState, lazy, Suspense } from 'react';
+import React, {
+  useState,
+  lazy,
+  Suspense,
+  useEffect,
+} from 'react';
 import { CSSTransition } from 'react-transition-group';
 
 import {
@@ -13,6 +18,11 @@ const LazyPreview = lazy(() => import('../components/Preview'));
 
 const App: React.FC = () => {
   const [imageURL, setImageURL] = useState('');
+  useEffect(() => () => {
+    if (imageURL) {
+      URL.revokeObjectURL(imageURL);
+    }
+  }, [imageURL]);
 
   return (
     <>
