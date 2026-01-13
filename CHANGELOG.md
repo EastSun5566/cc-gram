@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.2.10](https://github.com/EastSun5566/cc-gram/compare/v1.2.9...v1.2.10) (2026-01-13)
+
+
+### Bug Fixes
+
+* handle worker error ([#153](https://github.com/EastSun5566/cc-gram/issues/153)) ([2190bbb](https://github.com/EastSun5566/cc-gram/commit/2190bbb644c94b5f8c3bba15ca23994679a05a00))
+
 ### [1.2.9](https://github.com/EastSun5566/cc-gram/compare/v1.2.8...v1.2.9) (2026-01-04)
 
 ### [1.2.8](https://github.com/EastSun5566/cc-gram/compare/v1.2.7...v1.2.8) (2025-12-29)
