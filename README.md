@@ -109,6 +109,20 @@ const filterNames = filter.filterNames;
   - `maven`
   - `stinson`
   - `amaro`
+  - `pink`
+  - `vesper`
+  - `sierra`
+  - `helena`
+  - `ginza`
+  - `juno`
+  - `skyline`
+  - `ludwig`
+  - `hefe`
+  - `dogpatch`
+  - `kelvin`
+  - `sutro`
+  - `ashby`
+  - `crema`
 
 ##### Add / Set filter to the filter list
 
