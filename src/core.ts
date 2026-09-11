@@ -23,7 +23,9 @@ export class CCgram {
   static readonly DEFAULT_FILTERS = DEFAULT_FILTERS;
 
   /** filter list */
-  protected readonly _filters = DEFAULT_FILTERS;
+  protected readonly _filters = new Map(
+    [...DEFAULT_FILTERS.entries()].map(([name, setting]) => [name, { ...setting }]),
+  );
 
   /** data attribute */
   protected _dataAttribute: string;
@@ -41,16 +43,15 @@ export class CCgram {
 
     if (!init) return;
 
-    if (document.readyState === 'complete') {
+    if (document.readyState !== 'loading') {
       this.applyFilter();
       return;
     }
 
     const handleLoaded = (): void => {
       this.applyFilter();
-      document.removeEventListener('DOMContentLoaded', handleLoaded);
     };
-    document.addEventListener('DOMContentLoaded', handleLoaded);
+    document.addEventListener('DOMContentLoaded', handleLoaded, { once: true });
   }
 
   /** The filter name list */
@@ -195,6 +196,6 @@ export const CCGram = CCgram;
 export const Filter = CCgram;
 
 export type FilterInstance = InstanceType<typeof CCgram>;
-export function createFilter(options: Options): FilterInstance {
+export function createFilter(options: Options = {}): FilterInstance {
   return new Filter(options);
 }

@@ -28,7 +28,7 @@ describe('Read/Write filter list', (): void => {
 
   it('should remove filter', (): void => {
     const { filterNames } = cg!;
-    const targetFilterName = filterNames[Math.floor(Math.random() * (filterNames.length - 1))]!;
+    const targetFilterName = filterNames[0]!;
 
     cg!.removeFilter(targetFilterName);
 
@@ -82,6 +82,68 @@ describe('Read/Write filter list', (): void => {
     expect(result).toBe(true);
     expect(cg!.filterNames).not.toContain('temp-filter');
   });
+
+  it('should isolate instances and default settings', (): void => {
+    const a = new CCgram({ init: false });
+    const b = new CCgram({ init: false });
+    const original = { ...DEFAULT_FILTERS.get('aden')! };
+
+    a.setFilter('custom', { blur: 2 });
+    a.removeFilter('inkwell');
+    a.getFilterSetting('aden')!.brightness = 9;
+
+    expect(b.filterNames).toContain('inkwell');
+    expect(b.filterNames).not.toContain('custom');
+    expect(b.getFilterSetting('aden')).toEqual(original);
+    expect(DEFAULT_FILTERS.get('aden')).toEqual(original);
+  });
+
+  it('does not share setting objects with defaults or new instances', (): void => {
+    const first = new CCgram({ init: false });
+    first.getFilterSetting('1977')!.contrast = 99;
+
+    expect(new CCgram({ init: false }).getFilterSetting('1977')!.contrast)
+      .not.toBe(99);
+    expect(DEFAULT_FILTERS.get('1977')!.contrast).not.toBe(99);
+  });
+});
+
+describe('Document ready state initialization', () => {
+  const readyStateDescriptor = Object.getOwnPropertyDescriptor(document, 'readyState');
+
+  afterEach(() => {
+    if (readyStateDescriptor) {
+      Object.defineProperty(document, 'readyState', readyStateDescriptor);
+    } else {
+      delete (document as Partial<Document> & { readyState?: DocumentReadyState }).readyState;
+    }
+    vi.restoreAllMocks();
+  });
+
+  it.each(['interactive', 'complete'] as const)('applies synchronously in %s state', (state) => {
+    Object.defineProperty(document, 'readyState', { configurable: true, value: state });
+    const apply = vi.spyOn(CCgram.prototype, 'applyFilter');
+    const addEventListener = vi.spyOn(document, 'addEventListener');
+    new CCgram();
+    expect(apply).toHaveBeenCalledOnce();
+    expect(addEventListener.mock.calls.some(([type]) => type === 'DOMContentLoaded')).toBe(false);
+  });
+
+  it('waits for DOMContentLoaded once in loading state', () => {
+    Object.defineProperty(document, 'readyState', { configurable: true, value: 'loading' });
+    const apply = vi.spyOn(CCgram.prototype, 'applyFilter');
+    const addEventListener = vi.spyOn(document, 'addEventListener');
+    new CCgram();
+    expect(apply).not.toHaveBeenCalled();
+    document.dispatchEvent(new Event('DOMContentLoaded'));
+    document.dispatchEvent(new Event('DOMContentLoaded'));
+    expect(apply).toHaveBeenCalledOnce();
+    expect(addEventListener).toHaveBeenCalledWith(
+      'DOMContentLoaded',
+      expect.any(Function),
+      { once: true },
+    );
+  });
 });
 
 const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
@@ -100,7 +162,10 @@ const createInvalidImageElement = (): HTMLImageElement => (
 );
 
 describe('Apply filter to target Image', () => {
-  beforeEach(() => { document.body.innerHTML = ''; });
+  beforeEach(() => {
+    Object.defineProperty(document, 'readyState', { configurable: true, value: 'complete' });
+    document.body.innerHTML = '';
+  });
 
   it('should apply CSS filter when init', (): void => {
     document.body.innerHTML = `
@@ -192,6 +257,7 @@ describe('Access filter image data', () => {
   let cg: CCgram | null = null;
 
   beforeEach(() => {
+    Object.defineProperty(document, 'readyState', { configurable: true, value: 'complete' });
     // Mock canvas context for jsdom. This is a minimal subset of
     // CanvasRenderingContext2D needed for the tests.
     const mockContext = {

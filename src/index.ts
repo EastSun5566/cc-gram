@@ -10,3 +10,4 @@ export { Filter as default } from './core';
 
 export * from './filters';
 export * from './core';
+export type { Options, ParseOptions } from './types';
