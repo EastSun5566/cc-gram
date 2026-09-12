@@ -19,19 +19,9 @@ jobs:
         run: |
           pnpm i --frozen-lockfile
           pnpm exec playwright install --with-deps chromium
-          pnpm lint
-          pnpm typecheck
-          pnpm test
-          pnpm test:browser
-          pnpm build
+          pnpm verify
       - name: Validate JSR publish
-        run: npx jsr publish --dry-run
-      - name: Build demo
-        run: |
-          cd demo
-          pnpm i
-          pnpm lint
-          pnpm build
+        run: pnpm exec jsr publish --dry-run
       - name: Upload Playwright trace
         if: failure()
         uses: actions/upload-artifact@v4

@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import {
   describe,
   beforeEach,
@@ -12,7 +11,9 @@ const IMAGE_SRC = 'https://media.giphy.com/media/sIIhZliB2McAo/giphy.gif';
 const FILTER_NAME = '1977';
 
 describe('Custom data attribute with kebab-case', () => {
-  beforeEach(() => { document.body.innerHTML = ''; });
+  beforeEach(() => {
+    document.body.innerHTML = '';
+  });
 
   it('should apply filter with kebab-case data attr (data-my-filter)', (): void => {
     const DATA_ATTR = 'my-filter';

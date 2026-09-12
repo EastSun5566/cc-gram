@@ -7,7 +7,6 @@ import {
   vi,
 } from 'vitest';
 
-/* eslint-disable @typescript-eslint/no-non-null-assertion */
 import { CCgram } from '../src';
 import { DEFAULT_FILTERS } from '../src/filters';
 import { createBlobWorker } from '../src/utils';
@@ -15,7 +14,9 @@ import { createBlobWorker } from '../src/utils';
 describe('Read/Write filter list', (): void => {
   let cg: CCgram | null = null;
 
-  beforeEach(() => { cg = new CCgram({ init: false }); });
+  beforeEach(() => {
+    cg = new CCgram({ init: false });
+  });
 
   it('should get all filter name', (): void => {
     expect(cg!.filterNames).toEqual([...DEFAULT_FILTERS.keys()]);
@@ -346,7 +347,7 @@ describe('Access filter image data', () => {
 
   it('should return null when getBlob returns null', async (): Promise<void> => {
     const target = getTargetImage()!;
-    
+
     // Mock toBlob to return null
     vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation((callback) => {
       callback(null);
@@ -360,7 +361,7 @@ describe('Access filter image data', () => {
   it('should use filter from dataset when no filter option is provided', async (): Promise<void> => {
     const target = getTargetImage()!;
     const getFilterStyleSpy = vi.spyOn(cg!, 'getFilterStyle');
-    
+
     await cg!.getBlob(target);
 
     expect(getFilterStyleSpy).toHaveBeenCalledWith(FILTER_NAME);
@@ -395,7 +396,9 @@ describe('Access filter image data', () => {
   it('waits for an incomplete image to decode before allocating a canvas', async () => {
     const image = getTargetImage()!;
     let finishDecode!: () => void;
-    const decode = vi.fn(() => new Promise<void>((resolve) => { finishDecode = resolve; }));
+    const decode = vi.fn(() => new Promise<void>((resolve) => {
+      finishDecode = resolve;
+    }));
     Object.defineProperties(image, {
       complete: { configurable: true, value: false },
       naturalWidth: { configurable: true, value: 100 },
@@ -448,7 +451,7 @@ describe('FileReader terminal events', () => {
   class MockFileReader extends EventTarget {
     static instance: MockFileReader | undefined;
 
-    static readError: unknown;
+    static readError: Error | undefined;
 
     result: string | ArrayBuffer | null = null;
 
@@ -531,9 +534,9 @@ describe('Worker image export lifecycle', () => {
   class MockWorker {
     static instance: MockWorker | undefined;
 
-    static constructorError: unknown;
+    static constructorError: Error | undefined;
 
-    static postMessageError: unknown;
+    static postMessageError: Error | undefined;
 
     listeners = new Map<string, Set<Listener>>();
 
@@ -704,12 +707,14 @@ describe('Worker image export lifecycle', () => {
       convertToBlob: vi.fn().mockResolvedValue(new Blob(['result'])),
     };
 
-    await expect(createBlobWorker({ data: {
-      canvas,
-      image: { close } as unknown as ImageBitmap,
-      filterStyle: 'none',
-      options: { type: 'image/png' },
-    } } as MessageEvent<any>)).resolves.toBeInstanceOf(Blob);
+    await expect(createBlobWorker({
+      data: {
+        canvas,
+        image: { close } as unknown as ImageBitmap,
+        filterStyle: 'none',
+        options: { type: 'image/png' },
+      },
+    } as MessageEvent)).resolves.toBeInstanceOf(Blob);
     expect(canvas.getContext).toHaveBeenCalledWith('2d');
     expect(close).toHaveBeenCalledOnce();
   });
