@@ -28,6 +28,7 @@
     "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin typescript",
     "typecheck": "tsc --noEmit",
     "test": "vitest __tests__",
+    "test:browser": "playwright test",
     "test:coverage": "vitest run __tests__ --coverage",
     "lint": "eslint --fix src",
     "lint:pkg": "npx publint",
@@ -63,6 +64,7 @@
     }
   },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.3.0",
