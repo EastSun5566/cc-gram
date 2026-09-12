@@ -15,3 +15,14 @@ export interface ParseOptions {
   /** Override filter name, defaults to reading from data attribute */
   filter?: string;
 }
+
+/** Serializable error details used across the Worker boundary. */
+export interface WorkerError {
+  name: string;
+  message: string;
+}
+
+/** Internal wire protocol for Worker results. */
+export type WorkerResult<T> =
+  | { ok: true; value: T }
+  | { ok: false; error: WorkerError };

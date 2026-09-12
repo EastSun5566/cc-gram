@@ -12,9 +12,34 @@ import {
   camelize,
 } from './utils';
 
-import type { Options, ParseOptions } from './types';
+import type { Options, ParseOptions, WorkerResult } from './types';
 
 export const DEFAULT_DATA_ATTRIBUTE = 'filter';
+
+const isRecord = (value: unknown): value is Record<string, unknown> => (
+  typeof value === 'object' && value !== null
+);
+
+const isWorkerResult = (value: unknown): value is WorkerResult<Blob | null> => {
+  if (!isRecord(value) || typeof value.ok !== 'boolean') return false;
+
+  if (value.ok) return value.value === null || value.value instanceof Blob;
+
+  return isRecord(value.error)
+    && typeof value.error.name === 'string'
+    && typeof value.error.message === 'string';
+};
+
+const createWorkerError = (event: ErrorEvent): Error => {
+  const details = isRecord(event.error) ? event.error : {};
+  const error = new Error(
+    typeof details.message === 'string'
+      ? details.message
+      : event.message || '[CCgram] The image Worker failed.',
+  );
+  error.name = typeof details.name === 'string' ? details.name : 'Error';
+  return error;
+};
 
 /** 🖼 A CSS & Canvas Instagram filters based on CSSgram */
 export class CCgram {
@@ -125,12 +150,36 @@ export class CCgram {
 
     const reader = new FileReader();
 
-    return new Promise((resolve) => {
-      reader.addEventListener('load', () => {
+    return new Promise((resolve, reject) => {
+      let cleanup = (): void => {};
+      const handleLoad = (): void => {
+        cleanup();
         resolve(reader.result as string);
-      });
+      };
+      const handleError = (): void => {
+        cleanup();
+        reject(reader.error ?? new Error('[CCgram] The image data could not be read.'));
+      };
+      const handleAbort = (): void => {
+        cleanup();
+        reject(new Error('[CCgram] Reading the image data was aborted.'));
+      };
+      cleanup = (): void => {
+        reader.removeEventListener('load', handleLoad);
+        reader.removeEventListener('error', handleError);
+        reader.removeEventListener('abort', handleAbort);
+      };
 
-      reader.readAsDataURL(blob);
+      reader.addEventListener('load', handleLoad);
+      reader.addEventListener('error', handleError);
+      reader.addEventListener('abort', handleAbort);
+
+      try {
+        reader.readAsDataURL(blob);
+      } catch (error) {
+        cleanup();
+        reject(error);
+      }
     });
   }
 
@@ -145,6 +194,13 @@ export class CCgram {
   ): Promise<Blob | null> {
     assertIsImage(image);
 
+    try {
+      if (!image.complete) await image.decode();
+      if (image.naturalWidth <= 0 || image.naturalHeight <= 0) throw new Error();
+    } catch {
+      throw new Error('[CCgram] The image could not be decoded.');
+    }
+
     const { naturalWidth, naturalHeight } = image;
     const filterName = options.filter ?? image.dataset[this._dataAttributeKey];
     const filterStyle = this.getFilterStyle(filterName);
@@ -153,25 +209,70 @@ export class CCgram {
       const canvas = new OffscreenCanvas(naturalWidth, naturalHeight);
       const bmp = await createImageBitmap(image);
 
+      let worker: Worker;
+      try {
+        worker = createWorker(createBlobWorker);
+      } catch (error) {
+        bmp.close();
+        throw error;
+      }
+
       return new Promise((resolve, reject) => {
-        const worker = createWorker(createBlobWorker);
+        let settled = false;
+        let cleanup = (): boolean => false;
 
-        worker.addEventListener('message', ({ data }: MessageEvent<Blob>) => {
-          resolve(data);
-          worker.terminate();
-        });
+        const handleMessage = ({ data }: MessageEvent<unknown>): void => {
+          if (!cleanup()) return;
 
-        worker.addEventListener('error', (error) => {
+          if (!isWorkerResult(data)) {
+            reject(new Error('[CCgram] The image Worker returned an invalid response.'));
+            return;
+          }
+
+          if (data.ok) {
+            resolve(data.value);
+            return;
+          }
+
+          const error = new Error(data.error.message);
+          error.name = data.error.name;
           reject(error);
-          worker.terminate();
-        });
+        };
 
-        worker.postMessage({
-          canvas,
-          image: bmp,
-          filterStyle,
-          options,
-        }, [canvas, bmp]);
+        const handleError = (event: ErrorEvent): void => {
+          if (!cleanup()) return;
+          reject(createWorkerError(event));
+        };
+
+        const handleMessageError = (): void => {
+          if (!cleanup()) return;
+          reject(new Error('[CCgram] The image Worker response could not be decoded.'));
+        };
+        cleanup = (): boolean => {
+          if (settled) return false;
+          settled = true;
+          worker.removeEventListener('message', handleMessage);
+          worker.removeEventListener('error', handleError);
+          worker.removeEventListener('messageerror', handleMessageError);
+          worker.terminate();
+          return true;
+        };
+
+        worker.addEventListener('message', handleMessage);
+        worker.addEventListener('error', handleError);
+        worker.addEventListener('messageerror', handleMessageError);
+
+        try {
+          worker.postMessage({
+            canvas,
+            image: bmp,
+            filterStyle,
+            options,
+          }, [canvas, bmp]);
+        } catch (error) {
+          bmp.close();
+          if (cleanup()) reject(error);
+        }
       });
     }
 
@@ -179,7 +280,7 @@ export class CCgram {
     canvas.width = naturalWidth;
     canvas.height = naturalHeight;
 
-    const ctx = canvas.getContext('2d', { alpha: false });
+    const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('The 2d context canvas is not supported.');
 
     ctx.filter = filterStyle;
