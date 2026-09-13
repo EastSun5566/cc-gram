@@ -6,8 +6,8 @@
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
-  "packageManager": "pnpm@9.1.0",
-  "main": "dist/index.umd.js",
+  "packageManager": "pnpm@9.15.9",
+  "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
   "exports": {
@@ -17,7 +17,7 @@
     },
     "require": {
       "types": "./dist/index.d.cts",
-      "default": "./dist/index.umd.js"
+      "default": "./dist/index.cjs"
     }
   },
   "files": [
@@ -27,10 +27,14 @@
   "scripts": {
     "build": "rimraf dist && rollup -c rollup.config.ts --configPlugin typescript",
     "typecheck": "tsc --noEmit",
-    "test": "vitest __tests__",
+    "test": "vitest run __tests__",
+    "test:browser": "playwright test",
     "test:coverage": "vitest run __tests__ --coverage",
-    "lint": "eslint --fix src",
-    "lint:pkg": "npx publint",
+    "verify": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm test && pnpm test:coverage && pnpm build && pnpm lint:pkg && pnpm verify:package && pnpm -C demo install --frozen-lockfile && pnpm -C demo lint && pnpm -C demo build && pnpm test:browser",
+    "lint": "eslint src __tests__ rollup.config.ts playwright.config.ts",
+    "lint:fix": "eslint --fix src __tests__ rollup.config.ts playwright.config.ts",
+    "lint:pkg": "pnpm exec publint",
+    "verify:package": "node scripts/verify-package.mjs",
     "prepublishOnly": "pnpm build",
     "release": "sh scripts/release.sh",
     "demo:dev": "pnpm -C demo dev",
@@ -61,15 +65,33 @@
       "pre-commit": "pnpm lint"
     }
   },
+  "pnpm": {
+    "overrides": {
+      "@isaacs/brace-expansion@^5.0.0": "5.0.1",
+      "brace-expansion@^1.0.0": "1.1.18",
+      "brace-expansion@^2.0.0": "2.1.4",
+      "flatted@^3.0.0": "3.4.2",
+      "js-yaml@^3.0.0": "3.15.2",
+      "js-yaml@^4.0.0": "4.3.2",
+      "minimatch@^3.0.0": "3.1.4",
+      "minimatch@^9.0.0": "9.0.7",
+      "minimatch@^10.0.0": "10.2.3",
+      "picomatch@^4.0.0": "4.0.4",
+      "serialize-javascript@^6.0.0": "7.0.3",
+      "vite": "7.3.5",
+      "ws@^8.0.0": "8.21.0"
+    }
+  },
   "devDependencies": {
+    "@playwright/test": "1.63.0",
     "@rollup/plugin-node-resolve": "^16.0.3",
     "@rollup/plugin-terser": "^0.4.4",
     "@rollup/plugin-typescript": "^12.3.0",
     "@stylistic/eslint-plugin": "^3.0.1",
     "@types/node": "^24.10.4",
     "@types/offscreencanvas": "^2019.7.3",
-    "@vitest/coverage-v8": "^4.0.16",
-    "@vitest/ui": "^4.0.16",
+    "@vitest/coverage-v8": "4.1.11",
+    "@vitest/ui": "4.1.11",
     "eslint": "^9.39.2",
     "eslint-config-airbnb-extended": "^2.3.3",
     "eslint-import-resolver-typescript": "^4.0.0",
@@ -77,12 +99,15 @@
     "globals": "^15.14.0",
     "husky": "^3.1.0",
     "jsdom": "^27.4.0",
+    "jsr": "0.14.3",
+    "publint": "0.3.24",
     "rimraf": "^6.1.2",
     "rollup": "^4.54.0",
-    "rollup-plugin-filesize": "^9.1.2",
+    "standard-version": "9.5.0",
     "tslib": "^2.8.1",
     "typescript": "^5.9.3",
     "typescript-eslint": "^8.50.1",
-    "vitest": "^4.0.16"
+    "vite": "7.3.5",
+    "vitest": "4.1.11"
   }
 }

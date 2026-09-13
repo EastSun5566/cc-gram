@@ -19,18 +19,34 @@ export function assertIsImage(image: HTMLImageElement): asserts image is HTMLIma
 export function createWorker<
   TData = unknown,
   TMessage = unknown,
->(fn: (messageEvent: MessageEvent<TData>) => TMessage): Worker {
+>(fn: (messageEvent: MessageEvent<TData>) => TMessage | Promise<TMessage>): Worker {
   const code = `
     const work = ${fn.toString()};
 
     addEventListener('message', async (...params) => {
-      const res = await work(...params);
-      postMessage(res);
+      try {
+        const value = await work(...params);
+        postMessage({ ok: true, value });
+      } catch (error) {
+        postMessage({
+          ok: false,
+          error: {
+            name: error && typeof error.name === 'string' ? error.name : 'Error',
+            message: error && typeof error.message === 'string' ? error.message : String(error),
+          },
+        });
+      }
     });
   `;
 
   const url = URL.createObjectURL(new Blob([code], { type: 'text/javascript' }));
-  const worker = new Worker(url);
+  let worker: Worker;
+  try {
+    worker = new Worker(url);
+  } catch (error) {
+    URL.revokeObjectURL(url);
+    throw error;
+  }
 
   const { terminate } = worker;
   worker.terminate = (): void => {
@@ -64,7 +80,7 @@ interface CreateBlobOptions<
   TCanvas extends HTMLCanvasElement | OffscreenCanvas = HTMLCanvasElement,
 > {
   canvas: TCanvas;
-  image: CanvasImageSource;
+  image: ImageBitmap;
   filterStyle: string;
   options: ParseOptions;
 }
@@ -79,11 +95,15 @@ export function createBlobWorker({
     options,
   } = data;
 
-  const ctx = canvas.getContext('2d', { alpha: false });
-  if (!ctx) throw new Error('The 2d context canvas is not supported.');
+  try {
+    const ctx = canvas.getContext('2d');
+    if (!ctx) throw new Error('The 2d context canvas is not supported.');
 
-  ctx.filter = filterStyle;
-  ctx.drawImage(image, 0, 0);
+    ctx.filter = filterStyle;
+    ctx.drawImage(image, 0, 0);
 
-  return canvas.convertToBlob(options);
+    return canvas.convertToBlob(options);
+  } finally {
+    image.close();
+  }
 }

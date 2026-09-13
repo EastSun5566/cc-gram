@@ -1,13 +1,14 @@
 #!/bin/sh
 
-# abort on errors
-set -e
+set -eu
 
-echo "check out & sync main"
-git checkout main
-git pull
-
-npx standard-version
+branch=$(git symbolic-ref --short HEAD)
+[ "$branch" = main ] || { echo "release must start on main (got $branch)" >&2; exit 1; }
+[ -z "$(git status --porcelain)" ] || { echo "working tree must be clean" >&2; exit 1; }
+git fetch origin main
+[ "$(git rev-parse main)" = "$(git rev-parse origin/main)" ] || { echo "main does not match origin/main" >&2; exit 1; }
+pnpm verify
+pnpm exec standard-version
 
 # Sync jsr.json version with package.json
 echo "syncing jsr.json version with package.json"
@@ -26,12 +27,6 @@ else
   echo "updating release commit to include jsr.json"
   git add jsr.json
   git commit --amend --no-edit
-  # Update the tag created by standard-version to point to the amended commit
-  # Use -a to create an annotated tag so that --follow-tags will push it
   git tag -f -a "v$PACKAGE_VERSION" -m "chore(release): $PACKAGE_VERSION"
 fi
-
-echo "push tags"
-git push --follow-tags
-
-git checkout -
+echo "Release prepared locally: v$PACKAGE_VERSION. Push manually after review."

@@ -18,15 +18,15 @@ jobs:
       - name: Install and test
         run: |
           pnpm i --frozen-lockfile
-          pnpm lint
-          pnpm typecheck
-          pnpm test
-          pnpm build
+          pnpm exec playwright install --with-deps chromium
+          pnpm verify
       - name: Validate JSR publish
-        run: npx jsr publish --dry-run
-      - name: Build demo
-        run: |
-          cd demo
-          pnpm i
-          pnpm lint
-          pnpm build
+        run: pnpm exec jsr publish --dry-run
+      - name: Upload Playwright trace
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: playwright-trace
+          path: test-results/**/trace.zip
+          if-no-files-found: ignore
+          retention-days: 7

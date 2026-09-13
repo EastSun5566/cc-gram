@@ -21,7 +21,7 @@
 > [CSSgram](https://github.com/una/CSSgram) is an excellent CSS filter library. However, there are instances where you might need to access or download the image with filter. This is where CCgram comes into play. It enables you to preview filter using pure CSS and draw them with Canvas whenever you need to.
 
 - On-Demand: Utilizes CSS for previewing and draws with the Canvas API as needed
-- Non-Blocking: Images are drawn on a Web Worker using `OffscreenCanvas` & `ImageBitmap`
+- Non-Blocking: When supported, images are drawn on a Web Worker using `OffscreenCanvas` & `ImageBitmap`; otherwise the library falls back to the main thread.
 
 ## ✨ Installation
 
@@ -50,6 +50,9 @@ import { createFilter } from "cc-gram";
 
 const filter = createFilter();
 ```
+
+Each filter instance has its own filter list. Custom filters added or changed
+through one instance do not affect other instances or the default presets.
 
 ```js
 // or you can turn off init apply

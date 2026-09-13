@@ -3,7 +3,7 @@ name: Release
 on:
   push:
     tags:
-      - "**"
+      - "v*"
 
 jobs:
   test:
@@ -17,9 +17,8 @@ jobs:
       - name: Install and test
         run: |
           pnpm i --frozen-lockfile
-          pnpm lint
-          pnpm typecheck
-          pnpm test
+          pnpm exec playwright install --with-deps chromium
+          pnpm verify
 
   publish:
     needs: test
@@ -36,14 +35,88 @@ jobs:
       - uses: pnpm/action-setup@v4
       - name: Install deps
         run: pnpm i --frozen-lockfile
-      - name: Ensure npm supports OIDC
-        run: npm install -g npm@latest
+      - name: Validate release tag
+        run: |
+          node -e '
+            const identifier = "(?:0|[1-9][0-9]*|[0-9]*[A-Za-z-][0-9A-Za-z-]*)";
+            const semver = new RegExp(
+              `^v(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)\\.(0|[1-9][0-9]*)` +
+              `(?:-${identifier}(?:\\.${identifier})*)?` +
+              "(?:\\+[0-9A-Za-z-]+(?:\\.[0-9A-Za-z-]+)*)?$",
+            );
+            const tag = process.env.GITHUB_REF_NAME;
+            const packageVersion = require("./package.json").version;
+            const jsrVersion = require("./jsr.json").version;
+            if (!semver.test(tag) || tag.slice(1) !== packageVersion || packageVersion !== jsrVersion) {
+              console.error({ tag, packageVersion, jsrVersion });
+              process.exit(1);
+            }
+          '
+      - name: Install exact npm
+        run: npm install --global npm@12.0.2
+      - name: Preflight package and JSR
+        run: |
+          pnpm exec playwright install --with-deps chromium
+          pnpm verify
+          pnpm exec jsr publish --dry-run
+      - name: Prepare exact npm artifact
+        id: npm-artifact
+        shell: bash
+        run: |
+          set -euo pipefail
+          pack_json=$(npm pack --json --pack-destination "$RUNNER_TEMP")
+          metadata=$(PACK_JSON="$pack_json" node -e '
+            const parsed = JSON.parse(process.env.PACK_JSON);
+            const entry = Array.isArray(parsed) ? parsed[0] : Object.values(parsed)[0];
+            if (!entry || typeof entry.filename !== "string" || typeof entry.integrity !== "string") {
+              throw new Error("npm pack did not return filename and integrity");
+            }
+            process.stdout.write(`${entry.filename}\n${entry.integrity}`);
+          ')
+          filename=$(printf '%s\n' "$metadata" | sed -n '1p')
+          local_integrity=$(printf '%s\n' "$metadata" | sed -n '2p')
+          tarball="$RUNNER_TEMP/$filename"
+          test -f "$tarball"
+
+          package_name=$(node -p 'require("./package.json").name')
+          package_version=$(node -p 'require("./package.json").version')
+          error_log="$RUNNER_TEMP/npm-view-error.log"
+          set +e
+          remote_json=$(npm view "$package_name@$package_version" dist.integrity --json 2>"$error_log")
+          view_status=$?
+          set -e
+
+          if [ "$view_status" -eq 0 ]; then
+            remote_integrity=$(node -e '
+              const value = JSON.parse(process.argv[1]);
+              if (typeof value !== "string" || !value) throw new Error("registry returned no integrity");
+              process.stdout.write(value);
+            ' "$remote_json")
+            if [ "$remote_integrity" != "$local_integrity" ]; then
+              echo "Published npm integrity does not match the local artifact." >&2
+              exit 1
+            fi
+            echo "already-published=true" >> "$GITHUB_OUTPUT"
+          elif grep -Eq '(^|[^A-Z0-9_])E404([^A-Z0-9_]|$)' "$error_log"; then
+            echo "already-published=false" >> "$GITHUB_OUTPUT"
+          else
+            cat "$error_log" >&2
+            exit "$view_status"
+          fi
+
+          echo "tarball=$tarball" >> "$GITHUB_OUTPUT"
+          echo "integrity=$local_integrity" >> "$GITHUB_OUTPUT"
       - name: Publish to NPM via OIDC
-        run: npm publish
+        shell: bash
+        run: |
+          if [ "${{ steps.npm-artifact.outputs['already-published'] }}" = "true" ]; then
+            echo "npm artifact is already published with matching integrity; skipping npm publish."
+          else
+            npm publish "${{ steps.npm-artifact.outputs.tarball }}"
+          fi
       - name: Publish to JSR
-        run: npx jsr publish
+        run: pnpm exec jsr publish
       - name: Create GitHub Release
         uses: softprops/action-gh-release@v2
-        continue-on-error: true
         with:
           generate_release_notes: true
