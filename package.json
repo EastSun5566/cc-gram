@@ -6,7 +6,7 @@
   "engines": {
     "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
   },
-  "packageManager": "pnpm@9.1.0",
+  "packageManager": "pnpm@9.15.9",
   "main": "dist/index.cjs",
   "module": "dist/index.esm.js",
   "types": "dist/index.d.ts",
@@ -30,7 +30,7 @@
     "test": "vitest run __tests__",
     "test:browser": "playwright test",
     "test:coverage": "vitest run __tests__ --coverage",
-    "verify": "pnpm lint && pnpm typecheck && pnpm test && pnpm test:coverage && pnpm build && pnpm lint:pkg && pnpm verify:package && pnpm -C demo install --frozen-lockfile && pnpm -C demo lint && pnpm -C demo build && pnpm test:browser",
+    "verify": "pnpm audit --audit-level high && pnpm lint && pnpm typecheck && pnpm test && pnpm test:coverage && pnpm build && pnpm lint:pkg && pnpm verify:package && pnpm -C demo install --frozen-lockfile && pnpm -C demo lint && pnpm -C demo build && pnpm test:browser",
     "lint": "eslint src __tests__ rollup.config.ts playwright.config.ts",
     "lint:fix": "eslint --fix src __tests__ rollup.config.ts playwright.config.ts",
     "lint:pkg": "pnpm exec publint",
