@@ -69,7 +69,7 @@ export class CCgram {
   static readonly DEFAULT_FILTERS = DEFAULT_FILTERS;
 
   /** filter list */
-  protected readonly _filters = new Map(
+  protected readonly _filters: Map<FilterName, FilterSetting> = new Map(
     [...DEFAULT_FILTERS.entries()].map(([name, setting]) => [name, { ...setting }]),
   );
 
