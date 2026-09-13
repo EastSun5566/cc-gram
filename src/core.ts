@@ -41,6 +41,27 @@ const createWorkerError = (event: ErrorEvent): Error => {
   return error;
 };
 
+const renderOnMainThread = (
+  image: HTMLImageElement,
+  naturalWidth: number,
+  naturalHeight: number,
+  filterStyle: string,
+  options: ParseOptions,
+): Promise<Blob | null> => {
+  const canvas = document.createElement('canvas');
+  canvas.width = naturalWidth;
+  canvas.height = naturalHeight;
+
+  const ctx = canvas.getContext('2d');
+  if (!ctx) throw new Error('The 2d context canvas is not supported.');
+
+  ctx.filter = filterStyle;
+  ctx.drawImage(image, 0, 0);
+
+  const { type, quality } = options;
+  return new Promise((resolve) => canvas.toBlob((blob): void => resolve(blob), type, quality));
+};
+
 /** 🖼 A CSS & Canvas Instagram filters based on CSSgram */
 export class CCgram {
   static readonly DEFAULT_DATA_ATTRIBUTE = DEFAULT_DATA_ATTRIBUTE;
@@ -212,9 +233,9 @@ export class CCgram {
       let worker: Worker;
       try {
         worker = createWorker(createBlobWorker);
-      } catch (error) {
+      } catch {
         bmp.close();
-        throw error;
+        return renderOnMainThread(image, naturalWidth, naturalHeight, filterStyle, options);
       }
 
       return new Promise((resolve, reject) => {
@@ -276,18 +297,7 @@ export class CCgram {
       });
     }
 
-    const canvas = document.createElement('canvas');
-    canvas.width = naturalWidth;
-    canvas.height = naturalHeight;
-
-    const ctx = canvas.getContext('2d');
-    if (!ctx) throw new Error('The 2d context canvas is not supported.');
-
-    ctx.filter = filterStyle;
-    ctx.drawImage(image, 0, 0);
-
-    const { type, quality } = options;
-    return new Promise((resolve) => canvas.toBlob((blob): void => resolve(blob), type, quality));
+    return renderOnMainThread(image, naturalWidth, naturalHeight, filterStyle, options);
   }
 }
 

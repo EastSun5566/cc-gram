@@ -684,19 +684,27 @@ describe('Worker image export lifecycle', () => {
     expect(bitmap.close).toHaveBeenCalledOnce();
   });
 
-  it('closes the bitmap when Worker creation throws', async () => {
+  it('closes the bitmap and falls back when Worker creation throws', async () => {
     const createError = new Error('worker creation failed');
     MockWorker.constructorError = createError;
+    const result = new Blob(['fallback']);
+    const context = { filter: '', drawImage: vi.fn() };
+    vi.spyOn(HTMLCanvasElement.prototype, 'getContext')
+      .mockReturnValue(context as unknown as CanvasRenderingContext2D);
+    vi.spyOn(HTMLCanvasElement.prototype, 'toBlob').mockImplementation((callback) => {
+      callback(result);
+    });
     const { CCgram: WorkerCCgram } = await import('../src/core');
     const image = document.createElement('img');
     image.src = IMAGE_SRC;
     makeImageReady(image);
 
-    await expect(new WorkerCCgram({ init: false }).getBlob(image)).rejects.toBe(createError);
+    await expect(new WorkerCCgram({ init: false }).getBlob(image)).resolves.toBe(result);
     expect(bitmap.close).toHaveBeenCalledOnce();
     expect(MockWorker.instance).toBeUndefined();
     expect(MockURL.revokeObjectURL).toHaveBeenCalledOnce();
     expect(MockURL.revokeObjectURL).toHaveBeenCalledWith('blob:worker');
+    expect(context.drawImage).toHaveBeenCalledWith(image, 0, 0);
   });
 
   it('closes transferred bitmap in the Worker and requests an alpha-capable context', async () => {
