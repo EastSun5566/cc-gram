@@ -55,7 +55,12 @@ const renderOnMainThread = (
   const ctx = canvas.getContext('2d');
   if (!ctx) throw new Error('The 2d context canvas is not supported.');
 
-  ctx.filter = filterStyle;
+  // Check before assignment: unsupported contexts allow a misleading expando.
+  if (typeof ctx.filter === 'string') {
+    ctx.filter = filterStyle;
+  } else if (filterStyle && filterStyle !== 'none') {
+    throw new Error('[CCgram] Canvas filters are not supported.');
+  }
   ctx.drawImage(image, 0, 0);
 
   const { type, quality } = options;

@@ -311,6 +311,27 @@ describe('Access filter image data', () => {
     expect(HTMLCanvasElement.prototype.getContext).toHaveBeenCalledWith('2d');
   });
 
+  it.each(['getBlob', 'getDataURL'] as const)('rejects %s before drawing when canvas filters are unsupported', async (method) => {
+    const context = { drawImage: vi.fn() };
+    vi.mocked(HTMLCanvasElement.prototype.getContext)
+      .mockReturnValue(context as unknown as CanvasRenderingContext2D);
+
+    await expect(cg![method](getTargetImage()!)).rejects.toThrow('[CCgram] Canvas filters are not supported.');
+    expect(context.drawImage).not.toHaveBeenCalled();
+    expect(HTMLCanvasElement.prototype.toBlob).not.toHaveBeenCalled();
+    expect(context).not.toHaveProperty('filter');
+  });
+
+  it('exports without filters when the canvas filter capability is absent', async () => {
+    const context = { drawImage: vi.fn() };
+    vi.mocked(HTMLCanvasElement.prototype.getContext)
+      .mockReturnValue(context as unknown as CanvasRenderingContext2D);
+
+    await expect(cg!.getBlob(getTargetImage()!, { filter: '' })).resolves.toBeInstanceOf(Blob);
+    expect(context.drawImage).toHaveBeenCalledOnce();
+    expect(context).not.toHaveProperty('filter');
+  });
+
   it('should overwrite filter when call getDataURL method with filter option', async (): Promise<void> => {
     const target = getTargetImage()!;
     const overwriteFilterName = 'aden';
@@ -724,6 +745,34 @@ describe('Worker image export lifecycle', () => {
       },
     } as MessageEvent)).resolves.toBeInstanceOf(Blob);
     expect(canvas.getContext).toHaveBeenCalledWith('2d');
+    expect(close).toHaveBeenCalledOnce();
+  });
+
+  it.each(['none', '', 'invert(1)'])('handles unsupported Worker canvas filters for %j and closes the bitmap', async (filterStyle) => {
+    const close = vi.fn();
+    const context = { drawImage: vi.fn() };
+    const canvas = {
+      getContext: vi.fn(() => context),
+      convertToBlob: vi.fn().mockResolvedValue(new Blob(['result'])),
+    };
+    const render = (): Promise<Blob | null> => createBlobWorker({
+      data: {
+        canvas,
+        image: { close } as unknown as ImageBitmap,
+        filterStyle,
+        options: { type: 'image/png' },
+      },
+    } as MessageEvent);
+
+    if (filterStyle === 'invert(1)') {
+      expect(render).toThrow('[CCgram] Canvas filters are not supported.');
+      expect(context.drawImage).not.toHaveBeenCalled();
+      expect(canvas.convertToBlob).not.toHaveBeenCalled();
+    } else {
+      await expect(render()).resolves.toBeInstanceOf(Blob);
+      expect(context.drawImage).toHaveBeenCalledOnce();
+    }
+    expect(context).not.toHaveProperty('filter');
     expect(close).toHaveBeenCalledOnce();
   });
 });

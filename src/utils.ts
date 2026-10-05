@@ -99,7 +99,12 @@ export function createBlobWorker({
     const ctx = canvas.getContext('2d');
     if (!ctx) throw new Error('The 2d context canvas is not supported.');
 
-    ctx.filter = filterStyle;
+    // Keep this check self-contained because the Worker serializes this function.
+    if (typeof ctx.filter === 'string') {
+      ctx.filter = filterStyle;
+    } else if (filterStyle && filterStyle !== 'none') {
+      throw new Error('[CCgram] Canvas filters are not supported.');
+    }
     ctx.drawImage(image, 0, 0);
 
     return canvas.convertToBlob(options);

@@ -189,6 +189,14 @@ const blob = await filter.getBlob(image, {
 });
 ```
 
+CSS previews and canvas exports have separate browser support requirements.
+Filtered exports require the 2D canvas context used by the renderer (including
+the Worker context when `OffscreenCanvas` is available) to support `filter`.
+If it does not, `getBlob()` and `getDataURL()` reject with
+`[CCgram] Canvas filters are not supported.` instead of silently exporting the
+original image. Unfiltered exports still work without canvas filter support.
+See [canvas filter compatibility](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/filter#browser_compatibility).
+
 - Options
 
   - type: `string` - MIME types, defaults to `image/png`,
