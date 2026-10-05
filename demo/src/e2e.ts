@@ -12,7 +12,7 @@ export interface RenderResult {
 
 export interface E2EApi {
   ready: true;
-  render(): Promise<RenderResult>;
+  render(filterName?: string): Promise<RenderResult>;
   rejectInWorker(): Promise<never>;
 }
 
@@ -23,6 +23,7 @@ declare global {
 }
 
 const filter = new CCgram({ init: false });
+filter.setFilter('invert', { invert: 1 });
 
 async function loadFixture(): Promise<HTMLImageElement> {
   const image = new Image();
@@ -50,9 +51,9 @@ async function readPixels(blob: Blob): Promise<Pick<RenderResult, 'width' | 'hei
   };
 }
 
-async function render(): Promise<RenderResult> {
+async function render(filterName = ''): Promise<RenderResult> {
   const image = await loadFixture();
-  const blob = await filter.getBlob(image, { type: 'image/png' });
+  const blob = await filter.getBlob(image, { type: 'image/png', filter: filterName });
   if (!blob) throw new Error('The browser encoder returned a null Blob.');
 
   return {
