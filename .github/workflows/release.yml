@@ -18,7 +18,7 @@ jobs:
         run: |
           pnpm i --frozen-lockfile
           pnpm exec playwright install --with-deps chromium
-          pnpm verify
+          pnpm verify:release
 
   publish:
     needs: test
@@ -57,7 +57,7 @@ jobs:
       - name: Preflight package and JSR
         run: |
           pnpm exec playwright install --with-deps chromium
-          pnpm verify
+          pnpm verify:release
           pnpm exec jsr publish --dry-run
       - name: Prepare exact npm artifact
         id: npm-artifact

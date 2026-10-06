@@ -231,3 +231,25 @@ pnpm test
 # build for prod
 pnpm run build
 ```
+
+### Verification and dependency security
+
+- `pnpm verify` runs lint, type checks, tests, builds, package checks, and demo
+  verification. Existing dependency advisories do not interrupt these checks.
+- Pull requests use [Dependency Review](https://github.com/actions/dependency-review-action)
+  to reject newly introduced high or critical vulnerabilities, including runtime,
+  development, and unknown dependency scopes. Require both `test` and
+  `dependency-review` checks in branch protection to enforce these merge gates.
+- The separate **Security Audit** workflow audits the root and demo lockfiles,
+  including development dependencies, daily, on pushes to `main`, or manually.
+  Findings fail that workflow and should be tracked and fixed independently;
+  existing findings do not block unrelated pull requests.
+- `pnpm audit:security` runs the full root and demo audit with a high-severity
+  threshold. `pnpm verify:release` combines functional verification with this
+  audit; both local release preparation and publishing CI require it to pass.
+
+For example, a filter-only fix can pass PR checks despite an existing build-tool
+advisory, while a dependency update that introduces a high-severity vulnerability
+fails Dependency Review. Existing advisories must still be addressed before a
+release. Exceptions require a documented risk assessment rather than disabling
+the security check.

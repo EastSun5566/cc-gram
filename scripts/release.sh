@@ -7,7 +7,7 @@ branch=$(git symbolic-ref --short HEAD)
 [ -z "$(git status --porcelain)" ] || { echo "working tree must be clean" >&2; exit 1; }
 git fetch origin main
 [ "$(git rev-parse main)" = "$(git rev-parse origin/main)" ] || { echo "main does not match origin/main" >&2; exit 1; }
-pnpm verify
+pnpm verify:release
 pnpm exec standard-version
 
 # Sync jsr.json version with package.json
