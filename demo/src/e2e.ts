@@ -24,6 +24,8 @@ declare global {
 
 const filter = new CCgram({ init: false });
 filter.setFilter('invert', { invert: 1 });
+filter.setFilter('partial-invert', { blur: undefined, invert: 1, sepia: undefined });
+filter.setFilter('undefined-only', { blur: undefined, invert: undefined });
 
 async function loadFixture(): Promise<HTMLImageElement> {
   const image = new Image();
