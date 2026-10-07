@@ -62,6 +62,27 @@ async function disableCanvasFilters(page: Page): Promise<void> {
 }
 
 function testFilteredExports(mode: 'worker' | 'fallback'): void {
+  test('omits undefined settings without losing the remaining filter', async ({ page }) => {
+    const errors = collectErrors(page);
+    await openFixture(page);
+    const result = await page.evaluate(() => window.ccgramE2E.render('partial-invert'));
+
+    expect(result.mode).toBe(mode);
+    expectPixels(result, INVERTED_PIXELS);
+    expect(errors).toEqual([]);
+  });
+
+  test('exports original pixels for undefined-only settings without canvas filter support', async ({ page }) => {
+    const errors = collectErrors(page);
+    await disableCanvasFilters(page);
+    await openFixture(page);
+    const result = await page.evaluate(() => window.ccgramE2E.render('undefined-only'));
+
+    expect(result.mode).toBe(mode);
+    expectPixels(result);
+    expect(errors).toEqual([]);
+  });
+
   test('exports inverted pixels, preserving transparency', async ({ page }) => {
     const errors = collectErrors(page);
     await openFixture(page);

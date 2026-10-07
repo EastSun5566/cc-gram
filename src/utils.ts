@@ -66,6 +66,7 @@ export function parseSettingToStyle(setting?: FilterSetting): string {
 
   return Object
     .keys(setting)
+    .filter((key) => setting[key] !== undefined)
     .map((key): string => `${key}(${setting[key]}${
       key === 'hue-rotate'
         ? 'deg'
@@ -73,7 +74,7 @@ export function parseSettingToStyle(setting?: FilterSetting): string {
           ? 'px'
           : ''
     })`)
-    .join(' ');
+    .join(' ') || 'none';
 }
 
 interface CreateBlobOptions<
