@@ -4,7 +4,9 @@ import type { ParseOptions } from './types';
 export const hasOffscreenCanvas = typeof OffscreenCanvas !== 'undefined';
 
 export function camelize(string: string): string {
-  return string.replace(/-./g, (c) => (c[1] ? c[1].toUpperCase() : ''));
+  return string
+    .replace(/[A-Z]/g, (c) => c.toLowerCase())
+    .replace(/-[a-z]/g, (c) => c.slice(1).toUpperCase());
 }
 
 export function assert<TCond = unknown>(condition: TCond, message = 'internal error.'): asserts condition {
