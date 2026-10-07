@@ -240,10 +240,10 @@ pnpm run build
   to reject newly introduced high or critical vulnerabilities, including runtime,
   development, and unknown dependency scopes. Require both `test` and
   `dependency-review` checks in branch protection to enforce these merge gates.
-- The separate **Security Audit** workflow audits the root and demo lockfiles,
-  including development dependencies, daily, on pushes to `main`, or manually.
-  Findings fail that workflow and should be tracked and fixed independently;
-  existing findings do not block unrelated pull requests.
+- Keep Dependabot alerts and security updates enabled in the repository settings.
+  Dependabot monitors the dependency graph and attempts to open fix PRs for
+  vulnerable dependencies with available patches. These PRs still need review
+  and CI; alerts that cannot be fixed automatically need manual follow-up.
 - `pnpm audit:security` runs the full root and demo audit with a high-severity
   threshold. `pnpm verify:release` combines functional verification with this
   audit; both local release preparation and publishing CI require it to pass.
