@@ -13,6 +13,10 @@ export interface RenderResult {
 export interface E2EApi {
   ready: true;
   render(filterName?: string): Promise<RenderResult>;
+  renderFromAttribute(
+    dataAttribute: string,
+    method: 'getBlob' | 'getDataURL',
+  ): Promise<RenderResult & { preview: string }>;
   rejectInWorker(): Promise<never>;
 }
 
@@ -107,9 +111,38 @@ function rejectInWorker(): Promise<never> {
   });
 }
 
+async function renderFromAttribute(
+  dataAttribute: string,
+  method: 'getBlob' | 'getDataURL',
+): Promise<RenderResult & { preview: string }> {
+  const customFilter = new CCgram({ init: false, dataAttribute });
+  customFilter.setFilter('invert', { invert: 1 });
+  const image = await loadFixture();
+  image.setAttribute(`data-${dataAttribute}`, 'invert');
+  document.body.append(image);
+
+  try {
+    customFilter.applyFilter();
+    // Do not supply options.filter: the export must select from the dataset.
+    const result = await customFilter[method](image, { type: 'image/png' });
+    if (!result) throw new Error('The browser encoder returned no image.');
+    const blob = typeof result === 'string' ? await (await fetch(result)).blob() : result;
+
+    return {
+      mode: hasOffscreenCanvas ? 'worker' : 'fallback',
+      type: blob.type,
+      preview: image.style.filter,
+      ...await readPixels(blob),
+    };
+  } finally {
+    image.remove();
+  }
+}
+
 window.ccgramE2E = {
   ready: true,
   render,
+  renderFromAttribute,
   rejectInWorker,
 };
 
