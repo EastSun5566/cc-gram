@@ -216,6 +216,36 @@ const dataUrl = await filter.getDataURL(image, { filter: "inkwell" });
 const blob = await filter.getBlob(image, { filter: "valencia" });
 ```
 
+#### Exporting cross-origin images
+
+A cross-origin image can display with CSS filters without being eligible for
+canvas export. For `getBlob()` or `getDataURL()`, request the image with CORS
+enabled **before** loading it:
+
+```js
+import { createFilter } from "cc-gram";
+
+const image = new Image();
+image.crossOrigin = "anonymous"; // Set before src starts the request.
+image.src = "https://images.example.com/photo.png";
+await image.decode();
+
+const filter = createFilter({ init: false });
+const blob = await filter.getBlob(image, { filter: "1977" });
+```
+
+The image server must return an `Access-Control-Allow-Origin` header allowing
+your page's origin (or `*` for publicly accessible images). Setting `crossOrigin`
+alone does not grant permission; if the server disallows CORS, loading/decoding
+the image fails.
+
+Without CORS approval, drawing a cross-origin image taints the canvas, and export
+can reject with `SecurityError` (or `DataCloneError` when transferring a tainted
+image to a Worker). CCgram cannot bypass this browser protection.
+Same-origin images and object URLs created from user-selected local `File`s do
+not need cross-origin response headers. See
+[MDN: Use cross-origin images in a canvas](https://developer.mozilla.org/en-US/docs/Web/HTML/How_to/CORS_enabled_image).
+
 ## 🔧 Development
 
 ```sh
