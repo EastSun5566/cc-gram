@@ -41,9 +41,14 @@
     display: flex;
     overflow-x: scroll;
 
-    figure {
+    .filter-option {
       margin: 8px;
       min-width: 120px;
+      padding: 0;
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
       cursor: pointer;
 
       transition: transform 0.3s;
@@ -52,9 +57,14 @@
       &.selected {
         transform: translateY(-3px);
 
-        figcaption {
+        span {
           background-color: $bg-dark;
         }
+      }
+
+      &:focus-visible {
+        outline: 3px solid $bg-dark;
+        outline-offset: 2px;
       }
 
       img {
@@ -63,7 +73,8 @@
         @include shadow;
       }
 
-      figcaption {
+      span {
+        display: block;
         transition: background-color 0.5s;
       }
     }

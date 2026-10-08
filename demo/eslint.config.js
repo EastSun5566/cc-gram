@@ -28,9 +28,6 @@ export default [
       'react/prop-types': 'off',
       'react/require-default-props': 'off',
       'react/function-component-definition': 'off',
-      
-      // Allow figure with role="button" (used in filter selection UI)
-      'jsx-a11y/no-noninteractive-element-to-interactive-role': 'off',
     },
   },
 ];
