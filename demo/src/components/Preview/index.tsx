@@ -14,7 +14,7 @@ export const Preview: React.FC<PreviewProps> = ({
   onClear,
 }) => {
   const { filter, selectedFilterName, setSelectedFilterName } = useFilters();
-  const { imageRef, download } = useDownloadFilterImage({ filter });
+  const { imageRef, download, error } = useDownloadFilterImage({ filter });
 
   if (!imageURL) return null;
 
@@ -45,6 +45,8 @@ export const Preview: React.FC<PreviewProps> = ({
           <i className="fas fa-cloud-download-alt" />
         </button>
       </div>
+
+      {error && <p role="alert">{error}</p>}
 
       <div className="filters-container">
         {
