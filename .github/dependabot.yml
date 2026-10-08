@@ -1,0 +1,9 @@
+version: 2
+updates:
+  - package-ecosystem: "github-actions"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # Pullfrog is managed separately; do not propose edits to its workflow.
+    exclude-paths:
+      - ".github/workflows/pullfrog.yml"
