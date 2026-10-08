@@ -2,6 +2,22 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.1](https://github.com/EastSun5566/cc-gram/compare/v1.3.0...v1.3.1) (2026-10-08)
+
+
+### Bug Fixes
+
+* **ci:** pin release actions to verified commit SHAs ([#174](https://github.com/EastSun5566/cc-gram/issues/174)) ([519a8d1](https://github.com/EastSun5566/cc-gram/commit/519a8d196ed096c4aca5873537e0c817315f84ab))
+* **ci:** separate dependency security from functional checks ([#176](https://github.com/EastSun5566/cc-gram/issues/176)) ([aff45c2](https://github.com/EastSun5566/cc-gram/commit/aff45c260af4ad2c3676cc3d7d5c5938058a6780))
+* **deps:** clear release audit blockers ([#187](https://github.com/EastSun5566/cc-gram/issues/187)) ([b4fd18a](https://github.com/EastSun5566/cc-gram/commit/b4fd18a248ee20ec3b92bfbabc951cdafa8f0bd2))
+* **deps:** patch brace-expansion audit vulnerabilities ([#173](https://github.com/EastSun5566/cc-gram/issues/173)) ([d5d0eb4](https://github.com/EastSun5566/cc-gram/commit/d5d0eb4d1003573ecbbcc6facf99ed441accbf5d))
+* handle failed demo image exports ([#179](https://github.com/EastSun5566/cc-gram/issues/179)) ([cfc62d9](https://github.com/EastSun5566/cc-gram/commit/cfc62d9d6f3d3d66ce57927558508b386138f0d0))
+* keep demo filter instance stable across renders ([#180](https://github.com/EastSun5566/cc-gram/issues/180)) ([fd32882](https://github.com/EastSun5566/cc-gram/commit/fd3288212b6cf7752b419a6c61ca5c93f590a086))
+* make demo filter selection keyboard accessible ([#178](https://github.com/EastSun5566/cc-gram/issues/178)) ([d917d44](https://github.com/EastSun5566/cc-gram/commit/d917d444d32733e21d432871f8958a84b376080d))
+* match custom attributes to HTML dataset naming rules ([#177](https://github.com/EastSun5566/cc-gram/issues/177)) ([f3be7e1](https://github.com/EastSun5566/cc-gram/commit/f3be7e17de5e63e15dcc6a08230f6fc506ba7ac8))
+* omit undefined settings from filter CSS ([#175](https://github.com/EastSun5566/cc-gram/issues/175)) ([1a91523](https://github.com/EastSun5566/cc-gram/commit/1a9152341e639c3578b46a35ca37476461465433))
+* reject filtered exports without canvas filter support ([#172](https://github.com/EastSun5566/cc-gram/issues/172)) ([38839fa](https://github.com/EastSun5566/cc-gram/commit/38839facbfea70277b127c6a2f9a613210b923d4))
+
 ## [1.3.0](https://github.com/EastSun5566/cc-gram/compare/v1.2.10...v1.3.0) (2026-09-13)
 
 
