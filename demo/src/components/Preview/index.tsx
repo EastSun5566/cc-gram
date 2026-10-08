@@ -24,6 +24,7 @@ export const Preview: React.FC<PreviewProps> = ({
         <img
           id="preview-image"
           src={imageURL}
+          onLoad={() => filter.applyFilter()}
           data-filter={selectedFilterName}
           alt={selectedFilterName.toUpperCase()}
           ref={imageRef}
