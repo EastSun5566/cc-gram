@@ -14,7 +14,7 @@ export const useFilters = ({
 } => {
   const [selectedFilterName, setSelectedFilterName] = useState(initialFilterName);
 
-  const filter = createFilter({ init: false });
+  const [filter] = useState(() => createFilter({ init: false }));
 
   useEffect(() => {
     filter.applyFilter();

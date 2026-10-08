@@ -62,6 +62,45 @@ async function disableCanvasFilters(page: Page): Promise<void> {
 }
 
 function testFilteredExports(mode: 'worker' | 'fallback'): void {
+  for (const attribute of ['my-filter', 'foo-1', 'foo--bar']) {
+    for (const method of ['getBlob', 'getDataURL'] as const) {
+      test(`selects data-${attribute} for CSS preview and ${method}`, async ({ page }) => {
+        const errors = collectErrors(page);
+        await openFixture(page);
+        const result = await page.evaluate(
+          ([name, exportMethod]) => window.ccgramE2E.renderFromAttribute(name, exportMethod),
+          [attribute, method] as const,
+        );
+
+        expect(result.mode).toBe(mode);
+        expect(result.preview).toBe('invert(1)');
+        expectPixels(result, INVERTED_PIXELS);
+        expect(errors).toEqual([]);
+      });
+    }
+  }
+
+  test('omits undefined settings without losing the remaining filter', async ({ page }) => {
+    const errors = collectErrors(page);
+    await openFixture(page);
+    const result = await page.evaluate(() => window.ccgramE2E.render('partial-invert'));
+
+    expect(result.mode).toBe(mode);
+    expectPixels(result, INVERTED_PIXELS);
+    expect(errors).toEqual([]);
+  });
+
+  test('exports original pixels for undefined-only settings without canvas filter support', async ({ page }) => {
+    const errors = collectErrors(page);
+    await disableCanvasFilters(page);
+    await openFixture(page);
+    const result = await page.evaluate(() => window.ccgramE2E.render('undefined-only'));
+
+    expect(result.mode).toBe(mode);
+    expectPixels(result);
+    expect(errors).toEqual([]);
+  });
+
   test('exports inverted pixels, preserving transparency', async ({ page }) => {
     const errors = collectErrors(page);
     await openFixture(page);

@@ -14,7 +14,7 @@ export const Preview: React.FC<PreviewProps> = ({
   onClear,
 }) => {
   const { filter, selectedFilterName, setSelectedFilterName } = useFilters();
-  const { imageRef, download } = useDownloadFilterImage({ filter });
+  const { imageRef, download, error } = useDownloadFilterImage({ filter });
 
   if (!imageURL) return null;
 
@@ -24,6 +24,7 @@ export const Preview: React.FC<PreviewProps> = ({
         <img
           id="preview-image"
           src={imageURL}
+          onLoad={() => filter.applyFilter()}
           data-filter={selectedFilterName}
           alt={selectedFilterName.toUpperCase()}
           ref={imageRef}
@@ -46,23 +47,25 @@ export const Preview: React.FC<PreviewProps> = ({
         </button>
       </div>
 
+      {error && <p role="alert">{error}</p>}
+
       <div className="filters-container">
         {
           filter.filterNames.map((filterName: string) => (
-            <figure
-              role="button"
-              className={selectedFilterName === filterName ? 'selected' : ''}
+            <button
+              type="button"
+              className={`filter-option${selectedFilterName === filterName ? ' selected' : ''}`}
+              aria-pressed={selectedFilterName === filterName}
               key={filterName}
               onClick={() => setSelectedFilterName(filterName)}
-              onKeyPress={() => setSelectedFilterName(filterName)}
             >
               <img
                 src={imageURL}
                 data-filter={filterName}
-                alt={filterName.toUpperCase()}
+                alt=""
               />
-              <figcaption>{filterName.toUpperCase()}</figcaption>
-            </figure>
+              <span>{filterName.toUpperCase()}</span>
+            </button>
           ))
         }
       </div>
