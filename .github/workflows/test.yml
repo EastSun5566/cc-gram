@@ -37,7 +37,7 @@ jobs:
         run: pnpm exec jsr publish --dry-run
       - name: Upload Playwright trace
         if: failure()
-        uses: actions/upload-artifact@v6
+        uses: actions/upload-artifact@v7
         with:
           name: playwright-trace
           path: test-results/**/trace.zip
