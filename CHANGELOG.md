@@ -2,6 +2,16 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [1.3.2](https://github.com/EastSun5566/cc-gram/compare/v1.3.1...v1.3.2) (2026-11-19)
+
+Maven's brightness and the filter order of 13 presets now follow CSSgram. Images rendered with affected presets may look different.
+
+### Bug Fixes
+
+* align preset filters with CSSgram ([#195](https://github.com/EastSun5566/cc-gram/issues/195)) ([fea1907](https://github.com/EastSun5566/cc-gram/commit/fea1907bfce7581d2bddcd3ae9a1b06864c873f0)), closes [#194](https://github.com/EastSun5566/cc-gram/issues/194)
+* **build:** prepare type declarations before parallel bundle writes to prevent corrupted package types ([#195](https://github.com/EastSun5566/cc-gram/pull/195)).
+* **deps:** update demo Vite to 6.4.4 to address [GHSA-587h-7wmj-h5pm](https://github.com/advisories/GHSA-587h-7wmj-h5pm).
+
 ### [1.3.1](https://github.com/EastSun5566/cc-gram/compare/v1.3.0...v1.3.1) (2026-10-08)
 
 
