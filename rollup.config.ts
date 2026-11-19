@@ -1,7 +1,4 @@
 import { createRequire } from 'node:module';
-import {
-  writeFileSync, readFileSync, existsSync, readdirSync,
-} from 'node:fs';
 import { defineConfig } from 'rollup';
 import { nodeResolve, DEFAULTS } from '@rollup/plugin-node-resolve';
 import typescript from '@rollup/plugin-typescript';
@@ -10,8 +7,8 @@ import terser from '@rollup/plugin-terser';
 const require = createRequire(import.meta.url);
 const pkg = require('./package.json');
 
-const INDEX_DTS = 'dist/index.d.ts';
-const INDEX_DCTS = 'dist/index.d.cts';
+const INDEX_DTS = 'index.d.ts';
+const INDEX_DCTS = 'index.d.cts';
 
 export default defineConfig({
   input: 'src/index.ts',
@@ -41,27 +38,26 @@ export default defineConfig({
     terser(),
     {
       name: 'generate-cts',
-      writeBundle() {
-        // Copy .d.ts to .d.cts for CommonJS types
-        if (existsSync(INDEX_DTS)) {
-          try {
-            const declarationFiles = readdirSync('dist').filter((file) => file.endsWith('.d.ts'));
-            declarationFiles.forEach((file) => {
-              const path = `dist/${file}`;
-              const content = readFileSync(path, 'utf-8').replace(
-                /(from\s+['"]\.\/[^'"]+|import\s*\(\s*['"]\.\/[^'"]+)/g,
-                (specifier) => (specifier.endsWith('.js') ? specifier : `${specifier}.js`),
-              );
-              writeFileSync(path, content);
-            });
-            writeFileSync(INDEX_DCTS, readFileSync(INDEX_DTS, 'utf-8'));
-          } catch (error) {
-            console.error('Failed to generate CommonJS type declarations:', error);
-            throw error;
-          }
+      generateBundle(_options, bundle) {
+        // Prepare assets before parallel outputs write the same declaration files.
+        Object.values(bundle).forEach((file) => {
+          if (file.type !== 'asset' || !file.fileName.endsWith('.d.ts')) return;
+
+          const content = typeof file.source === 'string'
+            ? file.source
+            : Buffer.from(file.source).toString('utf-8');
+          file.source = content.replace(
+            /(from\s+['"]\.\/[^'"]+|import\s*\(\s*['"]\.\/[^'"]+)/g,
+            (specifier) => (specifier.endsWith('.js') ? specifier : `${specifier}.js`),
+          );
+        });
+
+        const declaration = bundle[INDEX_DTS];
+        if (declaration?.type === 'asset') {
+          this.emitFile({ type: 'asset', fileName: INDEX_DCTS, source: declaration.source });
         } else {
-          console.warn(
-            `[generate-cts] Expected type declaration file "${INDEX_DTS}" not found. `
+          this.warn(
+            `[generate-cts] Expected type declaration asset "${INDEX_DTS}" not found. `
               + `Skipping generation of "${INDEX_DCTS}". `
               + 'Ensure TypeScript is configured to emit declaration files for proper CJS type resolution.',
           );

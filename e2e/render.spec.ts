@@ -62,6 +62,29 @@ async function disableCanvasFilters(page: Page): Promise<void> {
 }
 
 function testFilteredExports(mode: 'worker' | 'fallback'): void {
+  const presets = [
+    ['maven', 'sepia(0.25) brightness(0.95) contrast(0.95) saturate(1.5)'],
+    ['moon', 'grayscale(1) contrast(1.1) brightness(1.1)'],
+  ] as const;
+
+  for (const [filterName, filterStyle] of presets) {
+    for (const method of ['getBlob', 'getDataURL'] as const) {
+      test(`matches CSSgram ${filterName} for CSS preview and ${method}`, async ({ page }) => {
+        const errors = collectErrors(page);
+        await openFixture(page);
+        const { result, pixels } = await page.evaluate(async ({ name, style, exportMethod }) => ({
+          result: await window.ccgramE2E.renderFromAttribute('filter', exportMethod, name),
+          pixels: await window.ccgramE2E.referencePixels(style),
+        }), { name: filterName, style: filterStyle, exportMethod: method });
+
+        expect(result.mode).toBe(mode);
+        expect(result.preview).toBe(filterStyle);
+        expectPixels(result, pixels);
+        expect(errors).toEqual([]);
+      });
+    }
+  }
+
   for (const attribute of ['my-filter', 'foo-1', 'foo--bar']) {
     for (const method of ['getBlob', 'getDataURL'] as const) {
       test(`selects data-${attribute} for CSS preview and ${method}`, async ({ page }) => {

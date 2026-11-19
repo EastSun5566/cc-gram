@@ -20,14 +20,15 @@ export interface FilterSetting {
 }
 
 /** The default Filter List */
+// Property order determines the CSS and Canvas filter execution order.
 export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'aden',
     {
       'hue-rotate': -20,
       contrast: 0.9,
-      brightness: 1.2,
       saturate: 0.85,
+      brightness: 1.2,
     },
   ],
   [
@@ -43,16 +44,16 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
     'reyes',
     {
       sepia: 0.22,
-      contrast: 0.85,
       brightness: 1.1,
+      contrast: 0.85,
       saturate: 0.75,
     },
   ],
   [
     'gingham',
     {
-      'hue-rotate': -10,
       brightness: 1.05,
+      'hue-rotate': -10,
     },
   ],
   [
@@ -65,8 +66,8 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'walden',
     {
-      'hue-rotate': -10,
       brightness: 1.1,
+      'hue-rotate': -10,
       sepia: 0.3,
       saturate: 1.6,
     },
@@ -96,8 +97,8 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'lofi',
     {
-      contrast: 1.5,
       saturate: 1.1,
+      contrast: 1.5,
     },
   ],
   [
@@ -124,10 +125,10 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'nashville',
     {
+      sepia: 0.2,
       contrast: 1.2,
       brightness: 1.05,
       saturate: 1.2,
-      sepia: 0.2,
     },
   ],
   [
@@ -139,9 +140,9 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'moon',
     {
-      brightness: 1.1,
-      contrast: 1.1,
       grayscale: 1,
+      contrast: 1.1,
+      brightness: 1.1,
     },
   ],
   [
@@ -154,32 +155,32 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'willow',
     {
+      grayscale: 0.5,
       contrast: 0.95,
       brightness: 0.9,
-      grayscale: 0.5,
     },
   ],
   [
     'rise',
     {
-      contrast: 0.9,
       brightness: 1.05,
       sepia: 0.2,
+      contrast: 0.9,
       saturate: 0.9,
     },
   ],
   [
     'slumber',
     {
-      brightness: 1.05,
       saturate: 0.66,
+      brightness: 1.05,
     },
   ],
   [
     'brannan',
     {
-      contrast: 1.4,
       sepia: 0.5,
+      contrast: 1.4,
     },
   ],
   [
@@ -193,18 +194,18 @@ export const DEFAULT_FILTERS: Map<FilterName, FilterSetting> = new Map([
   [
     'maven',
     {
-      contrast: 0.95,
-      brightness: 1.95,
-      saturate: 1.5,
       sepia: 0.25,
+      brightness: 0.95,
+      contrast: 0.95,
+      saturate: 1.5,
     },
   ],
   [
     'stinson',
     {
       contrast: 0.75,
-      brightness: 1.15,
       saturate: 0.85,
+      brightness: 1.15,
     },
   ],
   [

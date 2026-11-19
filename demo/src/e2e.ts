@@ -16,7 +16,9 @@ export interface E2EApi {
   renderFromAttribute(
     dataAttribute: string,
     method: 'getBlob' | 'getDataURL',
+    filterName?: string,
   ): Promise<RenderResult & { preview: string }>;
+  referencePixels(filterStyle: string): Promise<number[]>;
   rejectInWorker(): Promise<never>;
 }
 
@@ -69,6 +71,20 @@ async function render(filterName = ''): Promise<RenderResult> {
   };
 }
 
+async function referencePixels(filterStyle: string): Promise<number[]> {
+  const image = await loadFixture();
+  const canvas = document.createElement('canvas');
+  canvas.width = image.naturalWidth;
+  canvas.height = image.naturalHeight;
+
+  const context = canvas.getContext('2d');
+  if (!context) throw new Error('The browser test requires a 2D canvas context.');
+
+  context.filter = filterStyle;
+  context.drawImage(image, 0, 0);
+  return Array.from(context.getImageData(0, 0, canvas.width, canvas.height).data);
+}
+
 function rejectInWorker(): Promise<never> {
   const worker = createWorker(async () => {
     const error = new Error('[CCgram] Deliberate async Worker rejection.');
@@ -114,11 +130,12 @@ function rejectInWorker(): Promise<never> {
 async function renderFromAttribute(
   dataAttribute: string,
   method: 'getBlob' | 'getDataURL',
+  filterName = 'invert',
 ): Promise<RenderResult & { preview: string }> {
   const customFilter = new CCgram({ init: false, dataAttribute });
   customFilter.setFilter('invert', { invert: 1 });
   const image = await loadFixture();
-  image.setAttribute(`data-${dataAttribute}`, 'invert');
+  image.setAttribute(`data-${dataAttribute}`, filterName);
   document.body.append(image);
 
   try {
@@ -143,6 +160,7 @@ window.ccgramE2E = {
   ready: true,
   render,
   renderFromAttribute,
+  referencePixels,
   rejectInWorker,
 };
 
