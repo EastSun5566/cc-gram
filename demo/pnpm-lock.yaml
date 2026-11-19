@@ -50,7 +50,7 @@ importers:
         version: 4.4.12(@types/react@18.3.27)
       '@vitejs/plugin-react':
         specifier: ^4.2.1
-        version: 4.7.0(vite@6.4.4(sass@1.97.1))
+        version: 4.7.0(vite@6.4.5(sass@1.97.1))
       eslint:
         specifier: ^9.39.2
         version: 9.39.2
@@ -85,8 +85,8 @@ importers:
         specifier: ^8.50.1
         version: 8.50.1(eslint@9.39.2)(typescript@5.9.3)
       vite:
-        specifier: ^6.4.4
-        version: 6.4.4(sass@1.97.1)
+        specifier: ^6.4.5
+        version: 6.4.5(sass@1.97.1)
 
 packages:
 
@@ -2030,8 +2030,8 @@ packages:
   uri-js@4.4.1:
     resolution: {integrity: sha512-7rKUyy33Q1yc98pQ1DAmLtwX109F7TIfWlW1Ydo8Wl1ii1SeHieeh0HHfPeL2fMXK6z0s8ecKs9frCuLJvndBg==}
 
-  vite@6.4.4:
-    resolution: {integrity: sha512-xGjU/SyjeNyb0E4KxXBvYz/1C+3JXuujvf2hXNOtnlcE+58o5ajd9N2/n2VhkiJvpCP2qQasnUpx5PXNeI+p1Q==}
+  vite@6.4.5:
+    resolution: {integrity: sha512-4enwjFfi4IwtEh0w+jPzpLVOFQiPHmmzPxcHXQOyEur47o6u0jE573DmGpjA+7irXoMLYRZD5ZaFUEneS3abPg==}
     engines: {node: ^18.0.0 || ^20.0.0 || >=22.0.0}
     hasBin: true
     peerDependencies:
@@ -2751,7 +2751,7 @@ snapshots:
   '@unrs/resolver-binding-win32-x64-msvc@1.11.1':
     optional: true
 
-  '@vitejs/plugin-react@4.7.0(vite@6.4.4(sass@1.97.1))':
+  '@vitejs/plugin-react@4.7.0(vite@6.4.5(sass@1.97.1))':
     dependencies:
       '@babel/core': 7.28.5
       '@babel/plugin-transform-react-jsx-self': 7.27.1(@babel/core@7.28.5)
@@ -2759,7 +2759,7 @@ snapshots:
       '@rolldown/pluginutils': 1.0.0-beta.27
       '@types/babel__core': 7.20.5
       react-refresh: 0.17.0
-      vite: 6.4.4(sass@1.97.1)
+      vite: 6.4.5(sass@1.97.1)
     transitivePeerDependencies:
       - supports-color
 
@@ -4364,7 +4364,7 @@ snapshots:
     dependencies:
       punycode: 2.3.1
 
-  vite@6.4.4(sass@1.97.1):
+  vite@6.4.5(sass@1.97.1):
     dependencies:
       esbuild: 0.25.12
       fdir: 6.5.0(picomatch@4.0.4)
